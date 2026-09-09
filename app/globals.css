@@ -1,0 +1,200 @@
+@import "tailwindcss";
+
+/* =========================================================
+   Theme tokens → Tailwind utilities
+   Source of truth: design/tokens.json, design/theme.css
+   ========================================================= */
+
+@theme {
+  /* Colors */
+  --color-eggshell: #fdfcfc;
+  --color-warm-taupe: #f5f3f1;
+  --color-stone: #ebe8e4;
+  --color-ink: #000000;
+  --color-graphite: #44403b;
+  --color-smoke: #777169;
+  --color-ash: #a59f97;
+  --color-violet: #0447ff;
+  --color-ember-orange: #ff4704;
+
+  /* Fonts — overrides Tailwind's default font-sans / font-mono */
+  --font-sans: var(--font-switzer), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo,
+    Monaco, Consolas, monospace;
+
+  /* Type scale */
+  --text-caption: 11px;
+  --text-body-sm: 14px;
+  --text-body: 16px;
+  --text-body-lg: 20px;
+  --text-heading-sm: 32px;
+  --text-heading: 36px;
+  --text-display: 48px;
+
+  /* Line height, per size */
+  --leading-caption: 1.6;
+  --leading-body-sm: 1.5;
+  --leading-body: 1.5;
+  --leading-body-lg: 1.35;
+  --leading-heading-sm: 1.13;
+  --leading-heading: 1.17;
+  --leading-display: 1.08;
+
+  /* Letter spacing — display/heading sizes share -0.02em, body sizes share 0.01em */
+  --tracking-display: -0.02em;
+  --tracking-heading: -0.02em;
+  --tracking-heading-sm: -0.02em;
+  --tracking-body: 0.01em;
+  --tracking-body-sm: 0.01em;
+
+  /* Radius, named by role */
+  --radius-input: 4px;
+  --radius-card: 20px;
+  --radius-large: 24px;
+  --radius-pill: 9999px;
+}
+
+/* =========================================================
+   Layout tokens
+   Responsive page gutter: 20px mobile / 32px tablet / 64px desktop
+   ========================================================= */
+
+:root {
+  --content-max-width: 1280px;
+  --page-gutter: 20px;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --page-gutter: 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --page-gutter: 64px;
+  }
+}
+
+/* =========================================================
+   Base
+   Wrapped in Tailwind's `base` layer so utility classes (layer:
+   utilities) still win the cascade regardless of selector
+   specificity — an unlayered rule here would otherwise beat any
+   Tailwind color/typography utility applied to the same element.
+   ========================================================= */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  html,
+  body {
+    max-width: 100vw;
+    /* `clip`, not `hidden` — `overflow-x: hidden` forces overflow-y to
+       compute as `auto` (CSS Overflow §3), turning html/body into scroll
+       containers that break position:sticky descendants (e.g. the project
+       number/category rail). `clip` prevents the same horizontal overflow
+       without that coercion. */
+    overflow-x: clip;
+  }
+
+  body {
+    background-color: var(--color-eggshell);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Page canvas: subtle 24px dot grid. Belongs to the page background only. */
+  body {
+    background-image: radial-gradient(
+      circle,
+      color-mix(in srgb, var(--color-ash) 20%, transparent) 0.8px,
+      transparent 0.8px
+    );
+    background-size: 24px 24px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    margin: 0;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 300;
+    letter-spacing: var(--tracking-display);
+  }
+
+  p {
+    font-weight: 400;
+    letter-spacing: var(--tracking-body);
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  ::selection {
+    background: var(--color-ink);
+    color: var(--color-eggshell);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 4px;
+  }
+
+  /* Scroll/entrance reveals are handled by GSAP (see useGsapReveal, Hero) —
+     it checks prefers-reduced-motion itself and skips the hidden state
+     entirely for those visitors, so there's nothing to override here. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
