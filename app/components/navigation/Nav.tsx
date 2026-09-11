@@ -70,27 +70,28 @@ export function Nav() {
           aria-expanded={open}
           aria-controls="mobile-nav-panel"
           aria-label={open ? "Close menu" : "Open menu"}
-          className="text-body-sm text-ink"
+          className="text-body-sm text-ink transition-transform duration-150 ease-ui active:scale-[0.94]"
         >
           {open ? "Close" : "Menu"}
         </button>
 
         <div
           id="mobile-nav-panel"
-          className={`absolute inset-x-0 top-full grid border-b border-stone bg-eggshell transition-[grid-template-rows] duration-200 ease-out ${
+          className={`absolute inset-x-0 top-full grid border-b border-stone bg-eggshell transition-[grid-template-rows] duration-200 ease-out-strong ${
             open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
           }`}
         >
           <div className="overflow-hidden">
             <Container as="ul">
-              {NAV_LINKS.map(({ href, label }) => (
+              {NAV_LINKS.map(({ href, label }, index) => (
                 <li key={href} className="border-t border-stone first:border-t-0">
                   <Link
                     href={href}
                     aria-current={pathname === href ? "page" : undefined}
-                    className={`block py-4 text-body-sm ${
+                    className={`block py-4 text-body-sm transition-[opacity,transform] duration-200 ease-out-strong ${
                       pathname === href ? "text-ink" : "text-smoke"
-                    }`}
+                    } ${open ? "translate-y-0 opacity-100" : "-translate-y-1 opacity-0"}`}
+                    style={{ transitionDelay: open ? `${index * 40}ms` : "0ms" }}
                   >
                     {label}
                   </Link>

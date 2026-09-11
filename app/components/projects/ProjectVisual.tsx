@@ -13,6 +13,8 @@ type ProjectVisualProps = {
   /** Defaults to the homepage's standard 16/10 — case studies can use a taller/square crop where the content calls for it. */
   aspect?: keyof typeof ASPECT_CLASSES;
   caption?: string;
+  /** Edge-to-edge viewport width, no rounding — for the case-study hero visual only. Defaults to the standard rounded card within its container. */
+  bleed?: boolean;
 };
 
 /**
@@ -24,11 +26,14 @@ export function ProjectVisual({
   alt,
   aspect = "16/10",
   caption,
+  bleed = false,
 }: ProjectVisualProps) {
   return (
     <figure>
       <div
-        className={`relative w-full overflow-hidden rounded-large bg-warm-taupe ${ASPECT_CLASSES[aspect]}`}
+        className={`relative w-full overflow-hidden bg-warm-taupe ${
+          bleed ? "" : "rounded-large"
+        } ${ASPECT_CLASSES[aspect]}`}
       >
         {thumbnail ? (
           <Image
@@ -36,7 +41,7 @@ export function ProjectVisual({
             alt={alt}
             fill
             sizes="(min-width: 1024px) 1152px, 100vw"
-            className="object-cover transition-transform duration-300 ease-out group-hover:scale-[1.02]"
+            className="object-cover transition-transform duration-300 ease-out-strong group-hover:scale-[1.02]"
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center">

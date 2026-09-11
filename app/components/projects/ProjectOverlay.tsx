@@ -29,7 +29,7 @@ export function ProjectOverlay({ children }: { children: ReactNode }) {
       opacity: 0,
       y: 12,
       duration: 0.25,
-      ease: "power2.in",
+      ease: "power2.out",
       onComplete: () => router.back(),
     });
   }
@@ -56,7 +56,7 @@ export function ProjectOverlay({ children }: { children: ReactNode }) {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     gsap.set(el, { opacity: 0, y: 12 });
-    gsap.to(el, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" });
+    gsap.to(el, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" });
   }, []);
 
   return (

@@ -31,7 +31,7 @@ export function useGsapReveal<T extends HTMLElement>() {
         opacity: 1,
         y: 0,
         duration: 0.7,
-        ease: "power2.out",
+        ease: "power3.out",
         scrollTrigger: {
           trigger: el,
           start: "top 88%",

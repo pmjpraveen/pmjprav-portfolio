@@ -53,6 +53,12 @@
   --radius-card: 20px;
   --radius-large: 24px;
   --radius-pill: 9999px;
+
+  /* Easing — shared curves so hover/reveal motion feels like one system.
+     ui: symmetric, for two-way hover toggles (bar sweeps, color/opacity).
+     out-strong: pronounced deceleration, for one-way entrances (scale/expand). */
+  --ease-ui: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 /* =========================================================
@@ -108,16 +114,6 @@
     font-weight: 400;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-  }
-
-  /* Page canvas: subtle 24px dot grid. Belongs to the page background only. */
-  body {
-    background-image: radial-gradient(
-      circle,
-      color-mix(in srgb, var(--color-ash) 20%, transparent) 0.8px,
-      transparent 0.8px
-    );
-    background-size: 24px 24px;
   }
 
   h1,

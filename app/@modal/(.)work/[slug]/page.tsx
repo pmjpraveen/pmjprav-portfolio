@@ -6,6 +6,7 @@ import {
   getNextRealProject,
   toNextProjectData,
 } from "../../../content/projects";
+import { withMarkdownContent } from "../../../lib/project-content";
 
 type ModalProjectPageProps = {
   params: Promise<{ slug: string }>;
@@ -25,7 +26,7 @@ export default async function ModalProjectPage({ params }: ModalProjectPageProps
   return (
     <ProjectOverlay>
       <ProjectPage
-        project={project}
+        project={withMarkdownContent(project)}
         nextProject={next ? toNextProjectData(next) : undefined}
       />
     </ProjectOverlay>

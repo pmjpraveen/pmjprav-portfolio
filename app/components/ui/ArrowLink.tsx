@@ -21,22 +21,22 @@ export function ArrowLink({ href, children, className, ...rest }: ArrowLinkProps
   return (
     <Link
       href={href}
-      className={`group relative inline-flex items-center gap-2 py-2 font-medium text-ink ${className ?? ""}`}
+      className={`group relative inline-flex items-center gap-2 py-2 font-medium text-ink transition-transform duration-150 ease-ui active:scale-[0.97] ${className ?? ""}`}
       {...rest}
     >
       <span className="relative -mx-1 inline-block px-1">
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 origin-left scale-x-0 bg-ink transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-x-100"
+          className="pointer-events-none absolute inset-0 origin-left scale-x-0 bg-ink transition-transform duration-300 ease-ui group-hover:scale-x-100"
         />
-        <span className="relative transition-colors duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:text-eggshell">
+        <span className="relative transition-colors duration-300 ease-ui group-hover:text-eggshell">
           {children}
         </span>
       </span>
       <svg
         aria-hidden="true"
         viewBox="0 0 10 10"
-        className="size-[0.6em] shrink-0 -translate-x-1 rotate-45 opacity-0 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:translate-x-0 group-hover:opacity-100"
+        className="size-[0.6em] shrink-0 -translate-x-1 rotate-45 opacity-0 transition-all duration-300 ease-ui group-hover:translate-x-0 group-hover:opacity-100"
       >
         <path
           d="M1.004 9.166 9.337.833m0 0v8.333m0-8.333H1.004"

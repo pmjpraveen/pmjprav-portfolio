@@ -37,13 +37,28 @@ export function ProjectTextSection({ eyebrow, title, body, meta }: ProjectTextSe
       ) : null}
 
       {body ? (
-        <p
-          className={`text-body-lg leading-body-lg ${eyebrow || title ? "mt-4" : ""} ${
-            pending ? "italic text-ash" : "text-smoke"
-          }`}
-        >
-          {pending ? "Needs input" : body}
-        </p>
+        pending ? (
+          <p
+            className={`text-body-lg leading-body-lg italic text-ash ${
+              eyebrow || title ? "mt-4" : ""
+            }`}
+          >
+            Needs input
+          </p>
+        ) : (
+          // Split on blank lines so freeform multi-paragraph body text renders
+          // as separate <p> tags instead of collapsing into one block.
+          body.split(/\n\s*\n/).map((paragraph, index) => (
+            <p
+              key={index}
+              className={`text-body-lg leading-body-lg text-smoke ${
+                index > 0 || eyebrow || title ? "mt-4" : ""
+              }`}
+            >
+              {paragraph}
+            </p>
+          ))
+        )
       ) : null}
 
       {meta?.length ? (

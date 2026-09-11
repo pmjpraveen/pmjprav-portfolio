@@ -20,22 +20,22 @@ export function ProjectExternalLink({ label, url, description }: ProjectExternal
         href={url}
         target="_blank"
         rel="noopener noreferrer"
-        className={`group relative inline-flex items-center gap-2 py-2 font-medium text-ink ${
+        className={`group relative inline-flex items-center gap-2 py-2 font-medium text-ink transition-transform duration-150 ease-ui active:scale-[0.97] ${
           description ? "mt-6" : ""
         }`}
       >
         <span className="relative -mx-1 inline-block px-1">
           <span
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 origin-left scale-x-0 bg-ink transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-x-100"
+            className="pointer-events-none absolute inset-0 origin-left scale-x-0 bg-ink transition-transform duration-300 ease-ui group-hover:scale-x-100"
           />
-          <span className="relative transition-colors duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:text-eggshell">
+          <span className="relative transition-colors duration-300 ease-ui group-hover:text-eggshell">
             {label}
           </span>
         </span>
         <span
           aria-hidden="true"
-          className="text-body transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+          className="text-body transition-transform duration-300 ease-ui group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
         >
           ↗
         </span>

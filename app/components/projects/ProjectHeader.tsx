@@ -49,13 +49,14 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
         </div>
       </Container>
 
-      <div className="mt-12 lg:mt-16">
-        <Container>
-          <ProjectVisual
-            thumbnail={heroVisual?.src}
-            alt={heroVisual?.alt ?? `${title} preview`}
-          />
-        </Container>
+      {/* Full-bleed: breaks out of the container to span the viewport edge-to-edge,
+          the one deliberate width contrast against the text column above. */}
+      <div className="relative left-1/2 mt-12 w-screen -translate-x-1/2 lg:mt-16">
+        <ProjectVisual
+          thumbnail={heroVisual?.src}
+          alt={heroVisual?.alt ?? `${title} preview`}
+          bleed
+        />
       </div>
     </section>
   );

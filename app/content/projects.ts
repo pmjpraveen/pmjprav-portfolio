@@ -257,6 +257,14 @@ export const projects: Project[] = [
         body: NEEDS_INPUT,
       },
       {
+        id: "impact",
+        type: "metrics",
+        navLabel: "Impact",
+        eyebrow: "Impact",
+        // Only confirmed, real numbers belong here — see ProjectMetrics.
+        metrics: [],
+      },
+      {
         id: "reflection",
         type: "text",
         navLabel: "Reflection",
