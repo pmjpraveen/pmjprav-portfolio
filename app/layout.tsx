@@ -3,8 +3,15 @@ import { Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import { Footer } from "./components/layout/Footer";
 import { Header } from "./components/layout/Header";
+import { ThemeToggle } from "./components/layout/ThemeToggle";
 import { Preloader } from "./components/preloader/Preloader";
 import "./globals.css";
+
+// Runs before hydration so the page never flashes the wrong theme: mirrors
+// what ThemeToggle writes (a stored explicit choice, else the time of day —
+// day 6am-6pm, dark otherwise, matching DAY_START_HOUR/DAY_END_HOUR there)
+// onto <html data-theme> synchronously, pre-paint.
+const THEME_INIT_SCRIPT = `(function(){try{var s=localStorage.getItem('theme');var t;if(s==='dark'||s==='light'){t=s;}else{var h=new Date().getHours();t=(h>=6&&h<18)?'light':'dark';}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();`;
 
 // Geist Mono isn't present in public/fonts, so it's loaded via
 // next/font/google (self-hosted at build time, no runtime request).
@@ -36,8 +43,11 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#fdfcfc",
-  colorScheme: "light",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#fdfcfc" },
+    { media: "(prefers-color-scheme: dark)", color: "#14120f" },
+  ],
+  colorScheme: "light dark",
 };
 
 export default function RootLayout({
@@ -50,11 +60,16 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${switzer.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+      </head>
       <body className="flex min-h-full flex-col">
         <Preloader>
           <Header />
+          <ThemeToggle />
           {children}
           <Footer />
         </Preloader>

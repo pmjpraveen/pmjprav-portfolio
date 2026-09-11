@@ -155,7 +155,10 @@ export function Preloader({ children }: { children: ReactNode }) {
             id="site-preloader"
             role="status"
             aria-label="Loading"
-            className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-ink text-eggshell"
+            // Fixed black/white regardless of theme — this is a splash
+            // title card, not themed UI chrome, so it stays decoupled from
+            // the ink/eggshell tokens (which flip meaning in dark mode).
+            className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black text-white"
             exit={{ y: skipAnimation ? 0 : "-100%" }}
             transition={{ duration: skipAnimation ? 0 : 0.7, ease: [0.65, 0, 0.35, 1] }}
           >
@@ -165,7 +168,7 @@ export function Preloader({ children }: { children: ReactNode }) {
               </motion.div>
             </AnimatePresence>
 
-            <p className="absolute bottom-8 right-8 font-mono text-caption uppercase tracking-wide text-eggshell/60 sm:bottom-10 sm:right-10">
+            <p className="absolute bottom-8 right-8 font-mono text-caption uppercase tracking-wide text-white/60 sm:bottom-10 sm:right-10">
               {String(wordIndex + 1).padStart(2, "0")} / {String(WORDS.length).padStart(2, "0")}
             </p>
           </motion.div>
