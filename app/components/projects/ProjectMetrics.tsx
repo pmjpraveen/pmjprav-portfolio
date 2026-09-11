@@ -32,16 +32,26 @@ export function ProjectMetrics({ eyebrow, title, metrics }: ProjectMetricsProps)
         </div>
       ) : null}
 
-      <dl className={`grid grid-cols-2 gap-8 sm:grid-cols-4 ${hasHeading ? "mt-10 lg:mt-12" : ""}`}>
-        {metrics.map((metric) => (
-          <div key={metric.label}>
-            <dt className="font-mono text-caption uppercase tracking-wide text-smoke">
-              {metric.label}
-            </dt>
-            <dd className="mt-2 text-heading-sm text-ink">{metric.value}</dd>
-          </div>
-        ))}
-      </dl>
+      {metrics.length ? (
+        <dl className={`grid grid-cols-2 gap-8 sm:grid-cols-4 ${hasHeading ? "mt-10 lg:mt-12" : ""}`}>
+          {metrics.map((metric) => (
+            <div key={metric.label}>
+              <dt className="font-mono text-caption uppercase tracking-wide text-smoke">
+                {metric.label}
+              </dt>
+              <dd className="mt-2 text-heading-sm text-ink">{metric.value}</dd>
+            </div>
+          ))}
+        </dl>
+      ) : (
+        <p
+          className={`max-w-prose text-body-lg italic leading-body-lg text-ash ${
+            hasHeading ? "mt-4" : ""
+          }`}
+        >
+          Needs input
+        </p>
+      )}
     </div>
   );
 }

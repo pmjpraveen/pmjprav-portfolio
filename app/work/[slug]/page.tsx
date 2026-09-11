@@ -7,6 +7,7 @@ import {
   getRealProjects,
   toNextProjectData,
 } from "../../content/projects";
+import { withMarkdownContent } from "../../lib/project-content";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -43,7 +44,7 @@ export default async function Page({ params }: PageProps) {
   return (
     <main className="flex-1">
       <ProjectPage
-        project={project}
+        project={withMarkdownContent(project)}
         nextProject={next ? toNextProjectData(next) : undefined}
       />
     </main>

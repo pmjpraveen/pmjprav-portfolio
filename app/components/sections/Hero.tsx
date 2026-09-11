@@ -10,7 +10,7 @@ const useIsomorphicLayoutEffect =
 
 // Kept as data so the copy can change without touching the markup below.
 const HERO = {
-  eyebrow: "Senior Product Designer",
+  eyebrow: "Hi, I'm Praveenkumar",
   headline: ["I design products", "that make complexity", "feel simple."],
   supporting:
     "Senior Product Designer with 8+ years of experience creating AI-powered SaaS, B2B enterprise, and consumer marketplace products.",
@@ -35,7 +35,7 @@ export function Hero() {
         opacity: 1,
         y: 0,
         duration: 0.7,
-        ease: "power2.out",
+        ease: "power3.out",
         stagger: 0.1,
         delay: 0.1,
       });
