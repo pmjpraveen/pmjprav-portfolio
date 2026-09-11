@@ -79,10 +79,13 @@
 }
 
 /* Pullcord (theme toggle): positioned clear of the header nav's right edge,
-   colored to match the current theme rather than the package's default gray. */
+   colored to match the current theme rather than the package's default gray.
+   z above the header's own z-30 (see Header.tsx) so it stays visible/
+   grabbable through the header's show/hide transform either way. */
 :root {
   --pullcord-right: 1.25rem;
   --pullcord-ink: var(--color-smoke);
+  --pullcord-z: 40;
   color-scheme: light;
 }
 
@@ -217,5 +220,29 @@
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }
+  }
+}
+
+/* =========================================================
+   Footer marquee — a seamless infinite scroll: the track holds
+   two identical copies of the wordmark and translates by exactly
+   -50% (one copy's width), so it loops with no visible seam.
+   ========================================================= */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-marquee-track {
+    animation: none !important;
+    transform: none !important;
+  }
+  .footer-marquee-track > *:nth-child(2) {
+    display: none;
   }
 }
