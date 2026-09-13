@@ -204,6 +204,14 @@
     outline-offset: 4px;
   }
 
+  /* Native cursor hidden only once CustomCursor confirms a fine-pointer device
+     and actually mounts — never set unconditionally, so a JS failure or a
+     touch/coarse-pointer visitor always keeps the real cursor. */
+  .custom-cursor-active,
+  .custom-cursor-active * {
+    cursor: none !important;
+  }
+
   /* Scroll/entrance reveals are handled by GSAP (see useGsapReveal, Hero) —
      it checks prefers-reduced-motion itself and skips the hidden state
      entirely for those visitors, so there's nothing to override here. */

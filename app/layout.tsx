@@ -5,6 +5,7 @@ import { Footer } from "./components/layout/Footer";
 import { Header } from "./components/layout/Header";
 import { ThemeToggle } from "./components/layout/ThemeToggle";
 import { Preloader } from "./components/preloader/Preloader";
+import { CustomCursor } from "./components/ui/CustomCursor";
 import "./globals.css";
 
 // Runs before hydration so the page never flashes the wrong theme: mirrors
@@ -67,6 +68,7 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
       </head>
       <body className="flex min-h-full flex-col">
+        <CustomCursor />
         <Preloader>
           <Header />
           <ThemeToggle />
