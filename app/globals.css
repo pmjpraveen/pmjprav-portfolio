@@ -245,6 +245,28 @@
   }
 }
 
+/* =========================================================
+   404 page — a fixed, non-scrolling takeover. The shared
+   Header/Footer are hidden rather than made pathname-aware.
+   ========================================================= */
+html.is-404,
+html.is-404 body {
+  overflow: hidden;
+}
+
+html.is-404 header,
+html.is-404 footer {
+  display: none;
+}
+
+/* The page's own background is always dark, independent of the site's
+   light/dark toggle — pin --color-ink to its dark-theme (light) value so
+   the ink-colored cursor stays visible against it whatever the global
+   theme is set to. */
+html.is-404 {
+  --color-ink: #fdfcfc;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .footer-marquee-track {
     animation: none !important;
