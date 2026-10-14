@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Container } from "../../components/container";
 import { ProjectPage } from "../../components/projects/ProjectPage";
 import {
   findRealProject,
@@ -43,6 +45,17 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <main className="flex-1">
+      <Container>
+        <Link
+          href="/"
+          className="group mt-8 inline-flex items-center gap-2 font-mono text-caption uppercase tracking-wide text-smoke transition-colors duration-150 hover:text-ink"
+        >
+          <svg aria-hidden="true" viewBox="0 0 10 10" className="size-3 transition-transform duration-150 group-hover:-translate-x-0.5">
+            <path d="M9 5H1m0 0 4-4M1 5l4 4" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+          </svg>
+          Back
+        </Link>
+      </Container>
       <ProjectPage
         project={withMarkdownContent(project)}
         nextProject={next ? toNextProjectData(next) : undefined}
