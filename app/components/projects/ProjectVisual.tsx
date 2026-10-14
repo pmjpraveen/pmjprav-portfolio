@@ -43,7 +43,8 @@ export function ProjectVisual({
             src={thumbnail}
             alt={alt}
             fill
-            sizes="(min-width: 1024px) 1152px, 100vw"
+            sizes={bleed ? "100vw" : "(min-width: 1024px) 1152px, 100vw"}
+            quality={90}
             className={`object-cover ${objectTop ? "object-top" : ""} transition-transform duration-300 ease-out-strong group-hover:scale-[1.02]`}
           />
         ) : (
