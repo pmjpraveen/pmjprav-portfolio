@@ -36,6 +36,15 @@ const switzer = localFont({
 });
 
 export const metadata: Metadata = {
+  // Two files, picked by the browser's colour scheme (the tab strip follows
+  // the browser theme, not the site's own toggle): dark mark on light tabs,
+  // light mark on dark tabs.
+  icons: {
+    icon: [
+      { url: "/favicon-light.svg", type: "image/svg+xml", media: "(prefers-color-scheme: light)" },
+      { url: "/favicon-dark.svg", type: "image/svg+xml", media: "(prefers-color-scheme: dark)" },
+    ],
+  },
   title: {
     default: "Praveenkumar — Lead UX / Product Designer",
     template: "%s — Praveenkumar",
