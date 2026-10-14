@@ -191,11 +191,11 @@ export const projects: Project[] = [
     year: "2025",
     layout: "offset",
     featured: true,
-    thumbnail: "/projects/appstore-console/p1-after-3-versions.png",
-    imageAlt: "Release tracks table with one release live at 100% and another in review",
+    thumbnail: "/projects/appstore-console/cover.webp",
+    imageAlt: "App setup page of the developer console, showing pricing, availability and target audience",
     heroVisual: {
-      src: "/projects/appstore-console/p1-after-3-versions.png",
-      alt: "Release tracks table with one release live at 100% and another in review",
+      src: "/projects/appstore-console/cover.webp",
+      alt: "App setup page of the developer console, showing pricing, availability and target audience",
     },
     meta: {
       team: "~12: PM, TPM, design manager, engineering, QA, research, support",
@@ -220,11 +220,11 @@ export const projects: Project[] = [
       platform: "Web · Developer console",
     },
     // Story lives in app/content/work/two-way-communication.md.
-    thumbnail: "/projects/two-way-communication/case-thread.png",
-    imageAlt: "Case page with the conversation thread beside the case details",
+    thumbnail: "/projects/two-way-communication/cover.webp",
+    imageAlt: "Support requests list showing case ID, related app, status, subject, creator and last updated",
     heroVisual: {
-      src: "/projects/two-way-communication/case-thread.png",
-      alt: "Case page with the conversation thread beside the case details",
+      src: "/projects/two-way-communication/cover.webp",
+      alt: "Support requests list showing case ID, related app, status, subject, creator and last updated",
     },
   },
 
