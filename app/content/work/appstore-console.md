@@ -21,7 +21,7 @@ An earlier 39-developer survey had pointed at the same themes, which gave me con
 
 ![The old four-step submission flow](/projects/appstore-console/before-1-upload.png "Before · Step 1 of 4. Upload, targeting, store details and review all lived in one sequence. Brand elements redacted.")
 
-![The structural change: one linear submission became shared app setup plus independent release tracks](/projects/appstore-console/ia-before-after.svg "The structural shift · From one linear submission to shared app setup and independent release tracks.")
+![The structural change: one linear submission became shared app setup plus independent release tracks](/projects/appstore-console/ia-before-after.png "The structural shift · From one linear submission to shared app setup and independent release tracks.")
 
 **Separate the app from the release.** App-level information (availability, privacy, content rating) is set once and shared. Everything about a version (binary, devices, notes, rollout, date) belongs to a lane of its own.
 
