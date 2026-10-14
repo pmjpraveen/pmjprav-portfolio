@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# case-study build outputs (kept on disk, not tracked)
+docs/case-study/*.pdf
+docs/case-study/*.docx
+docs/case-study/*.pptx
+docs/case-study/*.standalone.html

@@ -3,6 +3,7 @@ import { Container } from "../container";
 import { NextProject } from "./NextProject";
 import { ProjectHeader } from "./ProjectHeader";
 import { ProjectNavigation } from "./ProjectNavigation";
+import { ProjectExternalLink } from "./ProjectExternalLink";
 import { ProjectSection, renderProjectSectionContent } from "./ProjectSection";
 
 type NextProjectData = {
@@ -45,9 +46,13 @@ export function ProjectPage({ project, nextProject }: ProjectPageProps) {
         <ProjectSection
           section={{
             id: "external-case-study",
-            type: "externalLink",
-            label: project.externalCaseStudy.label,
-            url: project.externalCaseStudy.url,
+            type: "custom",
+            content: (
+              <ProjectExternalLink
+                label={project.externalCaseStudy.label}
+                url={project.externalCaseStudy.url}
+              />
+            ),
           }}
         />
       ) : null}

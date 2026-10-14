@@ -28,113 +28,12 @@ type SectionBase = {
   navLabel?: string;
 };
 
-export type ProjectIntroSection = SectionBase & {
-  type: "intro";
-  eyebrow?: string;
-  title?: string;
-  body?: string;
-  /** e.g. Scope, Team, Timeline — only render what's factual. */
-  meta?: MetaEntry[];
-};
-
-export type ProjectTextSectionData = SectionBase & {
-  type: "text";
-  eyebrow?: string;
-  title?: string;
-  /** Use NEEDS_INPUT rather than omitting when the section exists but isn't written yet. */
-  body?: string;
-};
-
-export type ProjectVisualSectionData = SectionBase & {
-  type: "visual";
-  eyebrow?: string;
-  title?: string;
-  body?: string;
-  visual: ProjectVisualData;
-  /** Visual appears above the text instead of below. Defaults to below. */
-  visualPosition?: "before" | "after";
-};
-
-export type ProjectImageGridSectionData = SectionBase & {
-  type: "imageGrid";
-  eyebrow?: string;
-  title?: string;
-  images: ProjectVisualData[];
-  columns?: 2 | 3;
-};
-
-export type ProjectSplitSectionData = SectionBase & {
-  type: "split";
-  eyebrow?: string;
-  title?: string;
-  body?: string;
-  visual: ProjectVisualData;
-  /** Which side the text sits on at lg+. Defaults to left. */
-  textPosition?: "left" | "right";
-};
-
-export type ProjectPrinciplesSectionData = SectionBase & {
-  type: "principles";
-  eyebrow?: string;
-  title?: string;
-  intro?: string;
-  principles: { title: string; body?: string }[];
-};
-
-export type ProjectDecisionsSectionData = SectionBase & {
-  type: "decisions";
-  eyebrow?: string;
-  title?: string;
-  decisions: { title: string; reasoning?: string; visual?: ProjectVisualData }[];
-};
-
-export type ProjectInsightsSectionData = SectionBase & {
-  type: "insights";
-  eyebrow?: string;
-  title?: string;
-  /** Only real findings — never invented. */
-  insights: string[];
-};
-
-export type ProjectMetricsSectionData = SectionBase & {
-  type: "metrics";
-  eyebrow?: string;
-  title?: string;
-  /** Only confirmed, real numbers — never invented or estimated. */
-  metrics: { label: string; value: string }[];
-};
-
-export type ProjectQuoteSectionData = SectionBase & {
-  type: "quote";
-  quote: string;
-  attribution?: string;
-};
-
-export type ProjectExternalLinkSectionData = SectionBase & {
-  type: "externalLink";
-  label: string;
-  url: string;
-  description?: string;
-};
-
 export type ProjectCustomSectionData = SectionBase & {
   type: "custom";
   content: ReactNode;
 };
 
-export type ProjectSectionData =
-  | ProjectIntroSection
-  | ProjectTextSectionData
-  | ProjectVisualSectionData
-  | ProjectImageGridSectionData
-  | ProjectSplitSectionData
-  | ProjectPrinciplesSectionData
-  | ProjectDecisionsSectionData
-  | ProjectInsightsSectionData
-  | ProjectMetricsSectionData
-  | ProjectQuoteSectionData
-  | ProjectExternalLinkSectionData
-  | ProjectCustomSectionData;
+export type ProjectSectionData = ProjectCustomSectionData;
 
 export type Project = {
   /** Used to build the /work/[slug] case-study route. */
