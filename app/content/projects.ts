@@ -229,8 +229,33 @@ export const projects: Project[] = [
   },
 
   {
-    slug: "nytro-pitch",
+    slug: "honeywell-comments",
     number: "03",
+    title: "Comments in a Digital Dashboard",
+    category: "Enterprise · ERP",
+    description:
+      "Streamlining the comment feature in an internal ERP dashboard. Under NDA, shown at summary level.",
+    role: "Product Designer",
+    year: "2023",
+    layout: "offset",
+    featured: true,
+    meta: { team: "9", platform: "Web · ERP" },
+    // Story lives in app/content/work/honeywell-comments.md. Under NDA.
+    externalCaseStudy: {
+      label: "Open project file",
+      url: "https://www.figma.com/deck/9D599SrWHZOJ1bP1Yjh9ZY/Digital-Dashboard?node-id=1-42&viewport=-109%2C-41%2C0.52&t=AHnTHauv0JKAv4ql-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1",
+    },
+    thumbnail: "/projects/honeywell-comments/hero.png",
+    imageAlt: "The digital dashboard overview",
+    heroVisual: {
+      src: "/projects/honeywell-comments/hero.png",
+      alt: "The digital dashboard overview",
+    },
+  },
+
+  {
+    slug: "nytro-pitch",
+    number: "04",
     title: "Nytro Pitch App",
     category: "B2B · SaaS",
     description:
@@ -251,7 +276,7 @@ export const projects: Project[] = [
 
   {
     slug: "recur-spark",
-    number: "04",
+    number: "05",
     title: "Spark by Recur",
     category: "Fintech · Financing",
     description:
@@ -270,26 +295,6 @@ export const projects: Project[] = [
     },
   },
 
-  {
-    slug: "honeywell-comments",
-    number: "05",
-    title: "Comments in a Digital Dashboard",
-    category: "Enterprise · ERP",
-    description:
-      "Streamlining the comment feature in an internal ERP dashboard. Under NDA, shown at summary level.",
-    role: "Product Designer",
-    year: "2023",
-    layout: "offset",
-    featured: true,
-    meta: { team: "9", platform: "Web · ERP" },
-    // Story lives in app/content/work/honeywell-comments.md. Under NDA.
-    thumbnail: "/projects/honeywell-comments/hero.png",
-    imageAlt: "The digital dashboard overview",
-    heroVisual: {
-      src: "/projects/honeywell-comments/hero.png",
-      alt: "The digital dashboard overview",
-    },
-  },
 ];
 
 // Shared by both the /work/[slug] route and its intercepted modal route
