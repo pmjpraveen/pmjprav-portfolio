@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useLayoutEffect, useRef, type ReactNode } from "react";
 import { gsap } from "../../lib/gsap";
+import { Container } from "../container";
 
 const useIsomorphicLayoutEffect =
   typeof window !== "undefined" ? useLayoutEffect : useEffect;
@@ -10,7 +11,7 @@ const useIsomorphicLayoutEffect =
 /**
  * Full-screen project overlay rendered by the intercepted @modal route (see
  * app/@modal). Reuses ProjectPage/ProjectHeader/ProjectSection unchanged —
- * this only adds the dialog shell: ESC + close button call router.back()
+ * this only adds the dialog shell: ESC + the Back button call router.back()
  * (which is what actually unmounts this and reveals the page underneath),
  * body scroll lock while open, and a restrained fade/lift transition.
  */
@@ -67,23 +68,18 @@ export function ProjectOverlay({ children }: { children: ReactNode }) {
       aria-label="Project details"
       className="fixed inset-0 z-40 overflow-y-auto bg-eggshell"
     >
-      <button
-        type="button"
-        onClick={close}
-        aria-label="Close project"
-        className="fixed right-5 top-5 z-50 flex items-center gap-2 font-mono text-caption uppercase tracking-wide text-smoke transition-colors duration-150 hover:text-ink sm:right-8 sm:top-8"
-      >
-        Close
-        <svg aria-hidden="true" viewBox="0 0 10 10" className="size-3">
-          <path
-            d="M1 1l8 8M9 1l-8 8"
-            stroke="currentColor"
-            strokeWidth="1.25"
-            strokeLinecap="round"
-            fill="none"
-          />
-        </svg>
-      </button>
+      <Container>
+        <button
+          type="button"
+          onClick={close}
+          className="group mt-8 inline-flex items-center gap-2 font-mono text-caption uppercase tracking-wide text-smoke transition-colors duration-150 hover:text-ink"
+        >
+          <svg aria-hidden="true" viewBox="0 0 10 10" className="size-3 transition-transform duration-150 group-hover:-translate-x-0.5">
+            <path d="M9 5H1m0 0 4-4M1 5l4 4" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+          </svg>
+          Back
+        </button>
+      </Container>
 
       {children}
     </div>
