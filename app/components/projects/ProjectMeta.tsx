@@ -16,8 +16,8 @@ export function ProjectMeta({ items }: ProjectMetaProps) {
     <dl className="flex flex-wrap gap-x-8 gap-y-4 font-mono text-caption uppercase tracking-wide">
       {present.map((item) => (
         <div key={item.label}>
-          <dt className="text-ash">{item.label}</dt>
-          <dd className="mt-1 normal-case text-ink">{item.value}</dd>
+          <dt className="text-smoke">{item.label}</dt>
+          <dd className="mt-1 text-body-sm normal-case text-ink">{item.value}</dd>
         </div>
       ))}
     </dl>

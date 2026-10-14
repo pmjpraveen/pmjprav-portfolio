@@ -19,7 +19,6 @@ export function ProjectStory({ project, isFirst }: ProjectStoryProps) {
   // transform on the element it animates, and any transformed ancestor breaks
   // position:sticky on a descendant (the number/category rail below).
   const contentRef = useGsapReveal<HTMLDivElement>();
-  const isOffset = project.layout === "offset";
 
   return (
     <article
@@ -59,9 +58,7 @@ export function ProjectStory({ project, isFirst }: ProjectStoryProps) {
             <Link
               href={`/work/${project.slug}`}
               aria-label={`View ${project.title} case study`}
-              className={`group mt-10 block lg:mt-14 ${
-                isOffset ? "lg:ml-auto lg:w-[92%]" : ""
-              }`}
+              className="group mt-10 block lg:mt-14"
             >
               <ProjectVisual
                 thumbnail={project.thumbnail}

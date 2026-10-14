@@ -23,7 +23,7 @@ function AboutSection({ label, children }: { label: string; children: ReactNode 
 }
 
 export default function AboutPage() {
-  const { philosophy, focus } = ABOUT;
+  const { background, philosophy, focus, experience, process, skills } = ABOUT;
 
   return (
     <main className="flex-1">
@@ -42,6 +42,16 @@ export default function AboutPage() {
       </section>
 
       <div className="mt-20 sm:mt-24 lg:mt-28">
+        <AboutSection label={background.label}>
+          <div className="mt-6 max-w-prose space-y-6 lg:mt-0">
+            {background.paragraphs.map((paragraph) => (
+              <p key={paragraph} className="text-body-lg leading-body-lg text-smoke">
+                {paragraph}
+              </p>
+            ))}
+          </div>
+        </AboutSection>
+
         <AboutSection label={philosophy.label}>
           <div className="mt-6 max-w-2xl lg:mt-0">
             <h2 className="text-heading-sm leading-heading-sm tracking-heading-sm text-ink lg:text-heading lg:leading-heading lg:tracking-heading">
@@ -58,6 +68,52 @@ export default function AboutPage() {
             {focus.areas.map((area) => (
               <li key={area} className="text-body-lg leading-body-lg text-ink">
                 {area}
+              </li>
+            ))}
+          </ul>
+        </AboutSection>
+
+        <AboutSection label={experience.label}>
+          <ol className="mt-6 border-b border-stone lg:mt-0">
+            {experience.roles.map((item) => (
+              <li
+                key={`${item.company}-${item.period}`}
+                className="grid gap-1 border-t border-stone py-5 sm:grid-cols-[1fr_auto] sm:items-baseline sm:gap-8"
+              >
+                <div>
+                  <p className="text-body-lg leading-body-lg text-ink">{item.company}</p>
+                  <p className="text-body text-smoke">{item.role}</p>
+                </div>
+                <p className="font-mono text-caption uppercase tracking-wide text-smoke">
+                  {item.period}
+                </p>
+              </li>
+            ))}
+          </ol>
+        </AboutSection>
+
+        <AboutSection label={process.label}>
+          <ol className="mt-6 grid gap-x-12 gap-y-10 sm:grid-cols-2 lg:mt-0">
+            {process.steps.map((step, index) => (
+              <li key={step.title}>
+                <p className="font-mono text-caption text-ash">
+                  {String(index + 1).padStart(2, "0")}
+                </p>
+                <h3 className="mt-3 text-body-lg text-ink">{step.title}</h3>
+                <p className="mt-2 text-body text-smoke">{step.body}</p>
+              </li>
+            ))}
+          </ol>
+        </AboutSection>
+
+        <AboutSection label={skills.label}>
+          <ul className="mt-6 flex max-w-3xl flex-wrap gap-2 lg:mt-0">
+            {skills.items.map((skill) => (
+              <li
+                key={skill}
+                className="rounded-pill border border-stone px-4 py-1.5 text-body-sm text-ink"
+              >
+                {skill}
               </li>
             ))}
           </ul>

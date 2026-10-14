@@ -1,21 +1,17 @@
-import { Container } from "../container";
+import { personalProjects } from "../../content/personal-projects";
+import { PersonalProjectStory } from "./PersonalProjectStory";
 import { ProjectStoryList } from "./ProjectStoryList";
+import { WorkTabs } from "./WorkTabs";
 
 export function SelectedWorks() {
   return (
-    <section id="selected-works" aria-labelledby="selected-works-heading" className="scroll-mt-24">
-      <Container>
-        <header className="mb-8 sm:mb-10 lg:mb-12">
-          <h2
-            id="selected-works-heading"
-            className="text-heading-sm leading-heading-sm tracking-heading-sm text-ink"
-          >
-            Selected Works
-          </h2>
-        </header>
-      </Container>
-
-      <ProjectStoryList />
+    <section id="selected-works" aria-label="Work" className="scroll-mt-24">
+      <WorkTabs
+        selectedWorks={<ProjectStoryList />}
+        personalProjects={personalProjects.map((project, index) => (
+          <PersonalProjectStory key={project.slug} project={project} isFirst={index === 0} />
+        ))}
+      />
     </section>
   );
 }

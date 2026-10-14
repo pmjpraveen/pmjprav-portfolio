@@ -276,3 +276,73 @@ html.is-404 {
     display: none;
   }
 }
+
+/* =========================================================
+   Case-study image lightbox (ProjectFigure) — a modal <dialog>.
+   It sits in the top layer, above the custom cursor, so the
+   native cursor is restored inside it.
+   ========================================================= */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  max-width: 100vw;
+  height: 100dvh;
+  max-height: 100dvh;
+  margin: 0;
+  padding: 3.5rem 1.25rem 2.5rem;
+  border: 0;
+  background: color-mix(in srgb, var(--color-eggshell) 97%, transparent);
+  color: var(--color-ink);
+  overflow: auto;
+}
+.lightbox[open] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  animation: lightbox-in 180ms var(--ease-out-strong);
+}
+.lightbox-image {
+  width: auto;
+  height: auto;
+  max-width: min(100%, 1800px);
+  max-height: calc(100dvh - 8rem);
+  object-fit: contain;
+  border-radius: var(--radius-card);
+}
+.lightbox-caption {
+  max-width: 60ch;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  color: var(--color-smoke);
+}
+.lightbox-close {
+  position: fixed;
+  top: 1rem;
+  right: 1.25rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-warm-taupe);
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-ink);
+}
+.custom-cursor-active .lightbox,
+.custom-cursor-active .lightbox * {
+  cursor: zoom-out !important;
+}
+@keyframes lightbox-in {
+  from {
+    opacity: 0;
+    transform: scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

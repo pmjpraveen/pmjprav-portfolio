@@ -17,7 +17,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
   const { category, title, description, role, year, heroVisual, meta } = project;
 
   return (
-    <section aria-labelledby="project-title" className="pt-16 sm:pt-20 lg:pt-24">
+    <section aria-labelledby="project-title" className="pt-12 sm:pt-16 lg:pt-20">
       <Container>
         <p className="font-mono text-caption uppercase tracking-wide text-smoke">
           {category}
@@ -39,7 +39,6 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
             items={[
               { label: "Role", value: role },
               { label: "Year", value: year },
-              { label: "Category", value: category },
               { label: "Team", value: meta?.team },
               { label: "Timeline", value: meta?.timeline },
               { label: "Platform", value: meta?.platform },
@@ -51,7 +50,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
 
       {/* Full-bleed: breaks out of the container to span the viewport edge-to-edge,
           the one deliberate width contrast against the text column above. */}
-      <div className="relative left-1/2 mt-12 w-screen -translate-x-1/2 lg:mt-16">
+      <div className="relative left-1/2 mt-10 w-screen -translate-x-1/2 lg:mt-12">
         <ProjectVisual
           thumbnail={heroVisual?.src}
           alt={heroVisual?.alt ?? `${title} preview`}
