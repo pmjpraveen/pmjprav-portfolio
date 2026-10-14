@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Developer Support — Case Study</title>
+<meta name="description" content="How a support case became something Amazon developers can open, follow and return to.">
+<style>
+@font-face{font-family:Switzer;font-weight:300;src:url(../../public/fonts/Switzer/Switzer-Light.woff2) format("woff2")}
+@font-face{font-family:Switzer;font-weight:400;src:url(../../public/fonts/Switzer/Switzer-Regular.woff2) format("woff2")}
+@font-face{font-family:Switzer;font-weight:500;src:url(../../public/fonts/Switzer/Switzer-Medium.woff2) format("woff2")}
+
+:root{
+  --canvas:#fdfcfc;--surface:#f5f3f1;--line:#ebe8e4;
+  --ink:#000;--graphite:#44403b;--smoke:#777169;--ash:#a59f97;
+  --sans:Switzer,ui-sans-serif,system-ui,sans-serif;
+  --mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --gutter:20px;
+}
+@media(min-width:768px){:root{--gutter:32px}}
+@media(min-width:1024px){:root{--gutter:64px}}
+
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:32px}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  font:400 16px/1.5 var(--sans);letter-spacing:.01em;color:var(--graphite);
+  background-color:var(--canvas);
+  background-image:radial-gradient(circle,rgba(119,113,105,.22) .8px,transparent .8px);
+  background-size:24px 24px;
+  -webkit-font-smoothing:antialiased;
+}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+
+.wrap{max-width:1280px;margin:0 auto;padding:0 var(--gutter)}
+.mono{font:400 10px/1.6 var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--smoke)}
+h1,h2,h3{color:var(--ink);font-weight:300}
+h1{font-size:40px;line-height:1.08;letter-spacing:-.02em}
+h2{font-size:32px;line-height:1.13;letter-spacing:-.02em}
+h3{font-size:20px;line-height:1.35;font-weight:400;letter-spacing:0}
+@media(min-width:768px){h1{font-size:48px}h2{font-size:36px;line-height:1.17}}
+p+p{margin-top:16px}
+b,strong{font-weight:500;color:var(--ink)}
+.lead{font-size:20px;line-height:1.45;color:var(--smoke);max-width:46ch}
+.muted{color:var(--smoke)}
+
+/* header */
+.top{padding:28px 0;display:flex;justify-content:space-between;align-items:center}
+.top a{text-decoration:none;font-weight:500;color:var(--ink)}
+
+/* hero */
+.hero{padding:56px 0 72px}
+.hero h1{max-width:18ch;margin:20px 0 24px}
+.meta{display:grid;grid-template-columns:repeat(2,1fr);gap:24px 32px;margin-top:48px;padding-top:24px;border-top:1px solid var(--line)}
+@media(min-width:768px){.meta{grid-template-columns:repeat(4,1fr)}}
+.meta dd{margin-top:4px;color:var(--ink);font-size:14px}
+
+figure{margin:0}
+.shot{border:1px solid var(--line);border-radius:20px;overflow:hidden;background:var(--surface)}
+.shot img{width:100%}
+figcaption{margin-top:12px}
+
+/* layout with side index */
+.layout{display:block}
+@media(min-width:1024px){.layout{display:grid;grid-template-columns:200px 1fr;gap:64px}}
+nav.index{display:none}
+@media(min-width:1024px){
+  nav.index{display:block;position:sticky;top:32px;align-self:start}
+  nav.index ol{list-style:none;padding:0;display:grid;gap:10px}
+  nav.index a{text-decoration:none;color:var(--ash);font:400 10px/1.6 var(--mono);text-transform:uppercase;letter-spacing:.08em}
+  nav.index a:hover,nav.index a[aria-current]{color:var(--ink)}
+}
+
+section{padding:72px 0;border-top:1px solid var(--line)}
+@media(min-width:1024px){section{padding:96px 0}}
+section>.mono{display:block;margin-bottom:16px}
+section>h2{max-width:22ch}
+.body{margin-top:32px;max-width:62ch}
+.body.wide{max-width:none}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:32px;margin-top:48px}
+@media(min-width:768px){.stats{grid-template-columns:repeat(4,1fr)}.stats.three{grid-template-columns:repeat(3,1fr)}}
+.stats dd{font-size:36px;font-weight:300;letter-spacing:-.02em;line-height:1.1;color:var(--ink)}
+.stats dt{margin-top:8px;font-size:14px;color:var(--smoke);max-width:24ch}
+
+/* definition rows */
+.rows{margin-top:40px;border-bottom:1px solid var(--line)}
+.rows>div{display:grid;gap:4px;padding:20px 0;border-top:1px solid var(--line)}
+@media(min-width:768px){.rows>div{grid-template-columns:240px 1fr;gap:32px}}
+.rows dt{color:var(--ink)}
+.rows dd{color:var(--smoke);max-width:64ch}
+
+/* two-up */
+.two{display:grid;gap:40px;margin-top:48px}
+@media(min-width:768px){.two{grid-template-columns:1fr 1fr;gap:48px}}
+.two h3{margin-bottom:12px}
+
+/* journey strip */
+.journey{display:grid;gap:0;margin-top:48px;border:1px solid var(--line);border-radius:20px;overflow:hidden;background:var(--canvas)}
+@media(min-width:768px){.journey{grid-template-columns:repeat(4,1fr)}}
+.journey>div{padding:24px;border-top:1px solid var(--line)}
+.journey>div:first-child{border-top:0}
+@media(min-width:768px){.journey>div{border-top:0;border-left:1px solid var(--line)}.journey>div:first-child{border-left:0}}
+.journey p{font-size:14px;margin-top:8px}
+.journey .surface{background:var(--surface)}
+
+/* decisions */
+.decision{display:grid;gap:32px;padding:56px 0;border-top:1px solid var(--line)}
+.decision:first-of-type{margin-top:48px}
+@media(min-width:1024px){.decision{grid-template-columns:5fr 7fr;gap:48px}}
+.decision .num{display:block;margin-bottom:12px}
+.decision h3{font-size:24px;line-height:1.25;font-weight:300;letter-spacing:-.01em;max-width:20ch}
+.decision .text{margin-top:16px;font-size:15px}
+.decision ul{list-style:none;padding:0;margin-top:16px;display:grid;gap:8px;font-size:14px}
+.decision li{position:relative;padding-left:20px;color:var(--smoke)}
+.decision li:before{content:"";position:absolute;left:3px;top:.6em;width:5px;height:5px;border-radius:50%;background:var(--ash)}
+.pair{display:grid;gap:24px}
+@media(min-width:768px){.pair{grid-template-columns:1fr 1fr}}
+.trade{margin-top:20px;padding:16px 20px;background:var(--surface);border-radius:10px;font-size:14px}
+
+/* pending */
+.pill{display:inline-block;border-radius:9999px;background:var(--surface);padding:2px 12px;font:500 12px/1.6 var(--sans);color:var(--ink)}
+
+footer{padding:48px 0 64px;border-top:1px solid var(--line)}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top"><a href="/">praveen</a><span class="mono">Case study · 03</span></header>
+
+  <div class="hero">
+    <span class="mono">Developer tools · Support</span>
+    <h1>Helping Amazon developers follow their support cases</h1>
+    <p class="lead">What began as a request for two-way communication became a rethink of the support case itself: something a developer can open, follow and return to.</p>
+    <dl class="meta">
+      <div><dt class="mono">Role</dt><dd>Lead Designer, Support Cases</dd></div>
+      <div><dt class="mono">Year</dt><dd>2024</dd></div>
+      <div><dt class="mono">Team</dt><dd>PM, technical PM, engineering, research, design manager</dd></div>
+      <div><dt class="mono">Platform</dt><dd>Web · Developer console</dd></div>
+    </dl>
+  </div>
+
+  <figure>
+    <div class="shot"><img src="../../public/projects/two-way-communication/case-thread.png" alt="Case page with the conversation thread beside the case details" width="1940" height="1093"></div>
+    <figcaption class="mono">After · The case page. Example data.</figcaption>
+  </figure>
+
+  <div class="layout" style="margin-top:96px">
+    <nav class="index" aria-label="Sections">
+      <ol>
+        <li><a href="#summary">01 Summary</a></li>
+        <li><a href="#problem">02 Problem</a></li>
+        <li><a href="#role">03 Role</a></li>
+        <li><a href="#approach">04 Approach</a></li>
+        <li><a href="#decisions">05 Decisions</a></li>
+        <li><a href="#held-back">06 Held back</a></li>
+        <li><a href="#results">07 Results</a></li>
+        <li><a href="#reflection">08 Reflection</a></li>
+      </ol>
+    </nav>
+
+    <main>
+      <section id="summary" style="border-top:0;padding-top:0">
+        <span class="mono">01 · Summary</span>
+        <h2>Developers could open a case, but not follow it.</h2>
+        <div class="body">
+          <p>Email carried the whole conversation. Replies came back by mail, every follow-up opened a new case, and the only history was the developer’s own inbox.</p>
+          <p>I joined a plan that was a year old and, in three weeks of design, introduced case management into the two-way conversation, built on five decisions. In Phase 2 I proposed an AI help widget, which the contact-support platform team built.</p>
+        </div>
+        <dl class="stats">
+          <div><dd>~47%</dd><dt>fewer cases after Phase 1</dt></div>
+          <div><dd>~87%</dd><dt>after the Phase 2 widget (shared with the platform team)</dt></div>
+          <div><dd>Halved</dd><dt>turnaround time, roughly</dt></div>
+          <div><dd>3 weeks</dd><dt>of design, plus a week of review and handoff</dt></div>
+        </dl>
+      </section>
+
+      <section id="problem">
+        <span class="mono">02 · Problem</span>
+        <h2>A case was never a thing a developer could hold.</h2>
+        <div class="body">
+          <p>The brief was two-way communication. The deeper gap: once created, a case lived almost entirely in email. There was no case page, no status, no history, nothing to return to. Developers could not tell whether anyone was working on their issue.</p>
+        </div>
+
+        <div class="journey" role="list" aria-label="The old journey">
+          <div role="listitem"><span class="mono">01</span><h3>Fill in a form</h3><p>Generic, with no cue about which category to choose.</p></div>
+          <div role="listitem"><span class="mono">02</span><h3>Wait</h3><p>No sign of what happens after you press send.</p></div>
+          <div role="listitem"><span class="mono">03</span><h3>Reply by email</h3><p>A confirmation, then a reply from support, outside the console.</p></div>
+          <div role="listitem" class="surface"><span class="mono">04</span><h3>Fill in a new form</h3><p>Any follow-up became a fresh case.</p></div>
+        </div>
+
+        <figure style="margin-top:48px">
+          <div class="shot"><img src="../../public/projects/two-way-communication/before-banners.png" alt="The old console home: banners stacked above the app list" width="1600" height="1120" loading="lazy"></div>
+          <figcaption class="mono">Before · Operational notices share one banner stream with product announcements. A support reply has nowhere to live.</figcaption>
+        </figure>
+
+        <dl class="stats three">
+          <div><dd>13.9k</dd><dt>cases in eight months of 2023, only 2% spam. Real demand, not noise</dt></div>
+          <div><dd>~9 in 10</dd><dt>resolved within 14 days</dt></div>
+          <div><dd>10–14 days</dd><dt>for managed partners writing through a shared mailbox</dt></div>
+        </dl>
+
+        <dl class="rows">
+          <div><dt>Follow-ups became new cases</dt><dd>A reply by email could only be answered through a new form, so one problem produced several tickets and inflated volume.</dd></div>
+          <div><dt>History lived in inboxes</dt><dd>Reviewing a case meant searching mail by hand, harder with several apps and several open issues.</dd></div>
+          <div><dt>Support was fragmented</dt><dd>Five teams used seven tools to write to developers, in different formats, priorities and sender domains.</dd></div>
+          <div><dt>Internal tracking was weak</dt><dd>Partner managers saved emails by hand to beat the retention policy. An urgent request was invisible if their manager was away.</dd></div>
+          <div><dt>No one could see patterns</dt><dd>With no single record, nobody could ask which issue was raised most often.</dd></div>
+          <div><dt>Silence did as much damage as slowness</dt><dd>Forums and sentiment studies named “responsiveness” and “support” as the main negative drivers.</dd></div>
+        </dl>
+
+        <div class="two">
+          <div>
+            <h3>Two kinds of developer</h3>
+            <p class="muted">Managed partners have a named partner manager and usually write to that person. Unmanaged developers have one route: the Contact Us form, the front door for most of the base.</p>
+          </div>
+          <div>
+            <h3>Several teams behind the form</h3>
+            <p class="muted">Cases split almost evenly between developer relations and content quality; about four in five quality cases were about content policy. Content quality asked for licences and certificates by email, but developers could not reply.</p>
+          </div>
+        </div>
+
+        <h3 style="margin-top:48px">Developers wrote in for four reasons</h3>
+        <dl class="rows">
+          <div><dt>While submitting an app</dt><dd>Devices, testing, what to do next.</dd></div>
+          <div><dt>After submitting</dt><dd>Status, and how long publishing would take.</dd></div>
+          <div><dt>About something sent</dt><dd>Why an app failed, or what a requested certificate was.</dd></div>
+          <div><dt>About money</dt><dd>Payments, accounts and tax.</dd></div>
+        </dl>
+      </section>
+
+      <section id="role">
+        <span class="mono">03 · Role</span>
+        <h2>Sole designer, joined in Q3 2024.</h2>
+        <div class="body"><p>Strategy and research predated me and were led by product management.</p></div>
+        <dl class="rows">
+          <div><dt>Discovery</dt><dd>Read the existing research and studied how other developer platforms handle support and case history.</dd></div>
+          <div><dt>Scope</dt><dd>Introduced case management into the two-way conversation. Designed the workflow end to end: creation, status, conversation and case history.</dd></div>
+          <div><dt>Phase 2</dt><dd>Proposed the help widget. The contact-support platform team owned and built it, so its design is theirs.</dd></div>
+          <div><dt>Constraint</dt><dd>The parent company’s retail design system set the visual limits. My leverage was structure and clarity, not styling.</dd></div>
+          <div><dt>Timeline</dt><dd>About three weeks of design, and a week of review and handoff.</dd></div>
+        </dl>
+      </section>
+
+      <section id="approach">
+        <span class="mono">04 · Approach</span>
+        <h2>A phased plan, a launch-and-learn release.</h2>
+        <div class="body">
+          <p><b>Insight.</b> The real gap was the “submit and wait” model, not a missing reply box. Silence did as much damage as slowness, so most of the drop in cases would come from removing the reasons to open a second one.</p>
+        </div>
+        <dl class="rows">
+          <div><dt>The plan I inherited</dt><dd>Written in late 2023. Phase 1: a case tool on Contact Us, with create, status, history and replies from console or email. Phase 2: the help widget I proposed. Phase 3: trend analysis and automation.</dd></div>
+          <div><dt>Launch and learn</dt><dd>Release to a random share of unmanaged developers first. A two-way door that allows comparison with the old flow.</dd></div>
+          <div><dt>Protect managed partners</dt><dd>Their flow was left alone. They emailed a dedicated address that created a case in the same tool: a new address, not a new habit.</dd></div>
+          <div><dt>Keep the forum</dt><dd>Crowd-sourced answers are convenient, so the community forum was out of scope.</dd></div>
+          <div><dt>Rejected</dt><dd>A read-only viewer on top of email would not remove the follow-up-as-new-ticket problem. A chat-first model sketched in a late-2023 workshop was a much larger change, not on the roadmap.</dd></div>
+        </dl>
+
+        <h3 style="margin-top:48px">Planned measures, not results</h3>
+        <dl class="rows">
+          <div><dt>Time to first touch</dt><dd>Proposed two business days.</dd></div>
+          <div><dt>Handling time</dt><dd>And breached targets.</dd></div>
+          <div><dt>Channel choice</dt><dd>Email versus console.</dd></div>
+          <div><dt>Use of history</dt><dd>Do developers open closed cases?</dd></div>
+          <div><dt>Drop-off</dt><dd>Submitters as a share of form openers.</dd></div>
+          <div><dt>Self-help</dt><dd>Clicks on suggested links per visit.</dd></div>
+        </dl>
+      </section>
+
+      <section id="decisions">
+        <span class="mono">05 · Solution</span>
+        <h2>Five decisions.</h2>
+        <div class="body"><p>Three weeks is short, so the job was choosing what the experience had to get right.</p></div>
+
+        <article class="decision">
+          <div>
+            <span class="mono num">Decision 01</span>
+            <h3>The console holds the conversation, and email mirrors it</h3>
+            <p class="text muted">A case page is now the record: every message, attachment and detail, newest first, each labelled by who sent it, with the reply box at the bottom. After submitting, developers land on this page and get a confirmation email with the case ID.</p>
+            <ul>
+              <li>Replies from console and email land in the same conversation, so nobody has to change habit.</li>
+              <li>Details panel: case ID, status, category, related apps, device, creator, dates.</li>
+              <li>Resolve from the page and re-open for 30 days, so closing is safe, not final.</li>
+            </ul>
+          </div>
+          <figure><div class="shot"><img src="../../public/projects/two-way-communication/case-thread.png" alt="The case page: conversation thread beside case details" width="1940" height="1093" loading="lazy"></div><figcaption class="mono">Phase 1 · The case page. Example data.</figcaption></figure>
+        </article>
+
+        <article class="decision">
+          <div>
+            <span class="mono num">Decision 02</span>
+            <h3>Status is the headline, written from the developer’s side</h3>
+            <p class="text muted">The original spec listed open, pending marketplace action, pending developer action and closed. What shipped puts the question on the label: <b>pending your action</b>, <b>pending support action</b>, <b>resolved</b>.</p>
+            <ul>
+              <li>A developer scanning the list sees whose move it is without opening the case.</li>
+              <li>Search by case ID or app, sort by column, filter by app, status or creator.</li>
+              <li>A line above the table states details stay available for 12 months.</li>
+            </ul>
+          </div>
+          <figure><div class="shot"><img src="../../public/projects/two-way-communication/case-list.png" alt="The support requests list with search, filter and status" width="1940" height="788" loading="lazy"></div><figcaption class="mono">Phase 1 · The case list. Whose move it is, on every row.</figcaption></figure>
+        </article>
+
+        <article class="decision">
+          <div>
+            <span class="mono num">Decision 03</span>
+            <h3>Collect context up front, and accept a longer form</h3>
+            <p class="text muted">Support’s first reply was often a question: which app, which package, when. I moved those questions into the form so the first response can be an answer.</p>
+            <ul>
+              <li><b>Category, then topic</b> replaces one vague dropdown.</li>
+              <li><b>Related apps:</b> searchable, multi-select, chosen apps as removable chips.</li>
+              <li><b>Description:</b> opens with prompts for what support needs first. Limits: 4,000 characters, subject 250, attachment 5 MB.</li>
+              <li><b>Access:</b> share by role or name. “View my cases” comes before a new one.</li>
+            </ul>
+            <p class="trade"><b>The cost.</b> A longer form could raise abandonment. The plan tracked drop-off for that reason. I have no result to quote.</p>
+          </div>
+          <div class="pair">
+            <figure><div class="shot"><img src="../../public/projects/two-way-communication/category-topic.png" alt="Category, then topic: the topic list depends on the product area" width="1000" height="1340" loading="lazy"></div><figcaption class="mono">Category, then topic.</figcaption></figure>
+            <figure><div class="shot"><img src="../../public/projects/two-way-communication/related-apps.png" alt="Case form with category, topic and related apps selected" width="1000" height="1620" loading="lazy"></div><figcaption class="mono">Related apps and guided description.</figcaption></figure>
+          </div>
+        </article>
+
+        <article class="decision">
+          <div>
+            <span class="mono num">Decision 04</span>
+            <h3>Put cases where developers already are</h3>
+            <p class="text muted">“My Cases” now leads the support links in the Help menu, and every app has a Communications entry in its side navigation with a count of what is new.</p>
+            <ul>
+              <li><b>Support Requests</b> lists the app’s cases; <b>Communications</b> holds what the marketplace sent.</li>
+              <li>Each tab has its own unread count; a dot marks a new update.</li>
+              <li>An empty tab points to the full list, never a dead end.</li>
+            </ul>
+          </div>
+          <div class="pair" style="grid-template-columns:1fr">
+            <figure><div class="shot"><img src="../../public/projects/two-way-communication/app-communications.png" alt="An app's Communications page with two tabs and unread counts" width="1440" height="492" loading="lazy"></div><figcaption class="mono">Phase 1 · The inbox. Example data.</figcaption></figure>
+            <figure style="max-width:260px"><div class="shot"><img src="../../public/projects/two-way-communication/ingress-help-menu.png" alt="The Help menu with My Cases as the first link" width="434" height="440" loading="lazy"></div><figcaption class="mono">Ingress · My Cases leads the Help menu.</figcaption></figure>
+          </div>
+        </article>
+
+        <article class="decision">
+          <div>
+            <span class="mono num">Decision 05</span>
+            <h3>Adopt the ecosystem now, plan the exit, and let help end in a case</h3>
+            <p class="text muted">There was pushback on leaving the company ecosystem. I did not argue it: I designed within it and wrote a staged plan for moving to our own contact-support experience.</p>
+            <ul>
+              <li>For Phase 2 I proposed a chat widget that answers first.</li>
+              <li>With no answer, it opens a case, gives the case ID and links to it, so nothing asked is lost.</li>
+              <li>Built by the contact-support platform team; its design is theirs.</li>
+            </ul>
+          </div>
+          <figure><div class="shot"><img src="../../public/projects/two-way-communication/chat-widget.png" alt="Chat widget: a question, then a handoff to a case" width="1240" height="884" loading="lazy"></div><figcaption class="mono">Phase 2 · Chat. Right: with no answer found, the chat opens a case and links to it.</figcaption></figure>
+        </article>
+      </section>
+
+      <section id="held-back">
+        <span class="mono">06 · Held back</span>
+        <h2>Two things left out on purpose.</h2>
+        <dl class="rows">
+          <div><dt>Promising a resolution date</dt><dd>A date we miss costs more trust than silence, but silence leaves a developer in a black box. The team chose to wait until response targets were reliable, then show an estimated time.</dd></div>
+          <div><dt>Trend analysis and deeper automation</dt><dd>A single record makes it possible to ask which issues recur. Later phases aimed to use that for pre-emptive help. It was out of reach until the record existed.</dd></div>
+        </dl>
+      </section>
+
+      <section id="results">
+        <span class="mono">07 · Results &amp; impact</span>
+        <h2>Fewer cases, as follow-ups stopped creating duplicates.</h2>
+        <dl class="stats three">
+          <div><dd>~47%</dd><dt>fewer cases after Phase 1</dt></div>
+          <div><dd>Halved</dd><dt>turnaround time, roughly</dt></div>
+          <div><dd>~87%</dd><dt>reduction after the Phase 2 help widget launched (shared)</dt></div>
+        </dl>
+        <div class="body">
+          <p>The widget was built by another team, so the second result is shared. Fewer cases is a good sign only if developers were helped, not turned away. I have no satisfaction data to show that.</p>
+        </div>
+      </section>
+
+      <section id="reflection">
+        <span class="mono">08 · Reflection</span>
+        <h2>The most useful change was a model change.</h2>
+        <div class="body"><p>From “submit and wait” to “open a thread”. Most of the drop came from removing the reasons to open a second case.</p></div>
+        <dl class="rows">
+          <div><dt>Measure helped, not just fewer</dt><dd>Satisfaction after a deflected question, form drop-off, how often resolved cases are re-opened.</dd></div>
+          <div><dt>Bring back estimated resolution time</dt><dd>Once response targets hold; a status label only half solves the black box.</dd></div>
+          <div><dt>Grow the Communications tab</dt><dd>Into one role-aware home for everything the marketplace tells developers. A direction, not something I shipped.</dd></div>
+        </dl>
+        <div class="body"><p>Working inside a design system I did not own taught me where design leverage sits when styling is fixed: in what is shown, in what order, and whose move each state says it is.</p></div>
+      </section>
+    </main>
+  </div>
+</div>
+<footer><div class="wrap"><span class="mono">Praveenkumar · Lead UX / Product Designer</span><a class="mono" href="/work">All work</a></div></footer>
+<script>
+// Highlight the section in view in the side index.
+const links=[...document.querySelectorAll("nav.index a")];
+const io=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){links.forEach(a=>a.removeAttribute("aria-current"));
+    document.querySelector(`nav.index a[href="#${e.target.id}"]`)?.setAttribute("aria-current","true")}
+}),{rootMargin:"-30% 0px -60% 0px"});
+document.querySelectorAll("main section").forEach(s=>io.observe(s));
+</script>
+</body>
+</html>
