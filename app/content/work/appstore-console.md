@@ -1,40 +1,29 @@
 ## Summary
 
-One in-review version blocked every other submission on a major app marketplace's developer console, including test builds and builds for other devices. I led the redesign that replaced the single-file submission queue with independent release tracks, and **review waits fell from about 7 days to about 2**.
+One in-review version blocked every other submission on a major app marketplace's developer console, including test builds and builds for other devices. I led the redesign that replaced the single-file submission queue with independent release tracks, and **review waits fell from about 7 days to 2**.
 
 Phases 1 and 2 shipped in Q2 2025, in time for the launch of a new device OS that the project was blocking. Phase 3, a full overhaul of the developer platform, was in progress when I left.
 
 ![Release tracks: one lane is live at 100% while another is in review](/projects/appstore-console/p1-after-3-versions.png "After · Release tracks. A lane live at 100% while another is in review, impossible before.")
 
-## Problem framing
+## Problem and approach
 
 Developers ship to several device families, each with its own binary and release rhythm. The console treated an app as one thing with one submission. Nothing else could go out until the current version cleared review.
 
-The brief was narrow: allow parallel binary uploads. Research with seven strategic partners, the platform's highest-revenue developers, showed it was a symptom:
+The brief was narrow: allow parallel binary uploads. A two-week study with seven strategic partners, the platform's highest-revenue developers, combined card sorting, interviews and survey questions. It showed the brief was a symptom:
 
 - **About 7 days** per review, each one blocking everything behind it.
-- **About a 2-week lag** against the same apps on other mobile platforms.
+- **A 2-week lag** against the same apps on other mobile platforms.
 - **Test builds stuck** behind production review, so the safety net for a release was blocked by the release.
 - **Staged rollout** was hard to find, and hard to operate once found.
 
-Mapping the old flow end to end made the real issue clear: it was a straight line built for one live version at a time. Parallel upload could not be bolted on. The information architecture itself had to change.
+An earlier 39-developer survey had pointed at the same themes, which gave me confidence they were real patterns. Mapping the old flow end to end made the real issue clear: it was a straight line built for one live version at a time. Parallel upload could not be bolted on. The information architecture itself had to change.
 
 ![The old four-step submission flow](/projects/appstore-console/before-1-upload.png "Before · Step 1 of 4. Upload, targeting, store details and review all lived in one sequence. Brand elements redacted.")
 
-## Role and team
+![The structural change: one linear submission became shared app setup plus independent release tracks](/projects/appstore-console/ia-before-after.svg "The structural shift · From one linear submission to shared app setup and independent release tracks.")
 
-I was the lead designer for app submissions, working with a team of about twelve: a PM, TPM, design manager, engineering lead and engineers, a QA lead with two testers, a researcher and support.
-
-- Shaped the research plan with the research team, who ran the study.
-- Took the findings to the PM and leadership and made the case to phase the work.
-- Owned flows, UI, prototypes and design-system work through to handoff, then ran visual QA and signed off the build.
-- The reviewer-facing certification tool was a separate internal product and outside my scope.
-
-## Approach
-
-**Research first, narrowly.** A two-week study with seven strategic partners combining card sorting, interviews and survey questions. Earlier research (a 39-developer survey) had already pointed at the same themes, which gave me confidence they were real patterns.
-
-**Reframe the brief.** I separated what is true of the app from what is true of a release. App-level information (availability, privacy, content rating) is set once and shared. Everything about a version (binary, devices, notes, rollout, date) belongs to a lane of its own.
+**Separate the app from the release.** App-level information (availability, privacy, content rating) is set once and shared. Everything about a version (binary, devices, notes, rollout, date) belongs to a lane of its own.
 
 **Borrow familiarity.** The card sort showed partners already knew a competing console's structure. We designed toward conventions developers trusted, not a model they would have to learn.
 
@@ -59,22 +48,22 @@ I was the lead designer for app submissions, working with a team of about twelve
 
 ![A named release track](/projects/appstore-console/p2-4-track-page.png "Phase 2 · Store listing and first release are independent first steps inside each track.")
 
-**Phase 3: rebuild around the developer.** A new design system matched to the marketplace's devices, and a console organised by jobs (Dashboard, Release, Testing, Monetization, Monitoring) rather than by forms. Shown as design, not as shipped.
-
-![The Phase 3 dashboard](/projects/appstore-console/p3-dashboard.png "Phase 3 · Design in progress. Sample data.")
-
 ## Results and impact
 
-- **Review wait time fell from about 7 days to about 2 days**, gradually rather than overnight.
+- **Review wait time fell from about 7 days to 2**, gradually rather than overnight.
 - **Phases 1 and 2 shipped in Q2 2025**, meeting the new-OS device launch the project was blocking.
 - **Strategic partners could submit multiple binaries**, even while another was in review, and keep pace with their other platforms.
 - **Partners found the flow quicker to learn** because it matched console conventions they already knew.
 - **Smaller developers got the same capabilities**, not only the strategic partners.
 - **The four-step submission** became two places: store details and the production release.
 
-## Next steps
+## What came next
 
-Phase 3 was still in progress when I left: the new design system and structure for the whole developer platform.
+**Phase 3: rebuild around the developer.** A new design system matched to the marketplace's devices, and a console organised by jobs (Dashboard, Release, Testing, Monetization, Monitoring) rather than by forms. It was still in progress when I left, so it is shown as design, not as shipped.
+
+![The Phase 3 dashboard](/projects/appstore-console/p3-dashboard.png "Phase 3 · Design in progress. Sample data.")
+
+
 
 The longer-term direction in the product requirements is an **experiment track** alongside production, where developers could test store-listing or app changes against control groups and promote a winner. It was explicitly future work, and the reason the track model was worth getting right.
 

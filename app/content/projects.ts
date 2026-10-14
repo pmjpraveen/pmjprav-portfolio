@@ -186,7 +186,7 @@ export const projects: Project[] = [
     title: "Appstore Developer Console",
     category: "Developer Tools · Platform",
     description:
-      "Helping a major app marketplace's developers ship to every device in parallel, cutting review waits from about 7 days to about 2.",
+      "Helping a major app marketplace's developers ship to every device in parallel, cutting review waits from about 7 days to 2.",
     role: "Lead Designer, App Submissions",
     year: "2025",
     layout: "offset",
@@ -200,6 +200,7 @@ export const projects: Project[] = [
     meta: {
       team: "~12: PM, TPM, design manager, engineering, QA, research, support",
       platform: "Web · Developer console",
+      contribution: "Research plan, flows, UI, prototypes, design system, visual QA",
     },
     // Story lives in app/content/work/appstore-console.md. Company is anonymised.
   },

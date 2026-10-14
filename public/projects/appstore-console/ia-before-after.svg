@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" font-family="system-ui, sans-serif" role="img" aria-label="Before: one four-step sequence for one live version. After: shared app setup feeding independent release tracks.">
+<rect width="960" height="420" fill="#f5f3f1"/>
+<g fill="none" stroke="#44403b" stroke-width="1.2">
+<text x="40" y="44" fill="#777169" stroke="none" font-size="12" letter-spacing="1.5">BEFORE · ONE APP, ONE SUBMISSION</text>
+<rect x="40" y="62" width="180" height="56" rx="8"/><rect x="260" y="62" width="180" height="56" rx="8"/><rect x="480" y="62" width="180" height="56" rx="8"/><rect x="700" y="62" width="220" height="56" rx="8"/>
+<path d="M220 90h40M440 90h40M660 90h40" marker-end="url(#a)"/>
+<path d="M40 214h880" stroke="#ebe8e4" stroke-width="2"/>
+<text x="40" y="250" fill="#777169" stroke="none" font-size="12" letter-spacing="1.5">AFTER · SHARED APP SETUP, INDEPENDENT RELEASE TRACKS</text>
+<rect x="40" y="272" width="220" height="112" rx="8"/>
+<rect x="340" y="272" width="580" height="30" rx="8"/><rect x="340" y="314" width="580" height="30" rx="8"/><rect x="340" y="356" width="580" height="30" rx="8"/>
+<path d="M260 328h80" marker-end="url(#a)"/>
+</g>
+<g fill="#000" font-size="14">
+<text x="130" y="95" text-anchor="middle">Upload</text><text x="350" y="95" text-anchor="middle">Targeting</text><text x="570" y="95" text-anchor="middle">Store details</text><text x="810" y="95" text-anchor="middle">Review</text>
+<text x="40" y="150" fill="#777169" font-size="13">A version in review blocks everything behind it, including test builds.</text>
+<text x="56" y="298" font-weight="500">App setup</text>
+<text x="56" y="324" fill="#777169" font-size="13">Availability</text><text x="56" y="344" fill="#777169" font-size="13">Privacy</text><text x="56" y="364" fill="#777169" font-size="13">Content rating</text>
+<text x="356" y="292">Release track · OS A  ·  listing · releases · history</text>
+<text x="356" y="334">Release track · OS B  ·  listing · releases · history</text>
+<text x="356" y="376">Release track · per device type (Phase 2)</text>
+<text x="340" y="408" fill="#777169" font-size="13">Each track can be live, in review or in test at the same time.</text>
+</g>
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="none" stroke="#44403b"/></marker></defs>
+</svg>
