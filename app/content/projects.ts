@@ -181,102 +181,8 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    slug: "utsav",
-    number: "01",
-    title: "Utsav",
-    category: "Consumer · Marketplace",
-    description:
-      "A digital experience for discovering and experiencing pujas.",
-    role: "Lead Product Designer",
-    year: "2026",
-    layout: "standard",
-    featured: true,
-    // No real header visual yet — renders the neutral placeholder.
-    // The section shape/order below is confirmed; the actual content isn't
-    // written yet, so every body/decision uses NEEDS_INPUT rather than
-    // invented copy (see ProjectTextSection / ProjectDecision).
-    sections: [
-      {
-        id: "overview",
-        type: "intro",
-        navLabel: "Overview",
-        eyebrow: "Overview",
-        body: NEEDS_INPUT,
-        meta: [
-          { label: "Role", value: "Lead Product Designer" },
-          { label: "Timeline", value: undefined },
-          { label: "Team", value: undefined },
-          { label: "Responsibilities", value: undefined },
-        ],
-      },
-      {
-        id: "challenge",
-        type: "text",
-        navLabel: "The Challenge",
-        eyebrow: "The Challenge",
-        body: NEEDS_INPUT,
-      },
-      {
-        id: "research",
-        type: "text",
-        navLabel: "Research",
-        eyebrow: "Research",
-        body: NEEDS_INPUT,
-      },
-      {
-        id: "approach",
-        type: "text",
-        navLabel: "Design Approach",
-        eyebrow: "Design Approach",
-        body: NEEDS_INPUT,
-      },
-      {
-        id: "solution",
-        type: "text",
-        navLabel: "The Solution",
-        eyebrow: "The Solution",
-        body: NEEDS_INPUT,
-      },
-      {
-        id: "decisions",
-        type: "decisions",
-        navLabel: "Key Decisions",
-        eyebrow: "Key Decisions",
-        decisions: [
-          { title: NEEDS_INPUT },
-          { title: NEEDS_INPUT },
-          { title: NEEDS_INPUT },
-          { title: NEEDS_INPUT },
-        ],
-      },
-      {
-        id: "outcome",
-        type: "text",
-        navLabel: "Outcome",
-        eyebrow: "Outcome",
-        body: NEEDS_INPUT,
-      },
-      {
-        id: "impact",
-        type: "metrics",
-        navLabel: "Impact",
-        eyebrow: "Impact",
-        // Only confirmed, real numbers belong here — see ProjectMetrics.
-        metrics: [],
-      },
-      {
-        id: "reflection",
-        type: "text",
-        navLabel: "Reflection",
-        eyebrow: "Reflection",
-        body: NEEDS_INPUT,
-      },
-    ],
-  },
-
-  {
     slug: "appstore-console",
-    number: "02",
+    number: "01",
     title: "Appstore Developer Console",
     category: "Developer Tools · Platform",
     description:
@@ -300,7 +206,7 @@ export const projects: Project[] = [
 
   {
     slug: "two-way-communication",
-    number: "03",
+    number: "02",
     title: "Developer Support",
     category: "Developer Tools · Support",
     description:
@@ -322,32 +228,67 @@ export const projects: Project[] = [
     },
   },
 
-  // --- Temporary placeholders below, added only to preview the multi-project
-  // rhythm (dividers, alternating layout). Remove once real projects exist —
-  // none of this copy is approved content. ---
   {
-    slug: "placeholder-two",
-    number: "04",
-    title: "Placeholder Project Two",
+    slug: "nytro-pitch",
+    number: "03",
+    title: "Nytro Pitch App",
     category: "B2B · SaaS",
-    description: "Dummy description for previewing the second project slot.",
+    description:
+      "Redesigning a sales-pitch training app so teams can find features and create content faster, cutting pitch creation time by 31%.",
     role: "Product Designer",
-    year: "2025",
-    narrative:
-      "Dummy supporting narrative text — previewing how ProjectDetail looks when a project has a longer story alongside the case-study link.",
+    year: "2022",
     layout: "offset",
-    isPlaceholder: true,
+    featured: true,
+    meta: { platform: "Web app" },
+    // Story lives in app/content/work/nytro-pitch.md.
+    thumbnail: "/projects/nytro-pitch/pitch-overview-after.png",
+    imageAlt: "The redesigned Nytro pitch overview",
+    heroVisual: {
+      src: "/projects/nytro-pitch/pitch-overview-after.png",
+      alt: "The redesigned Nytro pitch overview",
+    },
   },
+
   {
-    slug: "placeholder-three",
-    number: "05",
-    title: "Placeholder Project Three",
-    category: "Internal Tools",
-    description: "Dummy description for previewing the third project slot.",
-    role: "Lead Product Designer",
-    year: "2024",
+    slug: "recur-spark",
+    number: "04",
+    title: "Spark by Recur",
+    category: "Fintech · Financing",
+    description:
+      "Designing the onboarding and approval flow for revenue-based financing, so founders can raise without dilution and see capital in as little as two days.",
+    role: "Product Designer",
+    year: "2022",
     layout: "standard",
-    isPlaceholder: true,
+    featured: true,
+    meta: { platform: "Web app" },
+    // Story lives in app/content/work/recur-spark.md.
+    thumbnail: "/projects/recur-spark/hero.webp",
+    imageAlt: "Spark, the revenue-based financing product inside Recur",
+    heroVisual: {
+      src: "/projects/recur-spark/hero.webp",
+      alt: "Spark, the revenue-based financing product inside Recur",
+    },
+  },
+
+  {
+    slug: "honeywell-comments",
+    number: "05",
+    title: "Comments in a Digital Dashboard",
+    category: "Enterprise · ERP",
+    description:
+      "Streamlining the comment feature in an internal ERP dashboard. Under NDA, shown at summary level.",
+    role: "Product Designer",
+    year: "2023",
+    layout: "offset",
+    featured: true,
+    meta: { team: "9", platform: "Web · ERP" },
+    // Story lives in app/content/work/honeywell-comments.md. Under NDA.
+    thumbnail: "/projects/honeywell-comments/hero.png",
+    imageAlt: "The digital dashboard overview",
+    heroVisual: {
+      src: "/projects/honeywell-comments/hero.png",
+      alt: "The digital dashboard overview",
+    },
   },
 ];
 

@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
 import type { ProjectSectionData } from "../content/projects";
+import { ProjectFigure } from "../components/projects/ProjectFigure";
 import { ProjectVisual } from "../components/projects/ProjectVisual";
+import { getImageSize } from "./image-size";
 
 function slugify(heading: string) {
   return heading
@@ -19,6 +21,7 @@ type Block =
   | { kind: "p"; text: string }
   | { kind: "list"; items: string[] }
   | ImageBlock
+  | { kind: "images"; items: ImageBlock[] }
   | { kind: "stats"; items: Pair[] }
   | { kind: "rows"; items: Pair[] }
   | { kind: "h3"; text: string }
@@ -47,6 +50,17 @@ function splitBlocks(rawLines: string[]): Block[] {
       // `path.png#3/4` picks the crop; default is the 16/10 landscape.
       const [src, aspect] = rawSrc.split("#");
       return { kind: "image", alt, src, caption, aspect: aspect as Aspect | undefined };
+    }
+
+    // Two or more image lines in one chunk render as a side-by-side pair/grid.
+    if (chunkLines.length > 1 && chunkLines.every((l) => IMAGE_LINE.test(l))) {
+      return {
+        kind: "images",
+        items: chunkLines.map((l) => {
+          const [, alt, src, caption] = IMAGE_LINE.exec(l)!;
+          return { kind: "image", alt, src, caption } as ImageBlock;
+        }),
+      };
     }
 
     // `::: stats` / `::: rows` fence, one `value | label` pair per line.
@@ -89,17 +103,27 @@ function splitBlocks(rawLines: string[]): Block[] {
   return folded;
 }
 
+function renderFigure(image: ImageBlock, key?: number) {
+  const size = getImageSize(image.src);
+  if (size && !image.aspect) {
+    return <ProjectFigure key={key} src={image.src} alt={image.alt} caption={image.caption} {...size} />;
+  }
+  return (
+    <ProjectVisual key={key} thumbnail={image.src} alt={image.alt} caption={image.caption} aspect={image.aspect} />
+  );
+}
+
 function renderBlock(block: Block, key: number, stepIndex = 0) {
-  if (block.kind === "image") {
+  if (block.kind === "images") {
     return (
-      <ProjectVisual
-        key={key}
-        thumbnail={block.src}
-        alt={block.alt}
-        caption={block.caption}
-        aspect={block.aspect}
-      />
+      <div key={key} className="grid gap-6 sm:grid-cols-2 lg:gap-8">
+        {block.items.map((image, i) => renderFigure(image, i))}
+      </div>
     );
+  }
+
+  if (block.kind === "image") {
+    return renderFigure(block, key);
   }
 
   if (block.kind === "stats") {
@@ -149,13 +173,7 @@ function renderBlock(block: Block, key: number, stepIndex = 0) {
           </div>
         </div>
         {block.image ? (
-          <ProjectVisual
-            thumbnail={block.image.src}
-            alt={block.image.alt}
-            caption={block.image.caption}
-            aspect={block.image.aspect}
-            objectTop
-          />
+          renderFigure(block.image)
         ) : null}
       </div>
     );
