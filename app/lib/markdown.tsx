@@ -11,10 +11,18 @@ function slugify(heading: string) {
 
 const IMAGE_LINE = /^!\[([^\]]*)\]\(([^\s)]+)(?:\s+"([^"]*)")?\)$/;
 
+type ImageBlock = { kind: "image"; alt: string; src: string; caption?: string; aspect?: Aspect };
+type Aspect = "16/10" | "4/3" | "1/1" | "3/4";
+type Pair = [string, string];
+
 type Block =
   | { kind: "p"; text: string }
   | { kind: "list"; items: string[] }
-  | { kind: "image"; alt: string; src: string; caption?: string };
+  | ImageBlock
+  | { kind: "stats"; items: Pair[] }
+  | { kind: "rows"; items: Pair[] }
+  | { kind: "h3"; text: string }
+  | { kind: "step"; title: string; body: Block[]; image?: ImageBlock };
 
 /** `**bold**` only — everything else in a paragraph renders as plain text. */
 function renderInline(text: string): ReactNode[] {
@@ -28,13 +36,34 @@ function splitBlocks(rawLines: string[]): Block[] {
   const text = rawLines.join("\n").trim();
   if (!text) return [];
 
-  return text.split(/\n\s*\n/).map((chunk): Block => {
+  // A `### ` line always starts its own chunk, blank line or not.
+  const chunks = text.replace(/\n(### )/g, "\n\n$1").replace(/(^### [^\n]*)\n(?!\n)/gm, "$1\n\n");
+  const blocks = chunks.split(/\n\s*\n/).map((chunk): Block => {
     const chunkLines = chunk.split("\n").map((l) => l.trim());
 
     const imageMatch = chunkLines.length === 1 ? IMAGE_LINE.exec(chunkLines[0]) : null;
     if (imageMatch) {
-      const [, alt, src, caption] = imageMatch;
-      return { kind: "image", alt, src, caption };
+      const [, alt, rawSrc, caption] = imageMatch;
+      // `path.png#3/4` picks the crop; default is the 16/10 landscape.
+      const [src, aspect] = rawSrc.split("#");
+      return { kind: "image", alt, src, caption, aspect: aspect as Aspect | undefined };
+    }
+
+    // `::: stats` / `::: rows` fence, one `value | label` pair per line.
+    const fence = /^:::\s*(stats|rows)$/.exec(chunkLines[0]);
+    if (fence) {
+      const items = chunkLines
+        .slice(1)
+        .filter((l) => l !== ":::")
+        .map((l): Pair => {
+          const [a, ...rest] = l.split("|");
+          return [a.trim(), rest.join("|").trim()];
+        });
+      return { kind: fence[1] as "stats" | "rows", items };
+    }
+
+    if (chunkLines.length === 1 && chunkLines[0].startsWith("### ")) {
+      return { kind: "h3", text: chunkLines[0].slice(4).trim() };
     }
 
     if (chunkLines.every((l) => l.startsWith("- "))) {
@@ -43,12 +72,92 @@ function splitBlocks(rawLines: string[]): Block[] {
 
     return { kind: "p", text: chunkLines.join(" ") };
   });
+
+  // Fold each `### title` and the blocks after it into one text-beside-image step.
+  const folded: Block[] = [];
+  for (const block of blocks) {
+    const open = folded[folded.length - 1];
+    if (block.kind === "h3") {
+      folded.push({ kind: "step", title: block.text, body: [] });
+    } else if (open?.kind === "step") {
+      if (block.kind === "image" && !open.image) open.image = block;
+      else open.body.push(block);
+    } else {
+      folded.push(block);
+    }
+  }
+  return folded;
 }
 
-function renderBlock(block: Block, key: number) {
+function renderBlock(block: Block, key: number, stepIndex = 0) {
   if (block.kind === "image") {
     return (
-      <ProjectVisual key={key} thumbnail={block.src} alt={block.alt} caption={block.caption} />
+      <ProjectVisual
+        key={key}
+        thumbnail={block.src}
+        alt={block.alt}
+        caption={block.caption}
+        aspect={block.aspect}
+      />
+    );
+  }
+
+  if (block.kind === "stats") {
+    return (
+      <dl key={key} className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-4">
+        {block.items.map(([value, label]) => (
+          <div key={label}>
+            <dd className="text-heading-sm font-light tracking-heading-sm text-ink lg:text-heading lg:tracking-heading">
+              {value}
+            </dd>
+            <dt className="mt-2 text-body-sm text-smoke">{label}</dt>
+          </div>
+        ))}
+      </dl>
+    );
+  }
+
+  if (block.kind === "rows") {
+    return (
+      <dl key={key} className="border-b border-stone">
+        {block.items.map(([term, detail]) => (
+          <div
+            key={term}
+            className="grid gap-1 border-t border-stone py-5 sm:grid-cols-[220px_1fr] sm:gap-8"
+          >
+            <dt className="text-body text-ink">{term}</dt>
+            <dd className="text-body text-smoke">{detail}</dd>
+          </div>
+        ))}
+      </dl>
+    );
+  }
+
+  if (block.kind === "step") {
+    return (
+      <div
+        key={key}
+        className="grid gap-6 border-t border-stone pt-10 first:border-t-0 first:pt-0 lg:grid-cols-[5fr_7fr] lg:gap-12"
+      >
+        <div>
+          <p className="font-mono text-caption uppercase tracking-wide text-smoke">
+            {String(stepIndex + 1).padStart(2, "0")}
+          </p>
+          <h3 className="mt-3 text-body-lg text-ink">{block.title}</h3>
+          <div className="mt-3 space-y-3 [&_p]:text-body [&_p]:leading-body [&_ul]:text-body">
+            {block.body.map((b, i) => renderBlock(b, i))}
+          </div>
+        </div>
+        {block.image ? (
+          <ProjectVisual
+            thumbnail={block.image.src}
+            alt={block.image.alt}
+            caption={block.image.caption}
+            aspect={block.image.aspect}
+            objectTop
+          />
+        ) : null}
+      </div>
     );
   }
 
@@ -102,7 +211,9 @@ export function parseCaseStudyMarkdown(markdown: string): ProjectSectionData[] {
             </h2>
           ) : null}
           <div className={`space-y-8 ${heading ? "mt-4" : ""}`}>
-            {blocks.map((block, i) => renderBlock(block, i))}
+            {blocks.map((block, i) =>
+              renderBlock(block, i, blocks.slice(0, i).filter((b) => b.kind === "step").length),
+            )}
           </div>
         </div>
       ),

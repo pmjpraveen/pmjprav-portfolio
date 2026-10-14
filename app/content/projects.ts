@@ -274,12 +274,60 @@ export const projects: Project[] = [
     ],
   },
 
+  {
+    slug: "appstore-console",
+    number: "02",
+    title: "Appstore Developer Console",
+    category: "Developer Tools · Platform",
+    description:
+      "Helping a major app marketplace's developers ship to every device in parallel, cutting review waits from about 7 days to about 2.",
+    role: "Lead Designer, App Submissions",
+    year: "2025",
+    layout: "offset",
+    featured: true,
+    thumbnail: "/projects/appstore-console/p1-after-3-versions.png",
+    imageAlt: "Release tracks table with one release live at 100% and another in review",
+    heroVisual: {
+      src: "/projects/appstore-console/p1-after-3-versions.png",
+      alt: "Release tracks table with one release live at 100% and another in review",
+    },
+    meta: {
+      team: "~12: PM, TPM, design manager, engineering, QA, research, support",
+      platform: "Web · Developer console",
+    },
+    // Story lives in app/content/work/appstore-console.md. Company is anonymised.
+  },
+
+  {
+    slug: "two-way-communication",
+    number: "03",
+    title: "Developer Support",
+    category: "Developer Tools · Support",
+    description:
+      "Helping Amazon's developers follow their support cases, cutting case volume by about 47%, then about 87% with an AI help widget.",
+    role: "Lead Designer, Support Cases",
+    year: "2024",
+    layout: "standard",
+    featured: true,
+    meta: {
+      team: "PM, technical PM, engineering, research, design manager",
+      platform: "Web · Developer console",
+    },
+    // Story lives in app/content/work/two-way-communication.md.
+    thumbnail: "/projects/two-way-communication/case-thread.png",
+    imageAlt: "Case page with the conversation thread beside the case details",
+    heroVisual: {
+      src: "/projects/two-way-communication/case-thread.png",
+      alt: "Case page with the conversation thread beside the case details",
+    },
+  },
+
   // --- Temporary placeholders below, added only to preview the multi-project
   // rhythm (dividers, alternating layout). Remove once real projects exist —
   // none of this copy is approved content. ---
   {
     slug: "placeholder-two",
-    number: "02",
+    number: "04",
     title: "Placeholder Project Two",
     category: "B2B · SaaS",
     description: "Dummy description for previewing the second project slot.",
@@ -292,7 +340,7 @@ export const projects: Project[] = [
   },
   {
     slug: "placeholder-three",
-    number: "03",
+    number: "05",
     title: "Placeholder Project Three",
     category: "Internal Tools",
     description: "Dummy description for previewing the third project slot.",

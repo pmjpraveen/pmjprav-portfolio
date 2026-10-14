@@ -15,6 +15,8 @@ type ProjectVisualProps = {
   caption?: string;
   /** Edge-to-edge viewport width, no rounding — for the case-study hero visual only. Defaults to the standard rounded card within its container. */
   bleed?: boolean;
+  /** Anchor the crop to the top — for tall screenshots in a shorter frame. */
+  objectTop?: boolean;
 };
 
 /**
@@ -27,6 +29,7 @@ export function ProjectVisual({
   aspect = "16/10",
   caption,
   bleed = false,
+  objectTop = false,
 }: ProjectVisualProps) {
   return (
     <figure>
@@ -41,7 +44,7 @@ export function ProjectVisual({
             alt={alt}
             fill
             sizes="(min-width: 1024px) 1152px, 100vw"
-            className="object-cover transition-transform duration-300 ease-out-strong group-hover:scale-[1.02]"
+            className={`object-cover ${objectTop ? "object-top" : ""} transition-transform duration-300 ease-out-strong group-hover:scale-[1.02]`}
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center">
