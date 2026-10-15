@@ -5,19 +5,19 @@ import { useEffect, useState, type ReactNode } from "react";
 
 // Purely decorative — an international "hello" sequence, not a claim about
 // the person. Kept short so the intro stays snappy.
-const WORDS = ["Hello", "Namaste", "こんにちは"];
+const WORDS = ["Hello", "Namaste", "Bonjour", "Hola", "Ciao", "こんにちは"];
 
 // Typing cadence: each letter pops in roughly as a keystroke would, not a
 // glide. Backspacing out is faster than typing in and removes from the end
 // first, like an actual delete — so entry delay counts forward from the
 // first letter while exit delay counts backward from the last.
-const TYPE_STAGGER = 0.045;
-const BACKSPACE_STAGGER = 0.03;
-const LETTER_DURATION = 0.06;
+const TYPE_STAGGER = 0.035;
+const BACKSPACE_STAGGER = 0.02;
+const LETTER_DURATION = 0.05;
 // Extra pause once a word is fully typed, so it's actually readable before
 // the next one starts erasing it.
-const READ_HOLD_MS = 150;
-const FINAL_HOLD_MS = 150;
+const READ_HOLD_MS = 120;
+const FINAL_HOLD_MS = 200;
 
 // AnimatePresence (mode="wait") only starts the incoming word's entrance
 // after the outgoing word's exit finishes — so the time until a word is
@@ -89,7 +89,7 @@ export function Preloader({ children }: { children: ReactNode }) {
   const [visible, setVisible] = useState(true);
   const [done, setDone] = useState(false);
   const [wordIndex, setWordIndex] = useState(0);
-  // True for reduced-motion / repeat-within-session visits — the overlay
+  // True for reduced-motion / non-homepage visits — the overlay
   // still mounts once (unavoidable: we can't know either condition during
   // SSR), but its exit must be instant rather than playing the exit wipe.
   const [skipAnimation, setSkipAnimation] = useState(false);
@@ -102,19 +102,16 @@ export function Preloader({ children }: { children: ReactNode }) {
       const prefersReducedMotion = window.matchMedia(
         "(prefers-reduced-motion: reduce)",
       ).matches;
-      // Only the homepage gets the greeting: someone landing on a shared case-study link should see the work, not a splash.
-      const alreadyShown =
-        sessionStorage.getItem("preloader-shown") || window.location.pathname !== "/";
+      // Plays on every homepage load. Anyone landing on another page (a shared
+      // case-study link, say) should see the work, not a splash.
+      const notHome = window.location.pathname !== "/";
 
-      if (prefersReducedMotion || alreadyShown) {
+      if (prefersReducedMotion || notHome) {
         // Set only this now — flipping `visible` in the same batch would mean
         // Motion never renders the overlay with duration:0 before removing
         // it, so it'd fall back to the last-seen (animated) exit transition.
         setSkipAnimation(true);
-        return;
       }
-
-      sessionStorage.setItem("preloader-shown", "1");
     }, 0);
 
     return () => clearTimeout(timer);
