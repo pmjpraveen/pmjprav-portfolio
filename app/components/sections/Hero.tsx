@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useLayoutEffect, useRef } from "react";
 import { gsap } from "../../lib/gsap";
 import { Container } from "../container";
-import { ArrowLink } from "../ui/ArrowLink";
+import { ProjectExternalLink } from "../projects/ProjectExternalLink";
 
 const useIsomorphicLayoutEffect =
   typeof window !== "undefined" ? useLayoutEffect : useEffect;
@@ -14,8 +14,9 @@ const HERO = {
   eyebrow: "Hi, I'm",
   name: "Praveenkumar",
   supporting:
-    "AI-native product designer and design engineer. I design and build AI-powered products end to end, backed by 8+ years across SaaS, B2B enterprise and consumer marketplaces.",
-  cta: { label: "My Resume", href: "https://drive.google.com/file/d/1xmeZsNdJ128nV7INO4DHunuTv698c8Tu/view?usp=sharing" },
+    "AI-native product designer and design engineer. I've spent 8+ years designing developer tools and enterprise products, and I now build my own with AI.",
+  cta: { label: "My Resume", href: "/resume.pdf" },
+  availability: "Open to full-time roles and consulting",
 };
 
 export function Hero() {
@@ -77,10 +78,11 @@ export function Hero() {
           {HERO.supporting}
         </p>
 
-        <div data-hero-animate className="mt-10 inline-block">
-          <ArrowLink href={HERO.cta.href} className="text-body">
-            {HERO.cta.label}
-          </ArrowLink>
+        <div data-hero-animate className="mt-10">
+          <ProjectExternalLink label={HERO.cta.label} url={HERO.cta.href} />
+          <p className="mt-4 font-mono text-caption uppercase tracking-wide text-smoke">
+            {HERO.availability}
+          </p>
         </div>
       </Container>
     </section>

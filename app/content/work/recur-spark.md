@@ -2,21 +2,12 @@
 
 Spark is a revenue-based financing product inside Recur. It lets startups borrow against their own recurring contracts and invoicing data instead of trading away equity. I designed the onboarding, verification and approval flow, which took a process that traditionally takes banks weeks to underwrite and turned it into a same-day application, with capital released in as little as two days.
 
-::: stats
-~70% | growth in active user base after launch
-2 days | to first capital, down from a multi-week bank process
-82% | preferred the redesigned vertical wizard flow
-:::
-
 ![Spark, the revenue-based financing product inside Recur](/projects/recur-spark/hero.webp "Spark, inside Recur. Click to enlarge.")
 
 ## Context
 
 ::: rows
 Company | Recur, financial software
-Headquarters | Gurugram, India
-Founded | 2021
-Revenue | $30 million (2022)
 My role | Onboarding, verification and approval flow
 :::
 
@@ -100,14 +91,6 @@ Once signatory and KYC details clear, the company gets its full terms in one cle
 
 ![Onboarding wizard layouts](/projects/recur-spark/concept-directions.webp "Onboarding wizard layouts explored. Click to enlarge.")
 
-Users completed the flow with less friction and fewer backtracks when the steps were vertical, and 82% of participants said they preferred it. The behaviour and the stated preference agreed.
+Users completed the flow with less friction and fewer backtracks when the steps were vertical, and participants said they preferred it. The behaviour and the stated preference agreed.
 
 The reason was visibility. A vertical layout let founders see what was still ahead at a glance, instead of holding that picture in their heads. For a flow that asks for financial documents, lowering that load mattered more than the horizontal pattern's more polished first impression. I had also explored a lighter, more spacious layout against a denser, sidebar-led one, and the calmer one won, because a quieter register builds more trust when people are handing over sensitive financial data.
-
-## Results
-
-::: stats
-~70% | growth in active user base after the Spark launch
-More HNI | high-net-worth investors onboarded to the marketplace side
-Strong | traction among early-stage founders unwilling to dilute equity
-:::

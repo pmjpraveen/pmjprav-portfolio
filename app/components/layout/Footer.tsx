@@ -15,7 +15,7 @@ export function Footer() {
     <footer className="bg-black text-[#fdfcfc]">
       <Container className="pt-16 text-center sm:pt-20 lg:pt-24">
         <p className="font-mono text-caption uppercase tracking-wide text-[#948d82]">
-          Bengaluru, India — <LocalClock />
+          Bengaluru, India · <LocalClock />
         </p>
       </Container>
 

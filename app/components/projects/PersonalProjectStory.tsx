@@ -5,6 +5,7 @@ import type { PersonalProject } from "../../content/personal-projects";
 import { useGsapReveal } from "../../hooks/useGsapReveal";
 import { Container } from "../container";
 import { ProjectExternalLink } from "./ProjectExternalLink";
+import { ProjectFigure } from "./ProjectFigure";
 import { ProjectMeta } from "./ProjectMeta";
 
 type PersonalProjectStoryProps = {
@@ -36,6 +37,14 @@ export function PersonalProjectStory({ project, isFirst }: PersonalProjectStoryP
             </h3>
             <p className="mt-4 max-w-prose text-body text-smoke">{project.description}</p>
 
+            {project.highlights ? (
+              <ul className="mt-6 max-w-prose list-disc space-y-2 pl-5 text-body text-smoke">
+                {project.highlights.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            ) : null}
+
             <div className="mt-6">
               <ProjectMeta items={[{ label: "Platform", value: project.platform }]} />
             </div>
@@ -57,6 +66,14 @@ export function PersonalProjectStory({ project, isFirst }: PersonalProjectStoryP
                 />
               </div>
             </a>
+
+            {project.screenshots ? (
+              <div className="mt-6 grid grid-cols-3 gap-4 lg:gap-6">
+                {project.screenshots.map((shot) => (
+                  <ProjectFigure key={shot.src} {...shot} />
+                ))}
+              </div>
+            ) : null}
 
             <div className="mt-8 lg:mt-10">
               <ProjectExternalLink label={`Visit ${project.host}`} url={project.url} />

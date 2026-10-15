@@ -5,7 +5,7 @@ import { useEffect, useState, type ReactNode } from "react";
 
 // Purely decorative — an international "hello" sequence, not a claim about
 // the person. Kept short so the intro stays snappy.
-const WORDS = ["Hello", "Namaste", "Bonjour", "Hola", "Ciao", "こんにちは"];
+const WORDS = ["Hello", "Namaste", "こんにちは"];
 
 // Typing cadence: each letter pops in roughly as a keystroke would, not a
 // glide. Backspacing out is faster than typing in and removes from the end
@@ -16,8 +16,8 @@ const BACKSPACE_STAGGER = 0.03;
 const LETTER_DURATION = 0.06;
 // Extra pause once a word is fully typed, so it's actually readable before
 // the next one starts erasing it.
-const READ_HOLD_MS = 250;
-const FINAL_HOLD_MS = 350;
+const READ_HOLD_MS = 150;
+const FINAL_HOLD_MS = 150;
 
 // AnimatePresence (mode="wait") only starts the incoming word's entrance
 // after the outgoing word's exit finishes — so the time until a word is
@@ -91,7 +91,7 @@ export function Preloader({ children }: { children: ReactNode }) {
   const [wordIndex, setWordIndex] = useState(0);
   // True for reduced-motion / repeat-within-session visits — the overlay
   // still mounts once (unavoidable: we can't know either condition during
-  // SSR), but its exit must be instant rather than playing the 700ms wipe.
+  // SSR), but its exit must be instant rather than playing the exit wipe.
   const [skipAnimation, setSkipAnimation] = useState(false);
 
   // Decide, once, whether to run the sequence at all. Scheduled via a 0ms
@@ -102,7 +102,9 @@ export function Preloader({ children }: { children: ReactNode }) {
       const prefersReducedMotion = window.matchMedia(
         "(prefers-reduced-motion: reduce)",
       ).matches;
-      const alreadyShown = sessionStorage.getItem("preloader-shown");
+      // Only the homepage gets the greeting: someone landing on a shared case-study link should see the work, not a splash.
+      const alreadyShown =
+        sessionStorage.getItem("preloader-shown") || window.location.pathname !== "/";
 
       if (prefersReducedMotion || alreadyShown) {
         // Set only this now — flipping `visible` in the same batch would mean
@@ -160,7 +162,7 @@ export function Preloader({ children }: { children: ReactNode }) {
             // the ink/eggshell tokens (which flip meaning in dark mode).
             className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black text-white"
             exit={{ y: skipAnimation ? 0 : "-100%" }}
-            transition={{ duration: skipAnimation ? 0 : 0.7, ease: [0.65, 0, 0.35, 1] }}
+            transition={{ duration: skipAnimation ? 0 : 0.55, ease: [0.65, 0, 0.35, 1] }}
           >
             <AnimatePresence mode="wait">
               <motion.div key={wordIndex} className="text-heading-sm sm:text-heading lg:text-display">

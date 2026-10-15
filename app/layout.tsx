@@ -6,6 +6,7 @@ import { Header } from "./components/layout/Header";
 import { ThemeToggle } from "./components/layout/ThemeToggle";
 import { Preloader } from "./components/preloader/Preloader";
 import { CustomCursor } from "./components/ui/CustomCursor";
+import { SITE_URL } from "./lib/site";
 import "./globals.css";
 
 // Runs before hydration so the page never flashes the wrong theme: mirrors
@@ -36,6 +37,14 @@ const switzer = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  openGraph: {
+    type: "website",
+    siteName: "Praveenkumar",
+    title: "Praveenkumar — AI-native Designer & Design Engineer",
+    description: "Portfolio of Praveenkumar, an AI-native product designer and design engineer.",
+  },
+  twitter: { card: "summary_large_image" },
   // Two files, picked by the browser's colour scheme (the tab strip follows
   // the browser theme, not the site's own toggle): dark mark on light tabs,
   // light mark on dark tabs.

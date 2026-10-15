@@ -32,6 +32,12 @@ export async function generateMetadata({
     openGraph: {
       title: project.title,
       description: project.description,
+      type: "article",
+      // Social platforms handle PNG/JPG reliably; other formats fall back to the site-wide card.
+      images:
+        project.thumbnail && /\.(png|jpe?g)$/i.test(project.thumbnail)
+          ? [project.thumbnail]
+          : [{ url: "/opengraph-image", width: 1200, height: 630 }],
     },
   };
 }

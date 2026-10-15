@@ -19,11 +19,11 @@ export default function ContactPage() {
           </p>
 
           <h1 className="mt-6 max-w-2xl text-heading leading-display tracking-display text-ink lg:text-display">
-            Have a project, product, or problem worth exploring?
+            Tell me what you&rsquo;re working on.
           </h1>
 
           <p className="mt-8 max-w-prose text-body-lg leading-body-lg text-smoke">
-            Reach out directly — I read every email.
+            I&rsquo;m open to full-time roles and consulting. Email me directly and I&rsquo;ll read every message.
           </p>
 
           <a

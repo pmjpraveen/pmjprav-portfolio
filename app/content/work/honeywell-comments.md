@@ -2,18 +2,13 @@
 
 A redesign of the comment feature inside an internal ERP dashboard used to run a $1.6 billion business. The project is under NDA, so only the summary is shown here, and the detailed work is shared on request.
 
-::: stats
-90% | overall usability
-52% | increase in user engagement
-3.2% | increase in CSAT score
-:::
-
 ![The digital dashboard overview](/projects/honeywell-comments/hero.png "The digital dashboard. Summary level only, under NDA. Click to enlarge.")
 
 ## Context
 
 ::: rows
 Company | Honeywell, HCE
+My role | Lead designer
 Product | ERP application
 Kick-off | April 2023
 Business revenue | $1.6 billion

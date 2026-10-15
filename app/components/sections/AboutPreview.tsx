@@ -9,9 +9,9 @@ import { ArrowLink } from "../ui/ArrowLink";
 // sections don't read as a duplicate of each other back to back.
 const ABOUT = {
   label: "About",
-  statement: "I'm an AI-native product designer and design engineer who makes complex systems feel simple.",
+  statement: "Most of my work is software people depend on at work: developer consoles, support tools and internal dashboards.",
   supporting:
-    "I focus on clarity — turning ambiguous, technical problems into experiences that feel obvious in hindsight.",
+    "Outside work I ship my own apps, like Along and Knockout, designed and coded with AI.",
   cta: { label: "More about me", href: "/about" },
 };
 

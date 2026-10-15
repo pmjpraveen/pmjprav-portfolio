@@ -85,7 +85,7 @@ export const projects: Project[] = [
     title: "Appstore Developer Console",
     category: "Developer Tools · Platform",
     description:
-      "Helping a major app marketplace's developers ship to every device in parallel, cutting review waits from about 7 days to 2.",
+      "Helping Amazon's app developers ship to every device in parallel, cutting review waits from about 7 days to 2.",
     role: "Lead Designer, App Submissions",
     year: "2025",
     layout: "offset",
@@ -101,7 +101,7 @@ export const projects: Project[] = [
       platform: "Web · Developer console",
       contribution: "Research plan, flows, UI, prototypes, design system, visual QA",
     },
-    // Story lives in app/content/work/appstore-console.md. Company is anonymised.
+    // Story lives in app/content/work/appstore-console.md.
   },
 
   {
@@ -128,14 +128,58 @@ export const projects: Project[] = [
     },
   },
 
+
+  {
+    slug: "recur-spark",
+    number: "03",
+    title: "Spark by Recur",
+    category: "Fintech · Financing",
+    description:
+      "Designing the onboarding and approval flow for revenue-based financing, so founders can raise without dilution and see capital in as little as two days.",
+    role: "",
+    year: "",
+    layout: "standard",
+    featured: true,
+    meta: { platform: "Web app" },
+    // Story lives in app/content/work/recur-spark.md.
+    thumbnail: "/projects/recur-spark/hero.webp",
+    imageAlt: "Spark, the revenue-based financing product inside Recur",
+    heroVisual: {
+      src: "/projects/recur-spark/hero.webp",
+      alt: "Spark, the revenue-based financing product inside Recur",
+    },
+  },
+
+  {
+    slug: "nytro-pitch",
+    number: "04",
+    title: "Nytro Pitch App",
+    category: "B2B · SaaS",
+    description:
+      "Redesigning a sales-pitch training app so teams can find features and create content faster.",
+    role: "Product Designer",
+    year: "2021–22",
+    layout: "offset",
+    featured: true,
+    meta: { platform: "Web app" },
+    // Story lives in app/content/work/nytro-pitch.md.
+    thumbnail: "/projects/nytro-pitch/pitch-overview-after.png",
+    imageAlt: "The redesigned Nytro pitch overview",
+    heroVisual: {
+      src: "/projects/nytro-pitch/pitch-overview-after.png",
+      alt: "The redesigned Nytro pitch overview",
+    },
+  },
+
+
   {
     slug: "honeywell-comments",
-    number: "03",
+    number: "05",
     title: "Comments in a Digital Dashboard",
     category: "Enterprise · ERP",
     description:
-      "Streamlining the comment feature in an internal ERP dashboard. Under NDA, shown at summary level.",
-    role: "Product Designer",
+      "Redesigning how people leave and manage comments in an internal ERP dashboard, so the feature is easier to find and use. Under NDA, shown at summary level.",
+    role: "Lead Designer",
     year: "2023",
     layout: "offset",
     featured: true,
@@ -152,49 +196,6 @@ export const projects: Project[] = [
       alt: "The digital dashboard overview",
     },
   },
-
-  {
-    slug: "nytro-pitch",
-    number: "04",
-    title: "Nytro Pitch App",
-    category: "B2B · SaaS",
-    description:
-      "Redesigning a sales-pitch training app so teams can find features and create content faster, cutting pitch creation time by 31%.",
-    role: "Product Designer",
-    year: "2022",
-    layout: "offset",
-    featured: true,
-    meta: { platform: "Web app" },
-    // Story lives in app/content/work/nytro-pitch.md.
-    thumbnail: "/projects/nytro-pitch/pitch-overview-after.png",
-    imageAlt: "The redesigned Nytro pitch overview",
-    heroVisual: {
-      src: "/projects/nytro-pitch/pitch-overview-after.png",
-      alt: "The redesigned Nytro pitch overview",
-    },
-  },
-
-  {
-    slug: "recur-spark",
-    number: "05",
-    title: "Spark by Recur",
-    category: "Fintech · Financing",
-    description:
-      "Designing the onboarding and approval flow for revenue-based financing, so founders can raise without dilution and see capital in as little as two days.",
-    role: "Product Designer",
-    year: "2022",
-    layout: "standard",
-    featured: true,
-    meta: { platform: "Web app" },
-    // Story lives in app/content/work/recur-spark.md.
-    thumbnail: "/projects/recur-spark/hero.webp",
-    imageAlt: "Spark, the revenue-based financing product inside Recur",
-    heroVisual: {
-      src: "/projects/recur-spark/hero.webp",
-      alt: "Spark, the revenue-based financing product inside Recur",
-    },
-  },
-
 ];
 
 // Shared by both the /work/[slug] route and its intercepted modal route

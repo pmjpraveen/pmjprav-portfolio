@@ -28,7 +28,7 @@ function AboutSection({ label, children }: { label: string; children: ReactNode 
 }
 
 export default function AboutPage() {
-  const { background, process, principles, ai, experience, capabilities } = ABOUT;
+  const { background, principles, ai, experience, capabilities } = ABOUT;
 
   return (
     <main className="flex-1">
@@ -103,6 +103,9 @@ export default function AboutPage() {
                   <div>
                     <p className="text-body-lg leading-body-lg text-ink">{item.company}</p>
                     <p className="text-body text-smoke">{item.role}</p>
+                    {item.scope ? (
+                      <p className="mt-1 max-w-prose text-body-sm text-smoke">{item.scope}</p>
+                    ) : null}
                     {work.length > 0 ? (
                       <p className="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-body-sm">
                         {work.map((project) => (
@@ -123,20 +126,6 @@ export default function AboutPage() {
                 </li>
               );
             })}
-          </ol>
-        </AboutSection>
-
-        <AboutSection label={process.label}>
-          <ol className="grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
-            {process.steps.map((step, index) => (
-              <li key={step.title} className="border-t border-ink pt-4">
-                <p className="font-mono text-caption text-ash">
-                  {String(index + 1).padStart(2, "0")}
-                </p>
-                <h3 className="mt-6 text-body-lg text-ink">{step.title}</h3>
-                <p className="mt-2 text-body text-smoke">{step.body}</p>
-              </li>
-            ))}
           </ol>
         </AboutSection>
 
@@ -189,7 +178,7 @@ export default function AboutPage() {
               </div>
             </div>
 
-            <ul className="mt-12 grid gap-x-12 gap-y-10 sm:grid-cols-2 lg:mt-16">
+            <ul className="mt-12 grid gap-x-10 gap-y-10 sm:grid-cols-3 lg:mt-16">
               {ai.items.map((item) => (
                 <li key={item.title} className="border-t border-stone pt-5">
                   <h3 className="text-body-lg text-ink">{item.title}</h3>
@@ -201,7 +190,7 @@ export default function AboutPage() {
         </AboutSection>
 
         <AboutSection label={capabilities.label}>
-          <div className="grid gap-10 sm:grid-cols-2 sm:gap-12 lg:grid-cols-4">
+          <div className="grid gap-10 sm:grid-cols-3 sm:gap-12">
             {capabilities.groups.map((group) => (
               <div key={group.title}>
                 <h3 className="text-body-lg text-ink">{group.title}</h3>

@@ -85,13 +85,7 @@ Trends and automation | A single record makes it possible to ask which issues re
 
 ## Results
 
-::: stats
-~47% | fewer cases after Phase 1, as follow-ups stopped creating duplicates
-Halved | turnaround time, roughly
-~87% | fewer cases after the Phase 2 widget, built by another team
-:::
-
-Fewer cases is a good sign only if developers were helped, not turned away. I have no satisfaction data to show that.
+The numbers are in the summary above. Fewer cases is a good sign only if developers were helped, not turned away. I have no satisfaction data to show that.
 
 ## Reflection
 

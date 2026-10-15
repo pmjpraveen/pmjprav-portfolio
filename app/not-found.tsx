@@ -70,7 +70,7 @@ export default function NotFound() {
           underneath even where this text sits; the Link opts back in. */}
       <Container className="relative z-10 py-24 text-center pointer-events-none">
         <p className="font-mono text-caption uppercase tracking-wide text-[#948d82]">
-          Error 404 — Query failed
+          Error 404: Query failed
         </p>
 
         <h1 className="mx-auto mt-6 max-w-2xl text-[clamp(2rem,6vw,3.5rem)] font-light leading-[1.05] tracking-tight text-[#fdfcfc]">
@@ -78,7 +78,7 @@ export default function NotFound() {
         </h1>
 
         <p className="mt-5 max-w-md mx-auto text-body text-[#948d82]">
-          Move your cursor through the void below. Click it — you might catch
+          Move your cursor through the void below. Click it. You might catch
           the answer for a second before it lets go again.
         </p>
 

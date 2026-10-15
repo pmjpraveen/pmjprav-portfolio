@@ -1,6 +1,6 @@
 ## Summary
 
-One in-review version blocked every other submission on a major app marketplace's developer console, including test builds and builds for other devices. I led the redesign that replaced the single-file submission queue with independent release tracks, and **review waits fell from about 7 days to 2**.
+One in-review version blocked every other submission on Amazon's app developer console, including test builds and builds for other devices. I led the redesign that replaced the single-file submission queue with independent release tracks, and **review waits fell from about 7 days to 2**.
 
 Phases 1 and 2 shipped in Q2 2025, in time for the launch of a new device OS that the project was blocking. Phase 3, a full overhaul of the developer platform, was in progress when I left.
 
@@ -19,7 +19,7 @@ The brief was narrow: allow parallel binary uploads. A two-week study with seven
 
 An earlier 39-developer survey had pointed at the same themes, which gave me confidence they were real patterns. Mapping the old flow end to end made the real issue clear: it was a straight line built for one live version at a time. Parallel upload could not be bolted on. The information architecture itself had to change.
 
-![The old four-step submission flow](/projects/appstore-console/before-1-upload.png "Before · Step 1 of 4. Upload, targeting, store details and review all lived in one sequence. Brand elements redacted.")
+![The old four-step submission flow](/projects/appstore-console/before-1-upload.png "Before · Step 1 of 4. Upload, targeting, store details and review all lived in one sequence.")
 
 ![The structural change: one linear submission became shared app setup plus independent release tracks](/projects/appstore-console/ia-before-after.png "The structural shift · From one linear submission to shared app setup and independent release tracks.")
 
@@ -59,7 +59,7 @@ An earlier 39-developer survey had pointed at the same themes, which gave me con
 
 ## What came next
 
-**Phase 3: rebuild around the developer.** A new design system matched to the marketplace's devices, and a console organised by jobs (Dashboard, Release, Testing, Monetization, Monitoring) rather than by forms. It was still in progress when I left, so it is shown as design, not as shipped.
+**Phase 3: rebuild around the developer.** A new design system matched to Amazon's devices, and a console organised by jobs (Dashboard, Release, Testing, Monetization, Monitoring) rather than by forms. It was still in progress when I left, so it is shown as design, not as shipped.
 
 ![The Phase 3 dashboard](/projects/appstore-console/p3-dashboard.png "Phase 3 · Design in progress. Sample data.")
 

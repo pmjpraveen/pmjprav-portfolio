@@ -3,9 +3,8 @@
 Nytro.ai is a Pitch Intelligence platform that trains sales reps and gets them ready to sell. It analyses sales pitches and demos quickly and gives sales teams insight. The goal of this project was to make the system easier to use and to create content faster, which improves customer satisfaction and engagement.
 
 ::: stats
-31% | reduction in pitch creation time
-26% | increase in CSAT score
-84% | increase in customer engagement
+84% | customer engagement
++26% | CSAT, from a 34% baseline
 :::
 
 ![Global settings in the redesigned app](/projects/nytro-pitch/hero.png "The redesigned app, global settings. Click to enlarge.")
@@ -14,11 +13,8 @@ Nytro.ai is a Pitch Intelligence platform that trains sales reps and gets them r
 
 ::: rows
 Company | Nytro.ai, sales enablement
-Headquarters | Palo Alto, California, US
-Founded | 2019
-Revenue | $1.5 million (early 2022)
-Company size | 20+
-Customers | 8
+My role | Product designer. I owned the pitch experience as Nytro.ai spun out into an independent company.
+Scope | Pitch creation, recording and post-pitch analytics
 :::
 
 ## Challenge
@@ -71,7 +67,7 @@ Three areas changed the most. Each pair below shows the original on the left and
 
 ## Results
 
-The redesigned app has a simple, organised layout that makes features much easier to find. The content creation flow is shorter, cutting the time to make a pitch by 31%. Reporting and customisation made users more engaged, and customer satisfaction rose 26%.
+The redesigned app has a simple, organised layout that makes features much easier to find. The content creation flow is shorter, so pitches take less time to make, and the new reporting and customisation give users more to engage with.
 
 "With our fresh visual branding and refined language, the pitch app distinctly encapsulates the essence of both our current and target customer base, as well as our core values."
 
@@ -79,4 +75,4 @@ Ravish Kamath, Founder and CEO, Nytro.ai
 
 ## Conclusion
 
-The redesign addressed the usability problems and produced a more intuitive, easier-to-use product. The improved UX and UI lifted adoption, engagement and satisfaction.
+The redesign addressed the usability problems and produced an easier-to-use product.
