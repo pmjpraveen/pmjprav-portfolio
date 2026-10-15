@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { NAV_LINKS } from "../../content/navigation";
+import { SOCIAL_LINKS } from "../../content/social";
 import { Container } from "../container";
 import { LocalClock } from "./LocalClock";
 
@@ -21,20 +22,39 @@ export function Footer() {
           </p>
         </div>
 
-        <nav aria-label="Footer">
-          <ul className="flex flex-wrap items-center gap-x-6 gap-y-2 text-body-sm">
-            {NAV_LINKS.map(({ href, label }) => (
+        <div className="flex flex-col gap-3 sm:items-end">
+          <nav aria-label="Footer">
+            <ul className="flex flex-wrap items-center gap-x-6 gap-y-2 text-body-sm">
+              {NAV_LINKS.map(({ href, label }) => (
+                <li key={href}>
+                  <Link
+                    href={href}
+                    className="text-smoke transition-colors duration-150 ease-ui hover:text-ink"
+                  >
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <ul aria-label="Social" className="flex flex-wrap items-center gap-x-6 gap-y-2 text-body-sm">
+            {SOCIAL_LINKS.map(({ href, label }) => (
               <li key={href}>
-                <Link
+                <a
                   href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-smoke transition-colors duration-150 ease-ui hover:text-ink"
                 >
                   {label}
-                </Link>
+                  <span aria-hidden="true"> ↗</span>
+                  <span className="sr-only"> (opens in a new tab)</span>
+                </a>
               </li>
             ))}
           </ul>
-        </nav>
+        </div>
       </Container>
 
       {/* Fixed dark band, decoupled from the light/dark theme tokens — a

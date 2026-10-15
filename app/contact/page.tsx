@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Container } from "../components/container";
+import { SOCIAL_LINKS } from "../content/social";
 
 const EMAIL = "pmjprav@gmail.com";
 
@@ -32,6 +33,28 @@ export default function ContactPage() {
             {EMAIL}
             <span className="absolute inset-x-0 -bottom-1 h-px origin-left scale-x-0 bg-ink transition-transform duration-300 ease-ui group-hover:scale-x-100" />
           </a>
+
+          <div className="mt-14 border-t border-stone pt-8 sm:mt-16">
+            <p className="font-mono text-caption uppercase tracking-wide text-smoke">
+              Elsewhere
+            </p>
+            <ul className="mt-4 flex flex-wrap gap-x-8 gap-y-2">
+              {SOCIAL_LINKS.map(({ href, label }) => (
+                <li key={href}>
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-body-lg text-ink transition-colors duration-150 ease-ui hover:text-graphite"
+                  >
+                    {label}
+                    <span aria-hidden="true"> ↗</span>
+                    <span className="sr-only"> (opens in a new tab)</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </Container>
       </section>
     </main>
