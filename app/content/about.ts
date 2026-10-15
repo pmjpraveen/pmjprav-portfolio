@@ -83,25 +83,25 @@ export const ABOUT = {
     label: "Working with AI",
     lead: "I design with AI, and I build with it.",
     paragraphs: [
-      "I use AI across the whole product loop: shaping ideas, exploring options, prototyping, and building working software. It lets me go from a design decision to a running product without waiting on a handoff.",
-      "I treat it as a fast collaborator, not the author. I set the direction, make the calls on what's good, and check everything it produces against what people actually need.",
+      "I use AI at every stage of a product, from research and concepts to prototypes and working code. My main tools are Claude Code and ChatGPT.",
+      "Along and Knockout were built entirely by me, with AI. I design the product, direct the build and ship it myself.",
     ],
     items: [
       {
-        title: "Explore faster",
-        body: "Widen the option space early. More directions and quicker comparisons before I commit to one.",
+        title: "Every stage",
+        body: "Research, concepts, prototypes and production code. AI is part of how I work, from the first question to the shipped product.",
       },
       {
-        title: "Prototype in code",
-        body: "Turn designs into working prototypes, so I test real behaviour instead of static screens.",
+        title: "Built end to end",
+        body: "Along and Knockout were coded completely by me with AI, from the first screen to a live product.",
       },
       {
-        title: "Build products end to end",
-        body: "Take my own ideas from concept to a live product, like Along and Knockout.",
+        title: "Guardrails in the project",
+        body: "My CLAUDE.md rules tell Claude Code to review and test each feature as soon as it's built, so problems surface early.",
       },
       {
-        title: "Keep judgement human",
-        body: "AI is quick at producing. Taste, product sense and empathy for the user stay with me, and I review and test everything before it ships.",
+        title: "A human on the flow",
+        body: "I still test every flow myself. A person catches things AI can't.",
       },
     ],
   },
@@ -169,9 +169,9 @@ export const ABOUT = {
         title: "AI",
         items: [
           "Designing AI-powered products",
-          "AI-assisted prototyping",
-          "Building products with AI",
-          "Prompt and workflow design",
+          "AI across research, design and build",
+          "Building products with Claude Code",
+          "Review and testing guardrails",
         ],
       },
       {
