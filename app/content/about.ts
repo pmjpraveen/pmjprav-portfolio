@@ -4,7 +4,7 @@ export const ABOUT = {
   eyebrow: "About",
   heading: "I make complex systems feel simple.",
   intro:
-    "I'm Praveenkumar, a Senior Product Designer with 8+ years of experience creating AI-powered SaaS, B2B enterprise and consumer marketplace products.",
+    "I'm Praveenkumar, an AI-native product designer and design engineer with 8+ years of experience creating AI-powered SaaS, B2B enterprise and consumer marketplace products.",
 
   facts: [
     { label: "Based in", value: "Bengaluru, India" },
@@ -79,6 +79,33 @@ export const ABOUT = {
     ] as { title: string; body: string; /** Slug of a case study where this shows up. */ work?: string }[],
   },
 
+  ai: {
+    label: "Working with AI",
+    lead: "I design with AI, and I build with it.",
+    paragraphs: [
+      "I use AI across the whole product loop: shaping ideas, exploring options, prototyping, and building working software. It lets me go from a design decision to a running product without waiting on a handoff.",
+      "I treat it as a fast collaborator, not the author. I set the direction, make the calls on what's good, and check everything it produces against what people actually need.",
+    ],
+    items: [
+      {
+        title: "Explore faster",
+        body: "Widen the option space early. More directions and quicker comparisons before I commit to one.",
+      },
+      {
+        title: "Prototype in code",
+        body: "Turn designs into working prototypes, so I test real behaviour instead of static screens.",
+      },
+      {
+        title: "Build products end to end",
+        body: "Take my own ideas from concept to a live product, like Along and Knockout.",
+      },
+      {
+        title: "Keep judgement human",
+        body: "AI is quick at producing. Taste, product sense and empathy for the user stay with me, and I review and test everything before it ships.",
+      },
+    ],
+  },
+
   experience: {
     label: "Experience",
     roles: [
@@ -136,6 +163,15 @@ export const ABOUT = {
           "Visual design",
           "Design systems",
           "Cross-platform design",
+        ],
+      },
+      {
+        title: "AI",
+        items: [
+          "Designing AI-powered products",
+          "AI-assisted prototyping",
+          "Building products with AI",
+          "Prompt and workflow design",
         ],
       },
       {

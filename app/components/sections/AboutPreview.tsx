@@ -9,7 +9,7 @@ import { ArrowLink } from "../ui/ArrowLink";
 // sections don't read as a duplicate of each other back to back.
 const ABOUT = {
   label: "About",
-  statement: "I'm a Senior Product Designer who makes complex systems feel simple.",
+  statement: "I'm an AI-native product designer and design engineer who makes complex systems feel simple.",
   supporting:
     "I focus on clarity — turning ambiguous, technical problems into experiences that feel obvious in hindsight.",
   cta: { label: "More about me", href: "/about" },

@@ -14,7 +14,7 @@ const HERO = {
   eyebrow: "Hi, I'm",
   name: "Praveenkumar",
   supporting:
-    "Senior Product Designer with 8+ years of experience creating AI-powered SaaS, B2B enterprise, and consumer marketplace products.",
+    "AI-native product designer and design engineer. I design and build AI-powered products end to end, backed by 8+ years across SaaS, B2B enterprise and consumer marketplaces.",
   cta: { label: "My Resume", href: "https://drive.google.com/file/d/1xmeZsNdJ128nV7INO4DHunuTv698c8Tu/view?usp=sharing" },
 };
 

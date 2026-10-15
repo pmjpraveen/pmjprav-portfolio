@@ -46,10 +46,10 @@ export const metadata: Metadata = {
     ],
   },
   title: {
-    default: "Praveenkumar — Lead UX / Product Designer",
+    default: "Praveenkumar — AI-native Designer & Design Engineer",
     template: "%s — Praveenkumar",
   },
-  description: "Portfolio of Praveenkumar, a Lead UX / Product Designer.",
+  description: "Portfolio of Praveenkumar, an AI-native product designer and design engineer.",
 };
 
 export const viewport: Viewport = {

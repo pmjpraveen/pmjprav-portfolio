@@ -28,7 +28,7 @@ function AboutSection({ label, children }: { label: string; children: ReactNode 
 }
 
 export default function AboutPage() {
-  const { background, process, principles, experience, capabilities } = ABOUT;
+  const { background, process, principles, ai, experience, capabilities } = ABOUT;
 
   return (
     <main className="flex-1">
@@ -174,8 +174,32 @@ export default function AboutPage() {
           </ol>
         </AboutSection>
 
+        <AboutSection label={ai.label}>
+          <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
+            <p className="max-w-xl text-heading-sm leading-heading-sm tracking-heading-sm text-ink">
+              {ai.lead}
+            </p>
+            <div className="max-w-prose space-y-6">
+              {ai.paragraphs.map((paragraph) => (
+                <p key={paragraph} className="text-body-lg leading-body-lg text-smoke">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+          </div>
+
+          <ul className="mt-12 grid gap-x-12 gap-y-10 sm:grid-cols-2 lg:mt-16">
+            {ai.items.map((item) => (
+              <li key={item.title} className="border-t border-stone pt-5">
+                <h3 className="text-body-lg text-ink">{item.title}</h3>
+                <p className="mt-2 max-w-prose text-body text-smoke">{item.body}</p>
+              </li>
+            ))}
+          </ul>
+        </AboutSection>
+
         <AboutSection label={capabilities.label}>
-          <div className="grid gap-10 sm:grid-cols-3 sm:gap-12">
+          <div className="grid gap-10 sm:grid-cols-2 sm:gap-12 lg:grid-cols-4">
             {capabilities.groups.map((group) => (
               <div key={group.title}>
                 <h3 className="text-body-lg text-ink">{group.title}</h3>
