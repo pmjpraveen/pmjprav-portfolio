@@ -80,7 +80,11 @@ export function Hero() {
 
         <div data-hero-animate className="mt-10">
           <ProjectExternalLink label={HERO.cta.label} url={HERO.cta.href} />
-          <p className="mt-4 font-mono text-caption uppercase tracking-wide text-smoke">
+          <p className="mt-4 flex items-center gap-2.5 font-mono text-caption uppercase tracking-wide text-smoke">
+            <span aria-hidden="true" className="relative flex size-2">
+              <span className="absolute inline-flex size-full animate-ping rounded-full bg-green-500 opacity-75 motion-reduce:animate-none" />
+              <span className="relative inline-flex size-2 rounded-full bg-green-500" />
+            </span>
             {HERO.availability}
           </p>
         </div>
