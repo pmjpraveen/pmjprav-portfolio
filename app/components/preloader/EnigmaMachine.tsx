@@ -63,6 +63,10 @@ const cloth = new THREE.MeshStandardMaterial({ color: "#1c1713", roughness: 0.85
 const bakelite = new THREE.MeshStandardMaterial({ color: "#0c0b0a", roughness: 0.4, metalness: 0.1 });
 const redCable = new THREE.MeshPhysicalMaterial({ color: "#5a0d11", roughness: 0.55, clearcoat: 0.4, clearcoatRoughness: 0.4 });
 const socketHole = new THREE.MeshStandardMaterial({ color: "#050505", roughness: 0.9 });
+// Shared across scenes, so no one scene may dispose them.
+[steel, cloth, bakelite, redCable, socketHole].forEach((m) => {
+  m.userData.shared = true;
+});
 
 export function letterTexture(ch: string, fg: string, bg: string) {
   const c = document.createElement("canvas");
@@ -376,7 +380,7 @@ function lead(scene: THREE.Object3D, a: string, b: string, bulge: number) {
 }
 
 /** Perforated black pegboard the Bombe's drums are mounted on. */
-function pegTexture() {
+export function pegTexture() {
   const c = document.createElement("canvas");
   c.width = c.height = 128;
   const g = c.getContext("2d")!;
@@ -425,7 +429,7 @@ function perfTexture() {
 }
 
 /** A small analogue panel meter for the side panel. */
-function gaugeTexture() {
+export function gaugeTexture() {
   const c = document.createElement("canvas");
   c.width = 160;
   c.height = 110;

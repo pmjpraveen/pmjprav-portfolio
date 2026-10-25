@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Container } from "./components/container";
 import { SectionHead } from "./components/sections/SectionHead";
+import { Scene3D } from "./components/three/Scene3DLazy";
 
 const LINKS = [
   { href: "/work", label: "Work" },
@@ -8,7 +9,7 @@ const LINKS = [
   { href: "/contact", label: "Contact" },
 ];
 
-/** The Enigma's lampboard spells out what happened, one letter at a time. */
+/** A Bombe at rest, its lit drums spelling 404. */
 export default function NotFound() {
   return (
     <main className="flex-1">
@@ -20,12 +21,19 @@ export default function NotFound() {
           headline="This page "
           accent="doesn’t exist."
           intro="The link may be old or mistyped. The work and contact details are on the homepage."
-          kind="lamps"
-          word="NOTFOUND"
         />
       </div>
 
-      <section className="border-t border-stone pb-24 pt-12 sm:pb-32 sm:pt-16">
+      <figure>
+        <div className="border-y border-stone">
+          <Scene3D kind="bombe404" className="aspect-[16/10] w-full sm:aspect-[2/1]" />
+        </div>
+        <figcaption className="label mx-auto mt-4 max-w-[var(--content-max-width)] px-[var(--page-gutter)] text-[11px] text-ash">
+          A Bombe, the machine built to search for matches. This address matched nothing, so it spells 404.
+        </figcaption>
+      </figure>
+
+      <section className="pb-24 pt-12 sm:pb-32 sm:pt-16">
         <Container>
           <div className="flex flex-wrap items-center gap-x-10 gap-y-6">
             <Link href="/" className="link-accent">

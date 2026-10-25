@@ -3,9 +3,9 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
-import { faceTexture, letterTexture } from "../preloader/EnigmaMachine";
+import { faceTexture, gaugeTexture, letterTexture, pegTexture } from "../preloader/EnigmaMachine";
 
-export type SceneKind = "rotor" | "plug" | "lamps";
+export type SceneKind = "rotor" | "plug" | "lamps" | "bombe404";
 
 // The one accent, as in globals.css (dark theme). 3D scenes stay dark in both themes.
 const ACCENT = "#ec5a48";
@@ -17,6 +17,9 @@ type Built = {
   group: THREE.Group;
   /** Bounding radius, for fitting the camera. */
   radius: number;
+  /** Half extents for a wide or tall object; they default to the radius. */
+  halfW?: number;
+  halfH?: number;
   update: (t: number, input: Input) => void;
 };
 
@@ -236,10 +239,224 @@ function buildLamps(track: Track, word = "EXPLORE"): Built {
   };
 }
 
+// A 5 x 7 dot-matrix "4" and "0": the drums that make up the digits are lit.
+const DIGITS: Record<string, string[]> = {
+  "4": ["...#.", "..##.", ".#.#.", "#..#.", "#####", "...#.", "...#."],
+  "0": [".###.", "#...#", "#...#", "#...#", "#...#", "#...#", ".###."],
+};
+
+/**
+ * 404: a Bombe's wall of drums, seen straight on. The lit drums form the number and
+ * every drum turns, notch by notch. Cables are plugged between sockets on the two
+ * side panels. Built for the not-found page only.
+ */
+function buildBombe404(track: Track): Built {
+  const COLS = 19;
+  const ROWS = 9;
+  const P = 0.9; // drum pitch
+  const R = 0.4; // drum radius
+  const W = (COLS - 1) * P;
+  const H = (ROWS - 1) * P;
+
+  // Which cells are lit: "404" with a blank column between digits and a dark margin.
+  const lit = new Set<string>();
+  let x0 = 1;
+  for (const ch of "404") {
+    DIGITS[ch].forEach((row, r) =>
+      Array.from(row).forEach((c, i) => {
+        if (c === "#") lit.add(`${r + 1},${x0 + i}`);
+      }),
+    );
+    x0 += 6;
+  }
+
+  const g = new THREE.Group();
+  const steel = steelMat(track);
+  const bakelite = bakeliteMat(track);
+
+  // The pegboard the drums are mounted on.
+  const panel = new THREE.Mesh(
+    track(new THREE.BoxGeometry(W + 2, H + 1.8, 0.3)),
+    track(new THREE.MeshStandardMaterial({ color: "#0b0a09", metalness: 0.4, roughness: 0.6 })),
+  );
+  panel.position.z = -0.3;
+  g.add(panel);
+  const pegTex = track(pegTexture());
+  pegTex.repeat.set((W + 2) / 0.7, (H + 1.8) / 0.7);
+  const pegs = new THREE.Mesh(
+    track(new THREE.PlaneGeometry(W + 2, H + 1.8)),
+    track(new THREE.MeshStandardMaterial({ map: pegTex, metalness: 0.3, roughness: 0.65 })),
+  );
+  pegs.position.z = -0.14;
+  g.add(pegs);
+
+  // Side panels: sockets at the top and bottom, meters between.
+  const SIDE_X = W / 2 + 2.3;
+  const SOCKETS = [2.7, 1.9, -2.7]; // y of each socket on both panels
+  const sideMat = track(new THREE.MeshStandardMaterial({ color: "#1f2120", metalness: 0.5, roughness: 0.5 }));
+  const gaugeMat = track(new THREE.MeshStandardMaterial({ map: track(gaugeTexture()), roughness: 0.4 }));
+  const holeMat = track(new THREE.MeshStandardMaterial({ color: "#050505", roughness: 0.9 }));
+  const FRONT = -0.05; // the panels' front face
+  for (const side of [-1, 1]) {
+    const sx = side * SIDE_X;
+    const relay = new THREE.Mesh(track(new THREE.BoxGeometry(1.7, H * 0.9, 0.3)), sideMat);
+    relay.position.set(sx, 0, -0.2);
+    g.add(relay);
+    [0.8, -0.4, -1.6].forEach((y) => {
+      const meter = new THREE.Mesh(track(new THREE.PlaneGeometry(1.1, 0.76)), gaugeMat);
+      meter.position.set(sx, y, FRONT + 0.01);
+      g.add(meter);
+    });
+    for (const y of SOCKETS) {
+      const ring = new THREE.Mesh(track(new THREE.CylinderGeometry(0.2, 0.2, 0.08, 28).rotateX(Math.PI / 2)), steel);
+      ring.position.set(sx, y, FRONT + 0.04);
+      const hole = new THREE.Mesh(track(new THREE.CylinderGeometry(0.1, 0.1, 0.1, 20).rotateX(Math.PI / 2)), holeMat);
+      hole.position.set(sx, y, FRONT + 0.06);
+      g.add(ring, hole);
+    }
+  }
+
+  // Patch cables: each is seated in a socket on one side and a socket on the other.
+  const cableMat = track(new THREE.MeshStandardMaterial({ color: "#c8372c", roughness: 0.55 }));
+  const collarMat = track(new THREE.MeshStandardMaterial({ color: "#c8372c", roughness: 0.4 }));
+  const plug = (x: number, y: number) => {
+    const barrel = new THREE.Mesh(track(new THREE.CylinderGeometry(0.09, 0.09, 0.5, 20).rotateX(Math.PI / 2)), steel);
+    barrel.position.set(x, y, FRONT + 0.3);
+    const body = new THREE.Mesh(track(new THREE.BoxGeometry(0.34, 0.42, 0.5)), bakelite);
+    body.position.set(x, y, FRONT + 0.72);
+    const collar = new THREE.Mesh(track(new THREE.CylinderGeometry(0.15, 0.15, 0.12, 24).rotateX(Math.PI / 2)), collarMat);
+    collar.position.set(x, y, FRONT + 1.03);
+    g.add(barrel, body, collar);
+  };
+  const ZOUT = FRONT + 1.1; // where a cable leaves its plug
+  const cable = (y: number, apexY: number, apexZ: number) => {
+    const L = -SIDE_X;
+    const Rr = SIDE_X;
+    plug(L, y);
+    plug(Rr, y);
+    const curve = new THREE.CatmullRomCurve3(
+      [
+        new THREE.Vector3(L, y, ZOUT),
+        new THREE.Vector3(L, y + Math.sign(apexY - y) * 0.15, ZOUT + 0.6),
+        new THREE.Vector3(L + 1.6, apexY, apexZ),
+        new THREE.Vector3(0, apexY + Math.sign(apexY - y) * 0.2, apexZ + 0.1),
+        new THREE.Vector3(Rr - 1.6, apexY, apexZ),
+        new THREE.Vector3(Rr, y + Math.sign(apexY - y) * 0.15, ZOUT + 0.6),
+        new THREE.Vector3(Rr, y, ZOUT),
+      ],
+      false,
+      "centripetal",
+    );
+    g.add(new THREE.Mesh(track(new THREE.TubeGeometry(curve, 120, 0.07, 10)), cableMat));
+  };
+  cable(SOCKETS[0], H / 2 + 1.1, 2.0); // up and over the top
+  cable(SOCKETS[1], H / 2 + 0.55, 2.5); // a lower arc over the top
+  cable(SOCKETS[2], -H / 2 - 1.1, 2.0); // down and under
+
+  // The drums: lit ones coral and glowing, the rest dark.
+  const faceTex = track(faceTexture(512));
+  const sleeveGeo = track(new THREE.CylinderGeometry(1, 1, 1.6, 28).rotateX(Math.PI / 2));
+  const lipGeo = track(new THREE.TorusGeometry(0.965, 0.05, 10, 28));
+  const faceGeo = track(new THREE.CircleGeometry(0.93, 28));
+  const hubGeo = track(new THREE.CylinderGeometry(0.31, 0.31, 0.06, 18).rotateX(Math.PI / 2));
+  const pinGeo = track(new THREE.CylinderGeometry(0.085, 0.085, 0.14, 12).rotateX(Math.PI / 2));
+  const prongGeo = track(new THREE.BoxGeometry(0.5, 0.05, 0.03));
+
+  const sets = [
+    {
+      cells: [] as { x: number; y: number; period: number; dir: number; off: number }[],
+      sleeve: track(
+        new THREE.MeshPhysicalMaterial({
+          color: ACCENT,
+          emissive: ACCENT,
+          emissiveIntensity: 0.5,
+          roughness: 0.35,
+          metalness: 0.1,
+          clearcoat: 1,
+          clearcoatRoughness: 0.2,
+        }),
+      ),
+      face: track(new THREE.MeshStandardMaterial({ map: faceTex, roughness: 0.5, emissive: "#ffd9a0", emissiveMap: faceTex, emissiveIntensity: 0.18 })),
+      metal: steel,
+    },
+    {
+      cells: [] as { x: number; y: number; period: number; dir: number; off: number }[],
+      sleeve: track(new THREE.MeshStandardMaterial({ color: "#191714", roughness: 0.6, metalness: 0.2 })),
+      face: track(new THREE.MeshStandardMaterial({ map: faceTex, color: "#3a3835", roughness: 0.7 })),
+      metal: track(new THREE.MeshStandardMaterial({ color: "#4b4b47", metalness: 0.7, roughness: 0.55 })),
+    },
+  ];
+  let n = 0;
+  for (let r = 0; r < ROWS; r++) {
+    for (let c = 0; c < COLS; c++, n++) {
+      sets[lit.has(`${r},${c}`) ? 0 : 1].cells.push({
+        x: (c - (COLS - 1) / 2) * P,
+        y: ((ROWS - 1) / 2 - r) * P,
+        period: 6 + ((n * 5) % 7),
+        dir: n % 3 === 1 ? -1 : 1,
+        off: (n * 0.37) % 1,
+      });
+    }
+  }
+
+  const dummy = new THREE.Object3D();
+  const hubM = new THREE.Matrix4();
+  const lm = new THREE.Matrix4();
+  const out = new THREE.Matrix4();
+  const built = sets.map((set) => {
+    const cnt = set.cells.length;
+    const sleeve = new THREE.InstancedMesh(sleeveGeo, set.sleeve, cnt);
+    const lip = new THREE.InstancedMesh(lipGeo, set.sleeve, cnt);
+    const face = new THREE.InstancedMesh(faceGeo, set.face, cnt);
+    const hub = new THREE.InstancedMesh(hubGeo, set.metal, cnt);
+    const pin = new THREE.InstancedMesh(pinGeo, set.metal, cnt);
+    const prongs = new THREE.InstancedMesh(prongGeo, set.metal, cnt * 2);
+    const put = (mesh: THREE.InstancedMesh, i: number, x: number, y: number, z: number, rot = 0) => {
+      dummy.position.set(x, y, z * R);
+      dummy.rotation.set(0, 0, rot);
+      dummy.scale.setScalar(R);
+      dummy.updateMatrix();
+      mesh.setMatrixAt(i, dummy.matrix);
+    };
+    set.cells.forEach((cell, i) => {
+      put(sleeve, i, cell.x, cell.y, 0.5);
+      put(lip, i, cell.x, cell.y, 1.3);
+    });
+    g.add(sleeve, lip, face, hub, pin, prongs);
+    return { set, face, hub, pin, prongs, put };
+  });
+
+  return {
+    group: g,
+    radius: 12,
+    halfW: 12.6,
+    halfH: 6,
+    update(t) {
+      for (const { set, face, hub, pin, prongs, put } of built) {
+        set.cells.forEach((cell, i) => {
+          const rot = cell.dir * step(t + cell.off * cell.period, cell.period, 26);
+          const hubRot = -cell.dir * step(t + cell.off * cell.period * 2, cell.period * 2, 12);
+          put(face, i, cell.x, cell.y, 1.32, rot);
+          put(hub, i, cell.x, cell.y, 1.37, hubRot);
+          put(pin, i, cell.x, cell.y, 1.45, hubRot);
+          hubM.copy(dummy.matrix);
+          [0.12, -0.12].forEach((tilt, k) => {
+            lm.makeRotationZ(tilt).setPosition(0.3, 0, -0.01);
+            prongs.setMatrixAt(i * 2 + k, out.multiplyMatrices(hubM, lm));
+          });
+        });
+        [face, hub, pin, prongs].forEach((m) => (m.instanceMatrix.needsUpdate = true));
+      }
+      // Straight on: the machine itself never tilts.
+    },
+  };
+}
+
 const BUILD: Record<SceneKind, (track: Track, word?: string) => Built> = {
   rotor: buildRotor,
   plug: buildPlug,
   lamps: buildLamps,
+  bombe404: buildBombe404,
 };
 
 type Live = { start: () => void; stop: () => void; dispose: () => void };
@@ -310,7 +527,9 @@ export default function Scene3D({ kind, className, word }: { kind: SceneKind; cl
         const h = el!.clientHeight || 1;
         renderer.setSize(w, h, false);
         camera.aspect = w / h;
-        const dist = Math.max(built.radius / tan, built.radius / (tan * camera.aspect)) * 1.08;
+        const hw = built.halfW ?? built.radius;
+        const hh = built.halfH ?? built.radius;
+        const dist = Math.max(hh / tan, hw / (tan * camera.aspect)) * 1.08;
         camera.position.set(0, 0, dist);
         camera.lookAt(0, 0, 0);
         camera.updateProjectionMatrix();
@@ -356,7 +575,13 @@ export default function Scene3D({ kind, className, word }: { kind: SceneKind; cl
           ro.disconnect();
           disposables.forEach((d) => d.dispose());
           scene.traverse((o) => {
-            if (o instanceof THREE.Mesh) o.geometry.dispose();
+            if (!(o instanceof THREE.Mesh)) return;
+            o.geometry.dispose();
+            // Materials a builder made inline are ours to free; shared ones are not.
+            for (const m of Array.isArray(o.material) ? o.material : [o.material]) {
+              if (!m.userData.shared) m.dispose();
+            }
+            if (o instanceof THREE.InstancedMesh) o.dispose();
           });
           pmrem.dispose();
           renderer.dispose();

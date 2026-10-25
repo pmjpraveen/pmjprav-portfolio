@@ -43,7 +43,7 @@ export function ThemeToggle() {
       const theme: Theme = wasDark ? "light" : "dark";
       applyTheme(theme);
       try {
-        localStorage.setItem("theme", theme);
+        localStorage.setItem("site-theme", theme);
       } catch {
         // Private browsing / storage disabled: the choice just won't persist.
       }

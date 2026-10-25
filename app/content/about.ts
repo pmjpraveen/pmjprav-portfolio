@@ -2,8 +2,8 @@
 // career/skills details. Nothing here is invented.
 export const ABOUT = {
   eyebrow: "About",
-  headline: "I'm a product designer ",
-  accent: "who also builds.",
+  headline: "I'm a product designer and ",
+  accent: "design engineer.",
   intro:
     "I'm Praveenkumar, a product designer and design engineer in Bengaluru, with 8+ years designing developer tools, enterprise dashboards and consumer apps. I'm open to full-time roles and consulting.",
 

@@ -13,7 +13,7 @@ import "./globals.css";
 // Runs before hydration so the page never flashes the wrong theme: the Enigma
 // theme (data-theme="dark") unless the visitor has pulled the cord to daylight,
 // which ThemeToggle stores. Written onto <html> synchronously, pre-paint.
-const THEME_INIT_SCRIPT = `(function(){var t='dark';try{if(localStorage.getItem('theme')==='light'){t='light';}}catch(e){}document.documentElement.setAttribute('data-theme',t);})();`;
+const THEME_INIT_SCRIPT = `(function(){var t='dark';try{if(localStorage.getItem('site-theme')==='light'){t='light';}}catch(e){}document.documentElement.setAttribute('data-theme',t);})();`;
 
 // Faculty Glyphic (display serif, headlines), Geist (body) and Geist Mono (labels),
 // all open-source and self-hosted at build time via next/font: no runtime request.
@@ -38,9 +38,9 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: "Praveenkumar",
-    title: "Praveenkumar — Product designer in Bengaluru",
+    title: "Praveenkumar — Product designer & design engineer",
     description:
-      "Praveenkumar is a product designer in Bengaluru. Case studies in developer tools and enterprise software, side projects, and AI explorations.",
+      "Praveenkumar is a product designer and design engineer in Bengaluru. Case studies in developer tools and enterprise software, plus side projects and AI explorations, designed and built by Praveenkumar.",
   },
   twitter: { card: "summary_large_image" },
   // Two files, picked by the browser's colour scheme (the tab strip follows
@@ -53,11 +53,11 @@ export const metadata: Metadata = {
     ],
   },
   title: {
-    default: "Praveenkumar — Product designer in Bengaluru",
+    default: "Praveenkumar — Product designer & design engineer",
     template: "%s — Praveenkumar",
   },
   description:
-    "Praveenkumar is a product designer in Bengaluru. Case studies in developer tools and enterprise software, side projects, and AI explorations.",
+    "Praveenkumar is a product designer and design engineer in Bengaluru. Case studies in developer tools and enterprise software, plus side projects and AI explorations, designed and built by Praveenkumar.",
 };
 
 export const viewport: Viewport = {
@@ -76,6 +76,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      // Dark from the first byte of HTML, with no script needed. The script below only
+      // switches to daylight for a visitor who has chosen it.
+      data-theme="dark"
       suppressHydrationWarning
       className={`${facultyGlyphic.variable} ${geist.variable} ${geistMono.variable} h-full antialiased`}
     >
