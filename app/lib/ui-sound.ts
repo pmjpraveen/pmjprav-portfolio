@@ -33,8 +33,30 @@ function audioCtx() {
 }
 
 /** Browsers keep audio suspended until a user gesture; call from one. */
-export function unlockRotorAudio() {
-  void audioCtx()?.resume();
+export function unlockRotorAudio(): Promise<void> {
+  return audioCtx()?.resume().catch(() => {}) ?? Promise.resolve();
+}
+
+// One master gain for everything the loader plays, so the Sound toggle can mute
+// it instantly while the recording keeps running in step.
+let master: GainNode | null = null;
+let masterCtx: AudioContext | null = null;
+function masterNode(c: AudioContext) {
+  if (master && masterCtx === c) return master;
+  master = c.createGain();
+  master.connect(c.destination);
+  masterCtx = c;
+  return master;
+}
+
+export function setSoundEnabled(on: boolean) {
+  const c = audioCtx();
+  if (c) masterNode(c).gain.value = on ? 1 : 0;
+}
+
+/** "suspended" means the browser is waiting for a click or key before it allows sound. */
+export function audioState(): AudioContextState | "none" {
+  return audioCtx()?.state ?? "none";
 }
 
 /** Short ratchet click for a spinning rotor, or a deeper thunk when it locks. */
@@ -98,27 +120,40 @@ export function loadEnigmaSample() {
 
 /**
  * Plays stretches of the recording back to back at `rate`, starting `lead`
- * seconds from now. Returns false if the recording or audio isn't ready, so the
- * caller can fall back to synthesized keys.
+ * seconds from now. `skip` joins a run that began that many seconds ago: what
+ * has already passed is left out and playback picks up in step. Returns false if
+ * the recording or audio isn't ready, so the caller can fall back to synthesized keys.
  */
-export function playEnigmaRun(segments: { from: number; to: number }[], rate: number, lead: number, gap: number) {
+export function playEnigmaRun(
+  segments: { from: number; to: number }[],
+  rate: number,
+  lead: number,
+  gap: number,
+  skip = 0,
+) {
   const c = audioCtx();
   if (!c || c.state !== "running" || !sample) return false;
-  let at = c.currentTime + lead;
+  let clock = lead - skip; // seconds from now at which the next segment begins
   for (const { from, to } of segments) {
-    const real = (to - from) / rate; // seconds on the clock
+    const real = (to - from) / rate;
+    const segStart = clock;
+    clock += real + gap;
+    if (segStart + real <= 0) continue; // already over
+    const used = Math.max(0, -segStart); // seconds of this segment already past
+    const offset = from + used * rate;
+    const left = real - used;
+    const at = c.currentTime + Math.max(0, segStart);
     const src = c.createBufferSource();
     src.buffer = sample;
     src.playbackRate.value = rate;
     const gain = c.createGain();
     gain.gain.setValueAtTime(0.0001, at);
     gain.gain.linearRampToValueAtTime(0.6, at + 0.03);
-    gain.gain.setValueAtTime(0.6, at + real - 0.05);
-    gain.gain.linearRampToValueAtTime(0.0001, at + real);
-    src.connect(gain).connect(c.destination);
-    src.start(at, from, to - from);
-    src.stop(at + real + 0.02);
-    at += real + gap;
+    gain.gain.setValueAtTime(0.6, at + Math.max(0.03, left - 0.05));
+    gain.gain.linearRampToValueAtTime(0.0001, at + left);
+    src.connect(gain).connect(masterNode(c));
+    src.start(at, offset, left * rate);
+    src.stop(at + left + 0.02);
   }
   return true;
 }
@@ -134,7 +169,7 @@ function softBus(c: AudioContext) {
   lp.frequency.value = 1600;
   const g = c.createGain();
   g.gain.value = 0.4;
-  lp.connect(g).connect(c.destination);
+  lp.connect(g).connect(masterNode(c));
   bus = lp;
   busCtx = c;
   return lp;
