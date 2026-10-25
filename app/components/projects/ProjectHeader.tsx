@@ -16,25 +16,31 @@ type ProjectHeaderProps = {
 export function ProjectHeader({ project }: ProjectHeaderProps) {
   const { category, title, description, role, year, heroVisual, meta } = project;
 
+  // Accent the last word of the title, as the other page headlines do.
+  const words = title.split(" ");
+  const last = words.pop();
+  const lead = words.length ? `${words.join(" ")} ` : "";
+
   return (
-    <section aria-labelledby="project-title" className="pt-12 sm:pt-16 lg:pt-20">
+    <section aria-labelledby="project-title" className="pt-10 sm:pt-14 lg:pt-16">
       <Container>
-        <p className="font-mono text-caption uppercase tracking-wide text-smoke">
-          {category}
+        <p className="label">
+          <span className="text-accent">{project.number}</span> / {category}
         </p>
 
         <h1
           id="project-title"
-          className="mt-6 max-w-4xl text-heading leading-display tracking-display text-ink lg:text-display"
+          className="mt-6 max-w-5xl text-[clamp(3rem,7.4vw,6.75rem)] leading-[0.98] tracking-[-0.03em] text-ink"
         >
-          {title}
+          {lead}
+          <span className="text-accent">{last}</span>
         </h1>
 
         <p className="mt-6 max-w-prose text-body-lg leading-body-lg text-smoke">
           {description}
         </p>
 
-        <div className="mt-10">
+        <div className="mt-10 border-t border-stone pt-6">
           <ProjectMeta
             items={[
               { label: "Role", value: role },
@@ -46,17 +52,14 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
             ]}
           />
         </div>
-      </Container>
 
-      {/* Full-bleed: breaks out of the container to span the viewport edge-to-edge,
-          the one deliberate width contrast against the text column above. */}
-      <div className="relative left-1/2 mt-10 w-screen -translate-x-1/2 lg:mt-12">
-        <ProjectVisual
-          thumbnail={heroVisual?.src}
-          alt={heroVisual?.alt ?? `${title} preview`}
-          bleed
-        />
-      </div>
+        <div className="mt-10 lg:mt-12">
+          <ProjectVisual
+            thumbnail={heroVisual?.src}
+            alt={heroVisual?.alt ?? `${title} preview`}
+          />
+        </div>
+      </Container>
     </section>
   );
 }

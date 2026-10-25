@@ -53,13 +53,13 @@ export default async function Page({ params }: PageProps) {
     <main className="flex-1">
       <Container>
         <Link
-          href="/"
-          className="group mt-8 inline-flex items-center gap-2 font-mono text-caption uppercase tracking-wide text-smoke transition-colors duration-150 hover:text-ink"
+          href="/work"
+          className="label group mt-8 inline-flex items-center gap-2 transition-colors duration-150 hover:text-ink"
         >
           <svg aria-hidden="true" viewBox="0 0 10 10" className="size-3 transition-transform duration-150 group-hover:-translate-x-0.5">
             <path d="M9 5H1m0 0 4-4M1 5l4 4" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" fill="none" />
           </svg>
-          Back
+          All work
         </Link>
       </Container>
       <ProjectPage

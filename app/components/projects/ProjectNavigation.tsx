@@ -63,11 +63,11 @@ export function ProjectNavigation({ items }: ProjectNavigationProps) {
             <a
               href={`#${item.id}`}
               aria-current={activeId === item.id ? "location" : undefined}
-              className={`whitespace-nowrap font-mono text-caption uppercase tracking-wide transition-colors duration-150 ${
-                activeId === item.id ? "text-ink" : "text-smoke hover:text-ink"
+              className={`label whitespace-nowrap transition-colors duration-150 ${
+                activeId === item.id ? "!text-ink" : "hover:!text-ink"
               }`}
             >
-              {String(index + 1).padStart(2, "0")} {item.label}
+              <span className={activeId === item.id ? "text-accent" : ""}>{String(index + 1).padStart(2, "0")}</span> {item.label}
             </a>
           </li>
         ))}

@@ -164,9 +164,7 @@ function renderBlock(block: Block, key: number, stepIndex = 0) {
         className="grid gap-6 border-t border-stone pt-10 first:border-t-0 first:pt-0 lg:grid-cols-[5fr_7fr] lg:gap-12"
       >
         <div>
-          <p className="font-mono text-caption uppercase tracking-wide text-smoke">
-            {String(stepIndex + 1).padStart(2, "0")}
-          </p>
+          <p className="label text-accent">{String(stepIndex + 1).padStart(2, "0")}</p>
           <h3 className="mt-3 text-body-lg text-ink">{block.title}</h3>
           <div className="mt-3 space-y-3 [&_p]:text-body [&_p]:leading-body [&_ul]:text-body">
             {block.body.map((b, i) => renderBlock(b, i))}
@@ -224,11 +222,11 @@ export function parseCaseStudyMarkdown(markdown: string): ProjectSectionData[] {
       content: (
         <div>
           {heading ? (
-            <h2 className="font-mono text-caption font-normal uppercase tracking-wide text-smoke">
+            <h2 className="text-[length:clamp(2rem,4vw,3rem)] leading-[1.05] tracking-[-0.02em] text-ink">
               {heading}
             </h2>
           ) : null}
-          <div className={`space-y-8 ${heading ? "mt-4" : ""}`}>
+          <div className={`space-y-8 ${heading ? "mt-8" : ""}`}>
             {blocks.map((block, i) =>
               renderBlock(block, i, blocks.slice(0, i).filter((b) => b.kind === "step").length),
             )}

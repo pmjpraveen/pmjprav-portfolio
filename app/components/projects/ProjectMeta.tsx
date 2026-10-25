@@ -13,11 +13,11 @@ export function ProjectMeta({ items }: ProjectMetaProps) {
   if (present.length === 0) return null;
 
   return (
-    <dl className="flex flex-wrap gap-x-8 gap-y-4 font-mono text-caption uppercase tracking-wide">
+    <dl className="flex flex-wrap gap-x-10 gap-y-5">
       {present.map((item) => (
         <div key={item.label}>
-          <dt className="text-smoke">{item.label}</dt>
-          <dd className="mt-1 text-body-sm normal-case text-ink">{item.value}</dd>
+          <dt className="label">{item.label}</dt>
+          <dd className="mt-1 max-w-xs text-body-sm text-ink">{item.value}</dd>
         </div>
       ))}
     </dl>
