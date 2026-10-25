@@ -105,35 +105,15 @@ Avoid unnecessary dependencies.
 
 # 5. Typography
 
-## Primary Typeface
+## Typefaces
 
-The primary typeface is **Switzer**.
+Three open-source typefaces, self-hosted at build time with `next/font/google`:
 
-Do not use Waldenburg or Inter.
+* Display and headings: **Faculty Glyphic** 400
+* Body, navigation, buttons: **Geist** 400 (500 for buttons / emphasis)
+* Technical metadata and labels: **Geist Mono** 400
 
-Typography hierarchy:
-
-* Display: Switzer 300
-* Large headings: Switzer 300
-* Headings: Switzer 300–400
-* Body: Switzer 400
-* Navigation: Switzer 400
-* Buttons / emphasis: Switzer 500
-* Technical metadata: Geist Mono 400
-
-Do not introduce additional typefaces.
-
-## Type Scale
-
-Use the established scale:
-
-* Display: 48px
-* Heading: 36px
-* Heading Small: 32px
-* Body Large: 20px
-* Body: 16px
-* Body Small: 14px
-* Caption: 10px
+Do not use Waldenburg, Inter or Switzer. Do not introduce additional typefaces.
 
 Display typography should use approximately:
 
@@ -151,134 +131,54 @@ Do not simply scale every type size proportionally on mobile. Preserve hierarchy
 
 # 6. Font Files
 
-If licensed Switzer font files are available, place them under:
-
-```text
-public/fonts/Switzer/
-```
-
-Use the actual filenames available in the project.
-
-Do not invent font filenames.
-
-Geist Mono should live under:
-
-```text
-public/fonts/GeistMono/
-```
-
-If font files are not yet available, do not create fake `@font-face` declarations.
+Fonts load through `next/font/google` in `app/layout.tsx`; there are no local font files to maintain. The old Switzer files under `public/fonts/` are unused.
 
 ---
 
 # 7. Color System
 
-Use these established colors.
+The palette comes from https://www.mithun.zip, applied to a different site. The tokens live in `app/globals.css`; use the token names, not hex values.
 
-## Canvas
-
-```text
-Eggshell       #fdfcfc
-Warm Taupe     #f5f3f1
-Stone          #ebe8e4
-```
-
-## Typography
+## Dark (default)
 
 ```text
-Ink            #000000
-Graphite       #44403b
-Smoke          #777169
-Ash            #a59f97
+Canvas   #131313   --color-eggshell
+Surface  #1a1815   --color-warm-taupe
+Hairline #2c2a26   --color-stone
+Text     #efe8da   --color-ink
+Muted    #b4ad9f   --color-smoke
+Faint    #8a8478   --color-ash
+Accent   #ec5a48   --color-accent
 ```
 
-## Product / Project Accents
+## Light (the pullcord's "paper" theme)
 
 ```text
-Violet Spark   #0447ff
-Ember Orange   #ff4704
+Canvas #f1ece2   Surface #e9e3d6   Hairline #d6cfbf
+Text   #1a1815   Muted   #676158   Accent   #d8402f
 ```
 
-Violet and orange are primarily for project/product visuals.
-
-Do not use them as general UI chrome.
-
-Avoid introducing arbitrary colors.
-
-Do not use pure white `#ffffff` as the page background.
+Use the accent sparingly: section index numbers, links, one phrase per headline, 3D highlights. Mono labels are muted, not accented. Violet and orange (`#0447ff`, `#ff4704`) are only for project visuals. Do not use pure white `#ffffff` as a background.
 
 ---
 
 # 8. Page Canvas
 
-The global page canvas should use the eggshell background:
-
-```text
-#fdfcfc
-```
-
-The portfolio uses a subtle **24px dot-grid paper background**.
-
-The dot grid is a portfolio-specific extension of the existing spacing system.
-
-Conceptually:
-
-```css
-background-color: #fdfcfc;
-background-image: radial-gradient(
-  circle,
-  rgba(119, 113, 105, 0.22) 0.8px,
-  transparent 0.8px
-);
-background-size: 24px 24px;
-```
-
-The dot grid should:
-
-* Remain subtle
-* Sit behind the page canvas
-* Not interfere with readability
-* Not appear inside every component
-* Not appear inside project visuals
-* Not become a decorative gimmick
-
-Content surfaces can sit cleanly above the canvas.
+Flat canvas colour, no background texture. Depth comes from 3D objects, hairlines and surfaces, not from patterns.
 
 ---
 
 # 9. Surfaces
 
-Use:
+* Page canvas, then one surface step (`--color-warm-taupe`) for cards and plates, then hairline borders (`--color-stone`).
+* Prefer flat surfaces and hairlines. Avoid heavy shadows, glassmorphism and excessive gradients.
+* Tags are mono chips: 3px radius, hairline border, faint fill (`.chip`).
 
-### Page Canvas
+---
 
-`#fdfcfc`
+# 9b. 3D and sound
 
-### Feature Surface
-
-`#f5f3f1`
-
-### Divider / Border
-
-`#ebe8e4`
-
-Prefer:
-
-* Flat surfaces
-* Hairline borders
-* Subtle contrast
-* Clear hierarchy
-
-Avoid:
-
-* Heavy shadows
-* Glassmorphism
-* Excessive gradients
-* Floating cards everywhere
-* Excessive borders
-* Pure white cards on an eggshell canvas
-
-The interface should feel printed/editorial rather than glossy.
+3D objects are a defining part of the design: the Enigma desk in the loader, and a rotor, patch lead and lampboard per homepage section (`app/components/three/Scene3D.tsx`). They mount only near the viewport, free their WebGL context when far away, react to the pointer and scroll, and render a single still frame under reduced motion. Keep them procedural and lightweight, and keep the 3D palette to the tokens above plus warm lamp light. Every link click plays a soft Enigma keystroke (`LinkSound`), muted by the loader's Sound toggle.
 
 ---
 

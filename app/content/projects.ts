@@ -51,7 +51,7 @@ export type Project = {
   /** Path to a real image, used by the homepage list. Omit to render the neutral placeholder. */
   thumbnail?: string;
   imageAlt?: string;
-  /** Composition variant — see ProjectStory. Defaults to "standard". */
+  /** Composition variant. Defaults to "standard". */
   layout?: ProjectLayout;
   featured?: boolean;
 
@@ -85,7 +85,7 @@ export const projects: Project[] = [
     title: "Appstore Developer Console",
     category: "Developer Tools · Platform",
     description:
-      "Helping Amazon's app developers ship to every device in parallel, cutting review waits from about 7 days to 2.",
+      "Amazon's app developer console let only one version through review at a time. I redesigned it around parallel release tracks, and review waits fell from about 7 days to 2.",
     role: "Lead Designer, App Submissions",
     year: "2025",
     layout: "offset",
@@ -110,7 +110,7 @@ export const projects: Project[] = [
     title: "Developer Support",
     category: "Developer Tools · Support",
     description:
-      "Helping Amazon's developers follow their support cases, cutting case volume by about 47%, then about 87% with an AI help widget.",
+      "Developers on Amazon's app marketplace could open a support case but not follow it. I turned each case into a page they can follow, and case volume fell by about 47%, then about 87% with an AI help widget.",
     role: "Lead Designer, Support Cases",
     year: "2024",
     layout: "standard",
@@ -135,7 +135,7 @@ export const projects: Project[] = [
     title: "Spark by Recur",
     category: "Fintech · Financing",
     description:
-      "Designing the onboarding and approval flow for revenue-based financing, so founders can raise without dilution and see capital in as little as two days.",
+      "Onboarding, verification and approval for Spark, a revenue-based financing product from Recur. Founders borrow against recurring revenue instead of selling equity, and see capital in as little as two days.",
     role: "",
     year: "",
     layout: "standard",
@@ -156,7 +156,7 @@ export const projects: Project[] = [
     title: "Nytro Pitch App",
     category: "B2B · SaaS",
     description:
-      "Redesigning a sales-pitch training app so teams can find features and create content faster.",
+      "Nytro.ai trains sales reps with pitch practice and analytics. I redesigned the app so teams can find features and create content faster.",
     role: "Product Designer",
     year: "2021–22",
     layout: "offset",
@@ -178,7 +178,7 @@ export const projects: Project[] = [
     title: "Comments in a Digital Dashboard",
     category: "Enterprise · ERP",
     description:
-      "Redesigning how people leave and manage comments in an internal ERP dashboard, so the feature is easier to find and use. Under NDA, shown at summary level.",
+      "Comments in an internal ERP dashboard were hard to find and use. I led the redesign. Under NDA, so shown at summary level.",
     role: "Lead Designer",
     year: "2023",
     layout: "offset",

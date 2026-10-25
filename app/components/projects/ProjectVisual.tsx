@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Plate } from "../ui/Plate";
 
 const ASPECT_CLASSES = {
   "16/10": "aspect-[16/10]",
@@ -21,7 +22,7 @@ type ProjectVisualProps = {
 
 /**
  * Presentational only — hover/link behavior belongs to whatever wraps this
- * (see ProjectStory), so this stays reusable without assuming clickability.
+ * (see ProjectCard), so this stays reusable without assuming clickability.
  */
 export function ProjectVisual({
   thumbnail,
@@ -31,11 +32,10 @@ export function ProjectVisual({
   bleed = false,
   objectTop = false,
 }: ProjectVisualProps) {
-  return (
-    <figure>
+  const frame = (
       <div
         className={`relative w-full overflow-hidden bg-warm-taupe ${
-          bleed ? "" : "rounded-large"
+          bleed ? "" : "rounded-xl"
         } ${ASPECT_CLASSES[aspect]}`}
       >
         {thumbnail ? (
@@ -55,6 +55,11 @@ export function ProjectVisual({
           </div>
         )}
       </div>
+  );
+
+  return (
+    <figure>
+      {bleed ? frame : <Plate>{frame}</Plate>}
 
       {caption ? (
         <figcaption className="mt-3 font-mono text-caption text-smoke">

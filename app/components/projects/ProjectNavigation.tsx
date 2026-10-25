@@ -12,7 +12,7 @@ type ProjectNavigationProps = {
  * Compact section index, generated from whichever sections the project
  * actually defines (see ProjectPage) — never a hard-coded universal list.
  * A horizontally-scrollable strip on mobile; a sticky left sidebar at lg+,
- * the same "sticky rail beside content" idiom ProjectStory already uses on
+ * the same "sticky rail beside content" idiom ProjectCard already uses on
  * the homepage. A subtle active-state tracks the section nearest the top of
  * the viewport via IntersectionObserver.
  */

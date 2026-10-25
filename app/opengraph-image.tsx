@@ -14,16 +14,16 @@ export default function OpengraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#fdfcfc",
-          color: "#000000",
+          background: "#131313",
+          color: "#efe8da",
           padding: 80,
         }}
       >
-        <div style={{ display: "flex", fontSize: 28, letterSpacing: 3, color: "#777169" }}>PORTFOLIO</div>
+        <div style={{ display: "flex", fontSize: 28, letterSpacing: 3, color: "#b4ad9f" }}>PORTFOLIO</div>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ display: "flex", fontSize: 148, lineHeight: 1, letterSpacing: -5 }}>Praveenkumar</div>
-          <div style={{ display: "flex", fontSize: 44, marginTop: 28, color: "#777169" }}>
-            AI-native product designer and design engineer
+          <div style={{ display: "flex", fontSize: 44, marginTop: 28, color: "#ec5a48" }}>
+            Product designer · Developer tools and enterprise software
           </div>
         </div>
       </div>

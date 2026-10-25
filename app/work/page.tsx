@@ -1,31 +1,42 @@
 import type { Metadata } from "next";
-import { Container } from "../components/container";
-import { ProjectStoryList } from "../components/projects/ProjectStoryList";
+import { WorkIndex } from "../components/projects/WorkIndex";
+import { SectionHead } from "../components/sections/SectionHead";
+import { getRealProjects } from "../content/projects";
 
 export const metadata: Metadata = {
   title: "Work",
-  description: "Selected product design work by Praveenkumar.",
+  description:
+    "Case studies by Praveenkumar, a product designer: developer tools at Amazon, fintech at Recur, B2B SaaS at Nytro.ai and enterprise software at Honeywell.",
 };
 
 export default function WorkPage() {
+  // Plain data only: the project records carry JSX sections that can't cross to the client.
+  const projects = getRealProjects().map((p) => ({
+    slug: p.slug,
+    number: p.number,
+    title: p.title,
+    category: p.category,
+    description: p.description,
+    role: p.role,
+    year: p.year,
+    thumbnail: p.thumbnail,
+    imageAlt: p.imageAlt,
+  }));
+
   return (
     <main className="flex-1">
-      <section className="pt-16 pb-16 sm:pt-20 sm:pb-20 lg:pt-24 lg:pb-24">
-        <Container>
-          <h1 className="max-w-2xl text-heading leading-display tracking-display text-ink lg:text-display">
-            Work
-          </h1>
-          <p className="mt-6 max-w-prose text-body-lg leading-body-lg text-smoke">
-            Selected product design work.
-          </p>
-        </Container>
-      </section>
-
-      {/* Keeps the heading outline non-skipping (h1 → h2 → h3) without
-          visually repeating "Work" above every project — ProjectStory's
-          own headings are h3. */}
-      <h2 className="sr-only">All projects</h2>
-      <ProjectStoryList />
+      <div className="pt-12 sm:pt-16 lg:pt-20">
+        <SectionHead
+          as="h1"
+          index="01"
+          eyebrow="Work"
+          headline="Selected "
+          accent="work."
+          intro="Case studies from Amazon, Recur, Nytro.ai and Honeywell."
+          kind="rotor"
+        />
+      </div>
+      <WorkIndex projects={projects} />
     </main>
   );
 }

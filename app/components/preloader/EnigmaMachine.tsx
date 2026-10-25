@@ -64,7 +64,7 @@ const bakelite = new THREE.MeshStandardMaterial({ color: "#0c0b0a", roughness: 0
 const redCable = new THREE.MeshPhysicalMaterial({ color: "#5a0d11", roughness: 0.55, clearcoat: 0.4, clearcoatRoughness: 0.4 });
 const socketHole = new THREE.MeshStandardMaterial({ color: "#050505", roughness: 0.9 });
 
-function letterTexture(ch: string, fg: string, bg: string) {
+export function letterTexture(ch: string, fg: string, bg: string) {
   const c = document.createElement("canvas");
   c.width = c.height = 96;
   const g = c.getContext("2d")!;
@@ -143,9 +143,9 @@ function brickTexture() {
   return t;
 }
 
-/** Bakelite drum face for the Bombe: brown disc, tan letter ring, wired holes. */
-function faceTexture() {
-  const size = 256;
+/** Bakelite drum face (Bombe and rotor): brown disc, tan letter ring, wired holes. */
+export function faceTexture(size = 256) {
+  const k = size / 256;
   const c = document.createElement("canvas");
   c.width = c.height = size;
   const g = c.getContext("2d")!;
@@ -158,7 +158,7 @@ function faceTexture() {
   g.arc(m, m, m * 0.78, 0, 7, true);
   g.fill("evenodd");
   g.fillStyle = "#eadfc6";
-  g.font = "700 20px Helvetica, Arial, sans-serif";
+  g.font = `700 ${20 * k}px Helvetica, Arial, sans-serif`;
   g.textAlign = "center";
   g.textBaseline = "middle";
   for (let i = 0; i < 26; i++) {
@@ -177,6 +177,7 @@ function faceTexture() {
   }
   const t = new THREE.CanvasTexture(c);
   t.colorSpace = THREE.SRGBColorSpace;
+  t.anisotropy = 8;
   return t;
 }
 
@@ -270,6 +271,7 @@ function drawDisplay(
   decrypting: boolean,
   dots: number,
   percent: number,
+  label = "LOADING",
 ) {
   g.fillStyle = "#070504";
   g.fillRect(0, 0, w, h);
@@ -298,7 +300,7 @@ function drawDisplay(
   g.fillStyle = "rgba(255,71,4,0.7)";
   g.font = mono(34);
   g.textAlign = "left";
-  g.fillText("LOADING", 48, 62);
+  g.fillText(label, 48, 62);
   g.textAlign = "right";
   g.fillText(`${String(percent).padStart(3, "0")}%`, w - 48, h - 36);
 }
@@ -665,29 +667,43 @@ function buildBombe(
   };
 }
 
+/** Where a part of the machine lands in the canvas, as 0–1 fractions (see `mode="hero"`). */
+export type MachinePoint = { id: string; x: number; y: number };
+
 export default function EnigmaMachine({
   onReady,
   onKey,
   percent,
+  mode = "loader",
+  onProject,
 }: {
   onReady: () => void;
   onKey: () => void;
   percent: number;
+  /** "loader": types the name to 100% and decrypts. "hero": idle, already decrypted, silent. */
+  mode?: "loader" | "hero";
+  /** hero only: called whenever the layout changes, with where the machine's parts are on screen. */
+  onProject?: (points: MachinePoint[]) => void;
 }) {
   const host = useRef<HTMLDivElement>(null);
   const readyRef = useRef(onReady);
   const keyRef = useRef(onKey);
   const percentRef = useRef(percent);
+  const modeRef = useRef(mode);
+  const projectRef = useRef(onProject);
 
   useEffect(() => {
     readyRef.current = onReady;
     keyRef.current = onKey;
     percentRef.current = percent;
-  }, [onReady, onKey, percent]);
+    projectRef.current = onProject;
+  }, [onReady, onKey, percent, onProject]);
 
   useEffect(() => {
     const el = host.current;
     if (!el) return;
+    const hero = modeRef.current === "hero";
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -884,9 +900,16 @@ export default function EnigmaMachine({
     lid.add(screen);
     machine.add(lid);
     let drawn = "";
-    let typedText = "";
+    let typedText = hero ? PLAINTEXT : "";
     let decryptAt = Infinity; // set once the whole name has been typed
     const redrawDisplay = (t: number) => {
+      if (hero) {
+        if (drawn) return;
+        drawn = "hero";
+        drawDisplay(displayCtx, dw, dh, PLAINTEXT, false, 0, 100, "DECRYPTED");
+        displayTex.needsUpdate = true;
+        return;
+      }
       const decrypting = t >= decryptAt;
       // Scrambling cells re-roll ~16×/s; the dots tick ~3×/s.
       const frame = decrypting ? Math.floor(t * 3) % 4 : Math.floor(t * 16);
@@ -1065,9 +1088,12 @@ export default function EnigmaMachine({
       renderer.setSize(w, h);
       camera.aspect = w / h;
       // The machine lives in a bottom-right region of the full-bleed scene.
-      const rw = w >= 1024 ? w * 0.5 : w >= 640 ? w * 0.6 : w;
-      const rh = h * 0.8;
-      const dist = Math.max((5.4 * (h / rh)) / tan, (4.7 * (w / rw)) / (tan * camera.aspect));
+      const rw = hero ? w : w >= 1024 ? w * 0.5 : w >= 640 ? w * 0.6 : w;
+      const rh = hero ? h * 0.94 : h * 0.8;
+      // The hero frames the machine tighter than the loader does.
+      const fitV = hero ? 4.4 : 5.4;
+      const fitH = hero ? 4.4 : 4.7;
+      const dist = Math.max((fitV * (h / rh)) / tan, (fitH * (w / rw)) / (tan * camera.aspect));
       // Keep the machine itself un-fogged at any distance; only the floor beyond it fades.
       (scene.fog as THREE.Fog).near = dist + 4;
       (scene.fog as THREE.Fog).far = dist + 38;
@@ -1076,14 +1102,37 @@ export default function EnigmaMachine({
       // Slide the picture so the region's centre lands bottom-right.
       camera.setViewOffset(w, h, -(w - rw) / 2, -(h - rh) / 2, w, h);
       camera.updateProjectionMatrix();
+
+      // Hero: tell the page where the machine's parts are, so labels can point at them.
+      if (hero && projectRef.current) {
+        camera.updateMatrixWorld();
+        machine.updateMatrixWorld(true);
+        const at = (id: string, v: THREE.Vector3): MachinePoint => {
+          const p = v.project(camera);
+          return { id, x: (p.x + 1) / 2, y: (1 - p.y) / 2 };
+        };
+        projectRef.current([
+          at("rotors", machine.localToWorld(new THREE.Vector3(0, surface + 0.45, -1.55))),
+          at("lamps", machine.localToWorld(new THREE.Vector3(1.1, surface + 0.12, -0.4))),
+          at("keys", machine.localToWorld(new THREE.Vector3(-1.6, surface + 0.55, 1.95))),
+          at("plugs", machine.localToWorld(new THREE.Vector3(-1.4, 0.5, FRONT_Z + 0.5))),
+        ]);
+      }
     };
     resize();
     window.addEventListener("resize", resize);
 
     // Typing: counts are continuous so the windows roll forward through wraps.
     const counts = [...START];
-    let typed = 0;
-    let nextKeyAt = PRESS_TIMES[0] ?? 0.3;
+    if (hero) {
+      // Open already decrypted: the rotors sit where the whole message left them.
+      for (const ch of PLAINTEXT) press(counts, letterOf(ch));
+      wins.forEach((w, i) => {
+        w.shown = counts[i];
+      });
+    }
+    let typed = hero ? PLAINTEXT.length : 0;
+    let nextKeyAt = hero ? 2 : (PRESS_TIMES[0] ?? 0.3);
     let heldUntil = 0;
     let heldKey = -1;
     let heldOut = -1;
@@ -1094,7 +1143,19 @@ export default function EnigmaMachine({
     let first = true;
     let last = 0;
     const clock = new THREE.Clock();
+    // Hero: stop drawing while it is off-screen.
+    let visible = true;
+    const io = hero
+      ? new IntersectionObserver(([entry]) => {
+          visible = entry.isIntersecting;
+        })
+      : null;
+    io?.observe(el);
     const tick = () => {
+      if (!visible) {
+        raf = requestAnimationFrame(tick);
+        return;
+      }
       const t = clock.getElapsedTime();
       const dt = Math.min(0.05, t - last);
       last = t;
@@ -1113,8 +1174,13 @@ export default function EnigmaMachine({
       dustGeo.attributes.position.needsUpdate = true;
 
       if (t >= nextKeyAt) {
-        typedText += PLAINTEXT[typed];
-        const letter = letterOf(PLAINTEXT[typed++]);
+        let letter: number;
+        if (hero) {
+          letter = Math.floor(Math.random() * 26); // an idle, silent key now and then
+        } else {
+          typedText += PLAINTEXT[typed];
+          letter = letterOf(PLAINTEXT[typed++]);
+        }
         const out = press(counts, letter);
         heldKey = letter;
         heldOut = out;
@@ -1123,10 +1189,14 @@ export default function EnigmaMachine({
         lamp.level = 1;
         lamp.mat.map = litTex[String.fromCharCode(A + out)];
         keyRef.current();
-        // Each press lands on a real click of the recording.
-        nextKeyAt = typed < PLAINTEXT.length ? (PRESS_TIMES[typed] ?? t + 0.35) : Infinity;
-        // Name complete: hold it for a beat, then switch to DECRYPTING.
-        if (typed === PLAINTEXT.length) decryptAt = t + DECRYPT_AFTER;
+        if (hero) {
+          nextKeyAt = t + 2.4 + Math.random() * 2.6;
+        } else {
+          // Each press lands on a real click of the recording.
+          nextKeyAt = typed < PLAINTEXT.length ? (PRESS_TIMES[typed] ?? t + 0.35) : Infinity;
+          // Name complete: hold it for a beat, then switch to DECRYPTING.
+          if (typed === PLAINTEXT.length) decryptAt = t + DECRYPT_AFTER;
+        }
       }
 
       if (t >= decryptAt && t >= rollAt) {
@@ -1158,12 +1228,15 @@ export default function EnigmaMachine({
         first = false;
         readyRef.current();
       }
+      // Hero with reduced motion: one still frame, no loop.
+      if (hero && reduceMotion) return;
       raf = requestAnimationFrame(tick);
     };
     tick();
 
     return () => {
       cancelAnimationFrame(raf);
+      io?.disconnect();
       window.removeEventListener("resize", resize);
       scene.traverse((o) => {
         if (o instanceof THREE.Mesh) {

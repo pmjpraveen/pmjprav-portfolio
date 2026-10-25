@@ -17,7 +17,7 @@ The brief was narrow: allow parallel binary uploads. A two-week study with seven
 - **Test builds stuck** behind production review, so the safety net for a release was blocked by the release.
 - **Staged rollout** was hard to find, and hard to operate once found.
 
-An earlier 39-developer survey had pointed at the same themes, which gave me confidence they were real patterns. Mapping the old flow end to end made the real issue clear: it was a straight line built for one live version at a time. Parallel upload could not be bolted on. The information architecture itself had to change.
+An earlier 39-developer survey had pointed at the same themes, which suggested they were real patterns. Mapping the old flow end to end made the real issue clear: it was a straight line built for one live version at a time. Parallel upload could not be bolted on. The information architecture itself had to change.
 
 ![The old four-step submission flow](/projects/appstore-console/before-1-upload.png "Before · Step 1 of 4. Upload, targeting, store details and review all lived in one sequence.")
 

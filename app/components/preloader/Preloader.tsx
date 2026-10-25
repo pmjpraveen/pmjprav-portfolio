@@ -40,7 +40,7 @@ export function Preloader({ children }: { children: ReactNode }) {
 
   // Decide, once, whether to run the sequence at all. Scheduled via a 0ms
   // timeout (rather than called directly in the effect body) so this stays
-  // inside a callback — see ProjectStory for the same pattern and why.
+  // inside a callback (react-hooks/set-state-in-effect).
   useEffect(() => {
     const timer = setTimeout(() => {
       const prefersReducedMotion = window.matchMedia(
@@ -136,7 +136,13 @@ export function Preloader({ children }: { children: ReactNode }) {
 
   return (
     <>
-      <AnimatePresence onExitComplete={() => setDone(true)}>
+      <AnimatePresence
+        onExitComplete={() => {
+          setDone(true);
+          // Lets the hero's name decode start now that the page is visible.
+          window.dispatchEvent(new Event("preloader:done"));
+        }}
+      >
         {visible && (
           <motion.div
             id="site-preloader"

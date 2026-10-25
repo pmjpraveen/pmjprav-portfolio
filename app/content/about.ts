@@ -2,22 +2,24 @@
 // career/skills details. Nothing here is invented.
 export const ABOUT = {
   eyebrow: "About",
-  heading: "I design tools people depend on. Now I build them too.",
+  headline: "I'm a product designer ",
+  accent: "who also builds.",
   intro:
-    "I'm Praveenkumar, a product designer and design engineer based in Bengaluru. I've spent 8+ years designing developer tools, enterprise dashboards and consumer products.",
+    "I'm Praveenkumar, a product designer and design engineer in Bengaluru, with 8+ years designing developer tools, enterprise dashboards and consumer apps. I'm open to full-time roles and consulting.",
 
   facts: [
     { label: "Based in", value: "Bengaluru, India" },
     { label: "Experience", value: "8+ years" },
     { label: "Focus", value: "Developer tools, enterprise products, consumer apps" },
+    { label: "Open to", value: "Full-time roles and consulting" },
   ],
 
   background: {
     label: "Background",
-    lead: "I design the tools people rely on to get their work done.",
+    lead: "I design the software people use to do their jobs.",
     paragraphs: [
-      "At Amazon I led design projects for the developer console, including the release-track redesign and the support case system in my work. Before that I designed internal dashboards at Honeywell and a sales-training app at Nytro.ai.",
-      "More recently I've started building. Along and Knockout are apps I designed and coded myself, with AI.",
+      "At Amazon I led design for the developer console, including the release-track redesign and the support case system shown in my work. Before that I designed internal dashboards at Honeywell and a sales-training app at Nytro.ai.",
+      "Lately I build too. Along and Knockout are apps I designed and coded myself, with AI.",
     ],
   },
 

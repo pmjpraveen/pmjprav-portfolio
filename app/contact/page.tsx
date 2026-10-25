@@ -1,59 +1,80 @@
 import type { Metadata } from "next";
 import { Container } from "../components/container";
+import { SectionHead } from "../components/sections/SectionHead";
+import { CopyEmail } from "../components/ui/CopyEmail";
 import { SOCIAL_LINKS } from "../content/social";
-
-const EMAIL = "pmjprav@gmail.com";
+import { EMAIL } from "../lib/site";
 
 export const metadata: Metadata = {
   title: "Contact",
   description: `Get in touch with Praveenkumar at ${EMAIL}.`,
 };
 
+/** "https://www.linkedin.com/in/pmjpraveen/" → "linkedin.com/in/pmjpraveen" */
+function handle(href: string) {
+  const url = new URL(href);
+  return `${url.host.replace(/^www\./, "")}${url.pathname.replace(/\/$/, "")}`;
+}
+
 export default function ContactPage() {
   return (
     <main className="flex-1">
-      <section className="py-16 sm:py-20 lg:py-24">
+      <div className="pt-12 sm:pt-16 lg:pt-20">
+        <SectionHead
+          as="h1"
+          index="05"
+          eyebrow="Contact"
+          headline="Tell me what you're "
+          accent="working on."
+          intro="I'm open to full-time roles and consulting. Email me directly and I'll read every message."
+          kind="plug"
+        />
+      </div>
+
+      <section className="border-t border-stone pb-24 pt-16 sm:pb-32 lg:pb-40 lg:pt-24">
         <Container>
-          <p className="font-mono text-caption uppercase tracking-wide text-smoke">
-            Contact
-          </p>
+          <div className="grid gap-16 lg:grid-cols-12 lg:gap-16">
+            <div className="lg:col-span-7">
+              <p className="label">Email</p>
+              <a
+                href={`mailto:${EMAIL}`}
+                className="mt-5 block break-words text-[clamp(1.75rem,4.4vw,3.75rem)] leading-tight tracking-[-0.02em] text-ink underline decoration-accent decoration-2 underline-offset-[10px] transition-opacity hover:opacity-80"
+              >
+                {EMAIL}
+              </a>
+              <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4">
+                <CopyEmail email={EMAIL} />
+                <p className="label flex items-center gap-2.5 text-[11px]">
+                  <span aria-hidden="true" className="relative flex size-2">
+                    <span className="absolute inline-flex size-full animate-ping rounded-full bg-green-500 opacity-75 motion-reduce:animate-none" />
+                    <span className="relative inline-flex size-2 rounded-full bg-green-500" />
+                  </span>
+                  Open to full-time roles and consulting
+                </p>
+              </div>
+            </div>
 
-          <h1 className="mt-6 max-w-2xl text-heading leading-display tracking-display text-ink lg:text-display">
-            Tell me what you&rsquo;re working on.
-          </h1>
-
-          <p className="mt-8 max-w-prose text-body-lg leading-body-lg text-smoke">
-            I&rsquo;m open to full-time roles and consulting. Email me directly and I&rsquo;ll read every message.
-          </p>
-
-          <a
-            href={`mailto:${EMAIL}`}
-            className="group relative mt-10 inline-block text-heading-sm leading-heading-sm tracking-heading-sm text-ink transition-[color,transform] duration-150 ease-ui hover:text-graphite active:scale-[0.98] lg:text-heading lg:leading-heading lg:tracking-heading"
-          >
-            {EMAIL}
-            <span className="absolute inset-x-0 -bottom-1 h-px origin-left scale-x-0 bg-ink transition-transform duration-300 ease-ui group-hover:scale-x-100" />
-          </a>
-
-          <div className="mt-14 border-t border-stone pt-8 sm:mt-16">
-            <p className="font-mono text-caption uppercase tracking-wide text-smoke">
-              Elsewhere
-            </p>
-            <ul className="mt-4 flex flex-wrap gap-x-8 gap-y-2">
-              {SOCIAL_LINKS.map(({ href, label }) => (
-                <li key={href}>
-                  <a
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-body-lg text-ink transition-colors duration-150 ease-ui hover:text-graphite"
-                  >
-                    {label}
-                    <span aria-hidden="true"> ↗</span>
-                    <span className="sr-only"> (opens in a new tab)</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <div className="lg:col-span-5">
+              <p className="label">Elsewhere</p>
+              <ul className="mt-5 border-b border-stone">
+                {SOCIAL_LINKS.map(({ href, label }) => (
+                  <li key={href}>
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-t border-stone py-5 transition-colors duration-150 ease-ui"
+                    >
+                      <span className="text-heading-sm leading-heading-sm tracking-[-0.02em] text-ink transition-colors duration-150 ease-ui group-hover:text-accent">
+                        {label} <span aria-hidden="true">↗</span>
+                        <span className="sr-only"> (opens in a new tab)</span>
+                      </span>
+                      <span className="font-mono text-[13px] text-smoke">{handle(href)}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </Container>
       </section>

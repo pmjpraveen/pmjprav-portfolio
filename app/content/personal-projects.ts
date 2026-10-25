@@ -21,17 +21,17 @@ export const personalProjects: PersonalProject[] = [
     title: "Along",
     category: "Consumer · Travel app",
     description:
-      "A free group trip planner and expense splitter: a shared itinerary, exact expense splits, settle-up in plain words, memories and travel stamps.",
+      "A free app for planning group trips and splitting expenses. Everyone works from the same itinerary, splits are exact, and the app finds the fewest payments to settle up.",
     url: "https://getalong.xyz",
     host: "getalong.xyz",
     thumbnail: "/projects/getalong/og.jpg",
     imageAlt: "Along, the group trip planner and expense splitter",
     platform: "iPhone, Android",
     highlights: [
-      "Plan together: a day-by-day itinerary with maps, edits, moves and undo, the same for everyone the moment it changes.",
-      "Split exactly: equally, by amounts, by percentage or by shares, exact to the last unit.",
-      "Settle up in plain words: the fewest payments that square the group.",
-      "Keep the memories: photos, notes and Google Photos links, plus travel stamps for every finished trip.",
+      "Plan together. A day-by-day itinerary with maps, edits, moves and undo. Changes show for everyone straight away.",
+      "Split exactly. Equally, by amounts, by percentage or by shares, exact to the last unit.",
+      "Settle up simply. The app finds the fewest payments that square the group.",
+      "Keep the memories. Photos, notes and Google Photos links, plus a travel stamp for every finished trip.",
     ],
     screenshots: [
       { src: "/projects/getalong/home.jpg", alt: "Along home screen listing trips", width: 720, height: 1565 },

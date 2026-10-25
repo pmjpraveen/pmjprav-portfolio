@@ -1,50 +1,59 @@
-"use client";
-
-import { useGsapReveal } from "../../hooks/useGsapReveal";
+import Image from "next/image";
+import Link from "next/link";
 import { Container } from "../container";
-import { ArrowLink } from "../ui/ArrowLink";
+import { TiltCard } from "../ui/TiltCard";
 
-// Reuses the role already established in Hero.tsx — years/domains are
-// deliberately not repeated here (Hero already states them) so the two
-// sections don't read as a duplicate of each other back to back.
+// Copy is Praveenkumar's own (see content/about.ts); nothing here is invented.
 const ABOUT = {
-  label: "About",
-  statement: "I lead design for enterprise and developer platforms.",
+  lead: "I've led design for ",
+  accent: "developer and enterprise platforms.",
   supporting:
-    "At Amazon I led design for the developer console, and at Honeywell I owned design for two enterprise platforms. I also design and build my own products with AI, including Along and Knockout.",
+    "At Amazon I led design for the developer console, and at Honeywell I owned design for two enterprise platforms. I also design and build my own apps with AI, including Along and Knockout.",
   cta: { label: "More about me", href: "/about" },
 };
 
 export function AboutPreview() {
-  const ref = useGsapReveal<HTMLElement>();
-
   return (
     <section
-      ref={ref}
       aria-labelledby="about-heading"
-      className="border-t border-stone py-20 sm:py-24 lg:py-28"
+      data-section
+      data-section-id="about"
+      data-section-index="04"
+      data-section-title="About"
+      className="scroll-mt-12 border-t border-stone py-24 sm:py-32 lg:py-40"
     >
       <Container>
-        <div className="lg:grid lg:grid-cols-[160px_1fr] lg:gap-12">
-          <p className="font-mono text-caption uppercase tracking-wide text-smoke">
-            {ABOUT.label}
-          </p>
-
-          <div className="mt-6 max-w-2xl lg:mt-0">
+        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-7">
+            <p className="label">
+              <span className="text-accent">04</span> / About
+            </p>
             <h2
               id="about-heading"
-              className="text-heading-sm leading-heading-sm tracking-heading-sm text-ink lg:text-heading lg:leading-heading lg:tracking-heading"
+              data-section-headline={`${ABOUT.lead}${ABOUT.accent}`}
+              className="mt-6 text-[clamp(2.5rem,5.6vw,5rem)] leading-[1] tracking-[-0.03em] text-ink"
             >
-              {ABOUT.statement}
+              {ABOUT.lead}
+              <span className="text-accent">{ABOUT.accent}</span>
             </h2>
+            <p className="mt-8 max-w-xl text-body-lg leading-body-lg text-smoke">{ABOUT.supporting}</p>
+            <Link href={ABOUT.cta.href} className="link-accent mt-10 inline-block">
+              {ABOUT.cta.label} <span aria-hidden="true">↗</span>
+            </Link>
+          </div>
 
-            <p className="mt-6 max-w-prose text-body-lg leading-body-lg text-smoke">
-              {ABOUT.supporting}
-            </p>
-
-            <ArrowLink href={ABOUT.cta.href} className="mt-8 text-body">
-              {ABOUT.cta.label}
-            </ArrowLink>
+          <div className="lg:col-span-5">
+            <TiltCard className="overflow-hidden rounded-large border border-stone bg-warm-taupe">
+              <div className="relative aspect-[4/5] w-full">
+                <Image
+                  src="/images/photo.png"
+                  alt="Praveenkumar"
+                  fill
+                  sizes="(min-width: 1024px) 460px, 90vw"
+                  className="object-cover"
+                />
+              </div>
+            </TiltCard>
           </div>
         </div>
       </Container>

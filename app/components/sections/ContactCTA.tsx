@@ -1,42 +1,62 @@
-"use client";
-
-import { useGsapReveal } from "../../hooks/useGsapReveal";
+import { SOCIAL_LINKS } from "../../content/social";
+import { EMAIL } from "../../lib/site";
 import { Container } from "../container";
-import { ArrowLink } from "../ui/ArrowLink";
 
-// Editorial copy, not a factual claim — no email/social exists in the
-// project yet, so the CTA routes to /contact (already the destination the
-// header nav points to) rather than inventing an address.
+// Editorial copy, not a factual claim.
 const CONTACT = {
-  eyebrow: "Let's talk",
-  statement: "Have a project, product, or problem worth exploring?",
-  cta: { label: "Get in touch", href: "/contact" },
+  lead: "Need a product designer? ",
+  accent: "Let's talk.",
 };
 
 export function ContactCTA() {
-  const ref = useGsapReveal<HTMLElement>();
-
   return (
     <section
-      ref={ref}
       aria-labelledby="contact-heading"
-      className="border-t border-stone bg-warm-taupe py-20 sm:py-24 lg:py-32"
+      data-section
+      data-section-id="contact"
+      data-section-index="05"
+      data-section-title="Contact"
+      className="scroll-mt-12 border-t border-stone bg-warm-taupe py-24 sm:py-32 lg:py-40"
     >
       <Container>
-        <p className="font-mono text-caption uppercase tracking-wide text-smoke">
-          {CONTACT.eyebrow}
+        <p className="label">
+          <span className="text-accent">05</span> / Contact
         </p>
-
         <h2
           id="contact-heading"
-          className="mt-6 max-w-2xl text-heading leading-heading tracking-heading text-ink lg:text-display lg:leading-display lg:tracking-display"
+          data-section-headline={`${CONTACT.lead}${CONTACT.accent}`}
+          className="mt-6 max-w-4xl text-[clamp(2.75rem,7vw,6.25rem)] leading-[0.98] tracking-[-0.03em] text-ink"
         >
-          {CONTACT.statement}
+          {CONTACT.lead}
+          <span className="text-accent">{CONTACT.accent}</span>
         </h2>
 
-        <ArrowLink href={CONTACT.cta.href} className="mt-10 text-body">
-          {CONTACT.cta.label}
-        </ArrowLink>
+        <p className="mt-8 max-w-xl text-body-lg leading-body-lg text-smoke">
+          I&rsquo;m open to full-time roles and consulting.
+        </p>
+
+        <a
+          href={`mailto:${EMAIL}`}
+          className="mt-10 inline-block text-[clamp(1.5rem,3.6vw,3rem)] leading-tight tracking-[-0.02em] text-ink underline decoration-accent decoration-2 underline-offset-[10px] transition-opacity hover:opacity-80"
+        >
+          {EMAIL}
+        </a>
+
+        <ul aria-label="Social" className="mt-10 flex flex-wrap gap-2">
+          {SOCIAL_LINKS.map(({ href, label }) => (
+            <li key={href}>
+              <a
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="chip transition-colors duration-150 hover:border-ash hover:text-ink"
+              >
+                {label} <span aria-hidden="true">&nbsp;↗</span>
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            </li>
+          ))}
+        </ul>
       </Container>
     </section>
   );

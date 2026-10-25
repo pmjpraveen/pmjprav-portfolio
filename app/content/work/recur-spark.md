@@ -1,6 +1,6 @@
 ## Summary
 
-Spark is a revenue-based financing product inside Recur. It lets startups borrow against their own recurring contracts and invoicing data instead of trading away equity. I designed the onboarding, verification and approval flow, which took a process that traditionally takes banks weeks to underwrite and turned it into a same-day application, with capital released in as little as two days.
+Spark is a revenue-based financing product inside Recur. It lets startups borrow against their own recurring contracts and invoicing data instead of selling equity. I designed the onboarding, verification and approval flow. Banks traditionally take weeks to underwrite a company like this. Spark made it a same-day application, with capital released in as little as two days.
 
 ![Spark, the revenue-based financing product inside Recur](/projects/recur-spark/hero.webp "Spark, inside Recur. Click to enlarge.")
 
@@ -11,27 +11,27 @@ Company | Recur, financial software
 My role | Onboarding, verification and approval flow
 :::
 
-Recur set out to build an alternative to equity. Spark was the first product in that vision: growth capital against revenue a founder has already earned, priced and delivered fast enough to compete with how quickly founders need to move.
+Recur set out to build an alternative to equity. Spark was its first product: growth capital against revenue a founder has already earned, delivered fast enough to match how quickly founders need to move.
 
 ## Problem
 
-**Equity is the most expensive capital a founder can raise.** Talking to founders and reviewing the market, one pattern kept surfacing: dilution was treated as the only lever, so most early-stage capital stacks leaned almost entirely on equity, throughout a company's life and not just at seed.
+**Founders had one financing lever: equity.** Talking to founders and reviewing the market, one pattern kept surfacing: dilution was treated as the only lever, so most early-stage capital stacks leaned almost entirely on equity, at every stage and not just at seed.
 
-It is expensive in two ways. Ownership is given away, and every raise also consumes months of founder time and attention that could have gone into the business. Because the startups raising the biggest rounds are treated as winners, the market had also normalised single-digit founder ownership as a success metric.
+Equity is expensive in two ways. Founders give away ownership, and every raise takes months of their time and attention away from the business. And because the startups raising the biggest rounds are treated as winners, single-digit founder ownership had become a normal measure of success.
 
-Meanwhile, the usual non-dilutive alternative, bank debt, mostly wasn't available to this group. Banks weren't equipped to underwrite asset-light, subscription-revenue businesses. Their models were built for collateral, not recurring contracts.
+The usual non-dilutive alternative, bank debt, mostly wasn't available to this group. Banks weren't equipped to underwrite asset-light, subscription-revenue businesses: their models were built for collateral, not recurring contracts.
 
-**The gap:** founders had exactly one financing lever, equity, and almost no fast, founder-friendly alternative built for how modern, asset-light companies earn revenue.
+**The gap:** there was almost no fast, founder-friendly alternative built for how modern, asset-light companies earn revenue.
 
 ## Goals
 
-The brief was specific: a platform that gives founders access to capital in a non-dilutive model. It should feel founder-friendly rather than extractive, and help them grow sustainably instead of trading away long-term ownership for short-term runway.
+The brief: a platform that gives founders non-dilutive capital. It should feel founder-friendly rather than extractive, and help founders grow sustainably instead of trading long-term ownership for short-term runway.
 
-The north star was speed. A founder should be able to raise through Spark and have usable cash within two days, not the weeks a bank or traditional lender would take. One level up, the longer-term vision was to turn Recur into an exchange for recurring revenue contracts, giving companies the best financing terms and the insight to scale.
+The north star was speed: a founder should raise through Spark and have usable cash within two days, not the weeks a bank would take. The longer-term vision was to turn Recur into an exchange for recurring revenue contracts, giving companies the best financing terms and the insight to scale.
 
 ## Research
 
-This was a speed-constrained project, so to be upfront about scope: there was no long discovery phase. The research we had time for was aimed at three questions. Where does the product create real value for the business and for founders? How do a handful of direct and indirect competitors approach the problem? And what does fundraising feel like for the founders we could talk to directly?
+This project was constrained by speed, so there was no long discovery phase. The research we had time for aimed at three questions. Where does the product create real value for the business and for founders? How do a handful of direct and indirect competitors approach the problem? And what does fundraising feel like for the founders we could talk to directly?
 
 An early brainstorm with the team mapped a simple onboarding shape and surfaced two problems straight away. The underwriting team would face real complexity working through founder-submitted documents, and the journey from onboarding to funded capital was already running past seven days end to end.
 

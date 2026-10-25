@@ -6,20 +6,30 @@
    ========================================================= */
 
 @theme {
-  /* Colors */
-  --color-eggshell: #fdfcfc;
-  --color-warm-taupe: #f5f3f1;
-  --color-stone: #ebe8e4;
-  --color-ink: #000000;
-  --color-graphite: #44403b;
-  --color-smoke: #777169;
-  --color-ash: #a59f97;
+  /* Colors. Dark is the default. These light values are the paper tones: cream
+     canvas, warm ink. Source of the whole palette: https://www.mithun.zip */
+  --color-eggshell: #f1ece2; /* page canvas */
+  --color-warm-taupe: #e9e3d6; /* surfaces */
+  --color-stone: #d6cfbf; /* hairlines */
+  --color-ink: #1a1815; /* primary text */
+  --color-graphite: #3a352e;
+  --color-smoke: #676158; /* muted text, mono labels */
+  --color-ash: #8f887b;
+  --color-accent: #d8402f; /* the one accent: links, index numbers, one phrase per headline */
   --color-violet: #0447ff;
   --color-ember-orange: #ff4704;
 
-  /* Fonts — overrides Tailwind's default font-sans / font-mono */
-  --font-sans: var(--font-switzer), ui-sans-serif, system-ui, -apple-system,
+  /* Kept for the 3D scenes and older components. */
+  --color-paper: #fbfaf6; /* a print / photo mount that stays light in both themes */
+  --color-brass: var(--color-accent);
+  --color-lamp: #b8860b; /* a lit lamp */
+  --color-oak: #7a4a22;
+  --color-bakelite: var(--color-warm-taupe);
+
+  /* Fonts — Geist for body, Faculty Glyphic for headlines, Geist Mono for labels */
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", Roboto, sans-serif;
+  --font-display: var(--font-faculty), Georgia, "Times New Roman", serif;
   --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo,
     Monaco, Consolas, monospace;
 
@@ -62,19 +72,21 @@
 }
 
 /* =========================================================
-   Dark theme — same warm/editorial character as the light
-   palette, inverted rather than a generic pure-black scheme.
-   Applied by ThemeToggle setting [data-theme] on <html>.
-   Accents (violet/ember) stay identical in both themes.
+   Dark (default). Near-black canvas, warm cream text, one coral accent:
+   the palette of https://www.mithun.zip, applied to a different site.
+   Applied by ThemeToggle setting [data-theme="dark"] on <html>.
    ========================================================= */
 :root[data-theme="dark"] {
-  --color-eggshell: #14120f;
-  --color-warm-taupe: #1e1c19;
-  --color-stone: #2c2925;
-  --color-ink: #fdfcfc;
-  --color-graphite: #c7c2ba;
-  --color-smoke: #948d82;
-  --color-ash: #5c564d;
+  --color-eggshell: #131313;
+  --color-warm-taupe: #1a1815;
+  --color-stone: #2c2a26;
+  --color-ink: #efe8da;
+  --color-graphite: #d8d1c4;
+  --color-smoke: #b4ad9f;
+  --color-ash: #8a8478;
+  --color-accent: #ec5a48;
+  --color-paper: #f1ece2;
+  --color-lamp: #ffd36a;
   color-scheme: dark;
 }
 
@@ -160,7 +172,8 @@
   h4,
   h5,
   h6 {
-    font-weight: 300;
+    font-family: var(--font-display);
+    font-weight: 400;
     letter-spacing: var(--tracking-display);
   }
 
@@ -196,6 +209,10 @@
 
   ::selection {
     background: var(--color-ink);
+    color: var(--color-eggshell);
+  }
+  ::selection {
+    background: var(--color-accent);
     color: var(--color-eggshell);
   }
 
@@ -243,28 +260,6 @@
   to {
     transform: translateX(-50%);
   }
-}
-
-/* =========================================================
-   404 page — a fixed, non-scrolling takeover. The shared
-   Header/Footer are hidden rather than made pathname-aware.
-   ========================================================= */
-html.is-404,
-html.is-404 body {
-  overflow: hidden;
-}
-
-html.is-404 header,
-html.is-404 footer {
-  display: none;
-}
-
-/* The page's own background is always dark, independent of the site's
-   light/dark toggle — pin --color-ink to its dark-theme (light) value so
-   the ink-colored cursor stays visible against it whatever the global
-   theme is set to. */
-html.is-404 {
-  --color-ink: #fdfcfc;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -344,5 +339,47 @@ html.is-404 {
   to {
     opacity: 1;
     transform: none;
+  }
+}
+
+/* =========================================================
+   Shared pieces. In the components layer so any utility still wins.
+   ========================================================= */
+@layer components {
+  /* Mono label: small caps, wide tracking, muted. */
+  .label {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.4;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-smoke);
+  }
+
+  /* Tag chip: hairline outline, barely-there fill, 3px corners. */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--color-graphite);
+    background: color-mix(in srgb, var(--color-ink) 5%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-ink) 18%, transparent);
+    border-radius: 3px;
+  }
+
+  /* The one accent link: mono, coral, underlined. */
+  .link-accent {
+    font-family: var(--font-mono);
+    font-size: 15px;
+    color: var(--color-accent);
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 2px;
+    transition: opacity 150ms var(--ease-ui);
+  }
+  .link-accent:hover {
+    opacity: 0.75;
   }
 }
