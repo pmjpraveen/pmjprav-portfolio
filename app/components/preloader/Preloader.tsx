@@ -2,10 +2,11 @@
 
 import { AnimatePresence, motion } from "motion/react";
 import dynamic from "next/dynamic";
+import { LEAD, RATE, RUN_MS, SEGMENTS } from "./enigmaTimeline";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   loadEnigmaSample,
-  playEnigmaSample,
+  playEnigmaRun,
   playEnigmaKey,
   playRotorDone,
   unlockRotorAudio,
@@ -13,8 +14,7 @@ import {
 
 // The loader is the machine running: a 3D Enigma M3 that types itself until the
 // timer ends. Three.js is only fetched when the loader actually plays.
-const RUN_MS = 5200;
-const MAX_WAIT_MS = 10000;
+const MAX_WAIT_MS = 15000;
 const EnigmaMachine = dynamic(() => import("./EnigmaMachine"), { ssr: false });
 
 export function Preloader({ children }: { children: ReactNode }) {
@@ -74,7 +74,7 @@ export function Preloader({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (skipAnimation || !visible || !ready) return;
     // The real recording when it's installed; synthesized key presses otherwise.
-    recordedRef.current = playEnigmaSample(RUN_MS / 1000);
+    recordedRef.current = playEnigmaRun(SEGMENTS, RATE, LEAD, 0.1);
     const start = performance.now();
     let raf = 0;
     const count = () => {

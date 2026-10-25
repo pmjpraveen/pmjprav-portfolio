@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
+import { DECRYPT_AFTER, PRESS_TIMES } from "./enigmaTimeline";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
 
 // A self-typing Enigma M3. The machine really encrypts: each press steps the
@@ -1082,7 +1083,7 @@ export default function EnigmaMachine({
     // Typing: counts are continuous so the windows roll forward through wraps.
     const counts = [...START];
     let typed = 0;
-    let nextKeyAt = 0.3;
+    let nextKeyAt = PRESS_TIMES[0] ?? 0.3;
     let heldUntil = 0;
     let heldKey = -1;
     let heldOut = -1;
@@ -1122,10 +1123,10 @@ export default function EnigmaMachine({
         lamp.level = 1;
         lamp.mat.map = litTex[String.fromCharCode(A + out)];
         keyRef.current();
-        // Paced so the whole name lands well before the run ends.
-        nextKeyAt = typed < PLAINTEXT.length ? t + 0.27 + Math.random() * 0.05 : Infinity;
+        // Each press lands on a real click of the recording.
+        nextKeyAt = typed < PLAINTEXT.length ? (PRESS_TIMES[typed] ?? t + 0.35) : Infinity;
         // Name complete: hold it for a beat, then switch to DECRYPTING.
-        if (typed === PLAINTEXT.length) decryptAt = t + 0.45;
+        if (typed === PLAINTEXT.length) decryptAt = t + DECRYPT_AFTER;
       }
 
       if (t >= decryptAt && t >= rollAt) {

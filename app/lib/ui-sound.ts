@@ -80,9 +80,8 @@ export function playRotorDone() {
 }
 
 // --- Recorded Enigma switch sounds (CC0, hz37 on freesound.org #792301). ---
-// Optional: if public/sounds/enigma-switch.wav is missing, loading fails
-// quietly and the loader falls back to the synthesized clicks above.
-const SAMPLE_URL = "/sounds/enigma-switch.wav";
+// If the file fails to load, the loader falls back to the synthesized key above.
+const SAMPLE_URL = "/sounds/enigma-switch.mp3";
 let sample: AudioBuffer | null = null;
 
 export function loadEnigmaSample() {
@@ -97,20 +96,30 @@ export function loadEnigmaSample() {
     .catch(() => {});
 }
 
-/** Plays a stretch of the recording for `seconds`, fading out. Returns false if unavailable. */
-export function playEnigmaSample(seconds: number) {
+/**
+ * Plays stretches of the recording back to back at `rate`, starting `lead`
+ * seconds from now. Returns false if the recording or audio isn't ready, so the
+ * caller can fall back to synthesized keys.
+ */
+export function playEnigmaRun(segments: { from: number; to: number }[], rate: number, lead: number, gap: number) {
   const c = audioCtx();
   if (!c || c.state !== "running" || !sample) return false;
-  const src = c.createBufferSource();
-  src.buffer = sample;
-  const gain = c.createGain();
-  const now = c.currentTime;
-  gain.gain.setValueAtTime(0.7, now);
-  gain.gain.setValueAtTime(0.7, now + Math.max(0, seconds - 0.4));
-  gain.gain.linearRampToValueAtTime(0.0001, now + seconds);
-  src.connect(gain).connect(c.destination);
-  src.start(now, 0);
-  src.stop(now + seconds);
+  let at = c.currentTime + lead;
+  for (const { from, to } of segments) {
+    const real = (to - from) / rate; // seconds on the clock
+    const src = c.createBufferSource();
+    src.buffer = sample;
+    src.playbackRate.value = rate;
+    const gain = c.createGain();
+    gain.gain.setValueAtTime(0.0001, at);
+    gain.gain.linearRampToValueAtTime(0.6, at + 0.03);
+    gain.gain.setValueAtTime(0.6, at + real - 0.05);
+    gain.gain.linearRampToValueAtTime(0.0001, at + real);
+    src.connect(gain).connect(c.destination);
+    src.start(at, from, to - from);
+    src.stop(at + real + 0.02);
+    at += real + gap;
+  }
   return true;
 }
 
