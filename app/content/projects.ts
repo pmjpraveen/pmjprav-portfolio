@@ -116,7 +116,7 @@ export const projects: Project[] = [
     layout: "standard",
     featured: true,
     meta: {
-      team: "PM, technical PM, engineering, research, design manager",
+      team: "PM, technical PM, engineering, research, design manager, MarTech team",
       platform: "Web · Developer console",
     },
     // Story lives in app/content/work/two-way-communication.md.
