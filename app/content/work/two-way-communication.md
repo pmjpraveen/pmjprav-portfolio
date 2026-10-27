@@ -71,7 +71,7 @@ I split the work into three steps and put them in this order on purpose.
 
 Each step depends on the one before it. A case page is wasted if developers cannot find the way in, and an assistant needs a case system to hand off to.
 
-## Phase 1a: make support easy to find
+## Phase 1a: make support easy to find | Phase 1a
 
 I drew low-fidelity screens exploring how a developer finds help. Two directions went forward.
 
@@ -85,7 +85,7 @@ I drew low-fidelity screens exploring how a developer finds help. Two directions
 
 **Decision: Option B.** I walked both options through with engineering and the PM and explained the reasoning behind each. Most of the room preferred the mega menu. It shows what is available at a glance, and it lets a developer go straight to the community forum, raise a ticket or search the support documents from one place.
 
-## Phase 1b: make every case followable
+## Phase 1b: make every case followable | Phase 1b
 
 Before, a developer chose marketplace queries from a company-wide list, submitted, and got nothing back in the console. I rebuilt the journey so that it stays in the console. After submitting, the developer receives a confirmation with a case ID and lands on a detailed case page, where they can follow up or re-open the case. A case management page lists every case together.
 
@@ -117,7 +117,7 @@ While designing the case pages I also set out where this should go next. A devel
 
 ![Chat widget: a question, then a handoff to a case](/projects/two-way-communication/chat-widget.png "North Star · The handoff to a case. With no answer found, the chat opens a case and links to it. Example data.")
 
-## Phase 2: answer before it becomes a ticket
+## Phase 2: answer before it becomes a ticket | Phase 2
 
 Once Phase 1 launched, the North Star was picked up and implemented as Phase 2. The assistant answers routine questions, so the support team receives only the tickets that need a person.
 

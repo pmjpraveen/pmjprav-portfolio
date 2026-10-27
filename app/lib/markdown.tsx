@@ -198,6 +198,7 @@ function renderBlock(block: Block, key: number, stepIndex = 0) {
  * Minimal markdown-lite parser for case-study content — not general
  * markdown, just what a case study needs:
  *   ## Heading            -> new section (sidebar-nav entry)
+ *   ## Heading | Short    -> same, with "Short" as the sidebar-nav label
  *   blank-line-separated  -> paragraphs (**bold** supported inline)
  *   - item / - item       -> bulleted list (highlights, key points)
  *   ![alt](src "caption") -> full-width image, reusing ProjectVisual
@@ -215,18 +216,21 @@ export function parseCaseStudyMarkdown(markdown: string): ProjectSectionData[] {
     buffer = [];
     if (!heading && blocks.length === 0) return;
 
+    // `## Long title | Short label` keeps the full title on the page and a short nav label.
+    const [title, navLabel] = heading ? heading.split(/\s+\|\s+/) : [undefined, undefined];
+
     sections.push({
-      id: heading ? slugify(heading) : "intro",
-      navLabel: heading,
+      id: title ? slugify(title) : "intro",
+      navLabel: navLabel ?? title,
       type: "custom",
       content: (
         <div>
-          {heading ? (
+          {title ? (
             <h2 className="text-[length:clamp(2rem,4vw,3rem)] leading-[1.05] tracking-[-0.02em] text-ink">
-              {heading}
+              {title}
             </h2>
           ) : null}
-          <div className={`space-y-8 ${heading ? "mt-8" : ""}`}>
+          <div className={`space-y-8 ${title ? "mt-8" : ""}`}>
             {blocks.map((block, i) =>
               renderBlock(block, i, blocks.slice(0, i).filter((b) => b.kind === "step").length),
             )}
