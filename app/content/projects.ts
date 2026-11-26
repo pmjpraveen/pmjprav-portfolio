@@ -82,9 +82,34 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    slug: "appstore-console",
+    slug: "two-way-communication",
     client: "Amazon",
     number: "01",
+    title: "Developer Support",
+    category: "Developer Tools · Support",
+    description:
+      "Developers on Amazon's app marketplace could open a support case but not follow it. I turned each case into a page they can follow, and case volume fell by about 47%, then about 87% with an AI help widget.",
+    role: "Lead Designer, Support Cases",
+    year: "2024",
+    layout: "standard",
+    featured: true,
+    meta: {
+      team: "PM, technical PM, engineering, research, design manager, MarTech team",
+      platform: "Web · Developer console",
+    },
+    // Story lives in app/content/work/two-way-communication.md.
+    thumbnail: "/projects/two-way-communication/cover.webp",
+    imageAlt: "Support requests list showing case ID, related app, status, subject, creator and last updated",
+    heroVisual: {
+      src: "/projects/two-way-communication/cover.webp",
+      alt: "Support requests list showing case ID, related app, status, subject, creator and last updated",
+    },
+  },
+
+  {
+    slug: "appstore-console",
+    client: "Amazon",
+    number: "02",
     title: "Appstore Developer Console",
     category: "Developer Tools · Platform",
     description:
@@ -105,31 +130,6 @@ export const projects: Project[] = [
       contribution: "Research plan, flows, UI, prototypes, design system, visual QA",
     },
     // Story lives in app/content/work/appstore-console.md.
-  },
-
-  {
-    slug: "two-way-communication",
-    client: "Amazon",
-    number: "02",
-    title: "Developer Support",
-    category: "Developer Tools · Support",
-    description:
-      "Developers on Amazon's app marketplace could open a support case but not follow it. I turned each case into a page they can follow, and case volume fell by about 47%, then about 87% with an AI help widget.",
-    role: "Lead Designer, Support Cases",
-    year: "2024",
-    layout: "standard",
-    featured: true,
-    meta: {
-      team: "PM, technical PM, engineering, research, design manager, MarTech team",
-      platform: "Web · Developer console",
-    },
-    // Story lives in app/content/work/two-way-communication.md.
-    thumbnail: "/projects/two-way-communication/cover.webp",
-    imageAlt: "Support requests list showing case ID, related app, status, subject, creator and last updated",
-    heroVisual: {
-      src: "/projects/two-way-communication/cover.webp",
-      alt: "Support requests list showing case ID, related app, status, subject, creator and last updated",
-    },
   },
 
 
