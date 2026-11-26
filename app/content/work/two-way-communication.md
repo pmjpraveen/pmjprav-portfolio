@@ -1,35 +1,12 @@
-## Overview
-
-Developers on Amazon's app marketplace could open a support case but could not follow it. I redesigned how they find support and follow a case, then set out the North Star that became an AI assistant.
-
-**Short on time?** Read this overview, the table that opens each phase, and Impact.
-
-::: stats
-~47% | fewer tickets after Phase 1
-~87% | fewer tickets after Phase 2
-Halved | turnaround time, roughly
-:::
-
-::: rows
-Role | Lead designer, and the only designer. I joined Amazon in mid-2024.
-Team | PM, technical PM, engineers, researcher, design manager, MarTech team
-Timeline | About three weeks of design and one week of review and handoff for Phase 1, then Phase 2
-Status | Both phases shipped
-Owned | Help navigation, case creation, case history, communication panels
-Phase 2 | I set out the assistant, then defined what it shows and when it escalates, with the MarTech team
-Constraint | Amazon's retail design system, so my work was structure and flow
-:::
-
-## Two problems behind one request | The challenge
+## Support was hard to find, and cases vanished into email | 01 · Problem
 
 I asked the PM for case volume and mapped every route to support. The support team's numbers became the baseline.
 
 ![Baseline: about 13.9k cases over eight months, about 2% spam](/projects/two-way-communication/illus-dots-baseline.png "Illustration · The baseline. About 2 in every 100 cases were spam.")
 
-::: rows
-Hard to find | Support sat on a company-wide contact page, among options for all of Amazon.
-Nothing to follow | After sending, the case was invisible. Everything ran over email.
-:::
+1. **Hard to find.** Support sat on a company-wide contact page, among options for all of Amazon.
+2. **Nothing to follow.** After sending, the case was invisible. Everything ran over email.
+3. **Missed replies became new tickets.** A reply the developer couldn't see led to a duplicate case.
 
 ![How a reply the developer could not see became a second ticket](/projects/two-way-communication/illus-chain.png "Illustration · One missed reply became a duplicate ticket.")
 
@@ -45,7 +22,7 @@ Developers and research said the same:
 ![A developer forum post](/projects/two-way-communication/forum-voice.png "Forum · No one answers the contact form. Author details removed.")
 ![Developer sentiment by theme](/projects/two-way-communication/sentiment-themes.png "Research · Support is the largest theme, and mostly negative.")
 
-## Research and benchmarking | Research
+## Two teams took the cases, and Google Play already let developers follow one | 02 · Research
 
 The plan came with research on who writes in, and a look at how other platforms do it.
 
@@ -59,18 +36,15 @@ The plan came with research on who writes in, and a look at how other platforms 
 > “I have written many times in over three years, but have never received an actual response.”
 > — A developer, in research feedback
 
-**Benchmark: Google Play Console** suggests articles before a case can be submitted, then lets a developer track it across teams.
+**Benchmark: Google Play Console** suggests articles before a case can be submitted, then lets a developer track it across teams. The full benchmark is in the appendix.
 
-![Google Play Console's contact page suggesting resources before a case is submitted](/projects/two-way-communication/benchmark-google-play.png "Benchmark · Google Play Console. Suggested resources appear before a case is submitted.")
-
-::: rows
-Articles first | Links to documentation before a case is raised, and later an assistant that answers from them.
-Tracking | A case page with a status and a history in one place.
-One thread | Developers asked for an email-like thread, which the case page became.
-Back end | Four case tools were compared. The existing internal tool needed the least change.
+::: decision Which case tool to build on
+Options | Four case tools, compared
+Chose | The existing internal tool
+Because | It needed the least change.
 :::
 
-## Three steps, in order | Strategy
+## Three steps, each one unlocking the next | 03 · Strategy
 
 ![Three steps, each unlocking the next: Find, Follow, Answer](/projects/two-way-communication/illus-strategy.png "Illustration · Each step gives the next one something to build on.")
 
@@ -78,7 +52,7 @@ Product management wrote the plan in late 2023, before I joined. I designed with
 
 ![From a plan on paper to two launches](/projects/two-way-communication/illus-process.png "Illustration · The process, from the plan to two launches.")
 
-## Phase 1a: give support its own entry | 1a · Find help
+## Support got its own entry in the navigation | 04 · Phase 1a
 
 ::: rows
 Problem | Support was hard to find.
@@ -88,12 +62,15 @@ Outcome | Engineering and the PM aligned. Its effect on tickets sits in the Phas
 
 Two directions went forward from my low-fidelity screens.
 
+::: decision Where support lives
 ![Option A: support inside the avatar menu](/projects/two-way-communication/option-avatar-menu.png "Option A · Support inside the avatar menu, beside Settings and Logout. Name replaced.")
 ![Option B: a mega menu in the top navigation](/projects/two-way-communication/mega-menu.png "Option B, chosen · A mega menu. For the marketplace, My Cases comes first.")
+Options | Inside the avatar menu, beside Settings and Logout · A mega menu in the top navigation
+Chose | The mega menu
+Because | It shows every option at a glance, and gets a developer to the forum, a ticket or the docs from one place. I walked both through with engineering and the PM, and most of the room preferred it.
+:::
 
-I walked both through with engineering and the PM. Most of the room preferred the mega menu: it shows every option at a glance, and gets a developer to the forum, a ticket or the docs from one place.
-
-## Phase 1b: give every case a home | 1b · Follow cases
+## Every case got a page, a thread and a status | 05 · Phase 1b
 
 ::: rows
 Problem | After submitting, a developer got nothing back in the console, so replies got missed.
@@ -101,34 +78,50 @@ Decision | Keep the whole journey in the console, in five parts.
 Outcome | About 47% fewer tickets than the baseline. Duplicates dropped, because developers could see their own cases.
 :::
 
+::: decision How a developer follows a case
+Options | A form, then everything over email · A case page in the console, with a thread and a status
+Chose | A case page, written as a thread
+Because | Developers asked for an email-like thread, and seeing their own cases removed the reason to raise a second ticket. Duplicates dropped.
+:::
+
 ![The status model: open, pending support action, pending developer action and resolved](/projects/two-way-communication/illus-status.png "Illustration · The status says whose move it is.")
 
 ### The journey stays in the console
-A confirmation with a case ID, then a case page to follow up or re-open.
+**Problem.** After sending, the case was invisible, and everything ran over email.
+
+**Solution.** A confirmation with a case ID, then a case page to follow up or re-open.
 
 ![The new journey: everything happens in the console](/projects/two-way-communication/illus-flow-after.png "The new journey · Highlighted steps are new pages.")
 
 ### A form that asks for what support needs
-Category, then topic. Searchable apps. Prompts for what support asks first. The full structure is in the appendix.
+**Problem.** The old form was a company-wide Contact Us page, where a developer picked the marketplace from a category list for all of Amazon.
+
+**Solution.** Category, then topic. Searchable apps. Prompts for what support asks first. The full structure is in the appendix.
 
 ![The case form with category, topic and related apps selected](/projects/two-way-communication/related-apps.png#3/4 "The form · Category, topic, related apps and guided description. Example data.")
 
 ### Every case, in one list
-Search, sort and filter. The status says whose move it is.
+**Problem.** Developers couldn't see their own cases, so they raised new ones.
+
+**Solution.** Search, sort and filter. The status says whose move it is.
 
 ![The case list with search, filters and status](/projects/two-way-communication/case-list.png "The case list · Example data.")
 
 ### A case is a thread
-The conversation and details in one view, with the reply box below. No reason to raise a second ticket.
+**Problem.** A reply the developer couldn't see led to a duplicate case.
+
+**Solution.** The conversation and details in one view, with the reply box below. No reason to raise a second ticket.
 
 ![The case page: conversation beside case details](/projects/two-way-communication/case-thread.png "The case page · Example data.")
 
 ### Cases live inside each app
-A Communications panel for each app, with an unread count.
+**Problem.** Replies arrived in email, away from the app they were about.
+
+**Solution.** A Communications panel for each app, with an unread count.
 
 ![An app's Communications page with two tabs and unread counts](/projects/two-way-communication/app-communications.png "The inbox · Example data.")
 
-## How it maps to DART and ASQS | Internal teams
+## One case carries the whole conversation | 06 · Internal teams
 
 Two teams sat behind the form. Each had to work with the case system.
 
@@ -137,6 +130,77 @@ Two teams sat behind the form. Each had to work with the case system.
 ![What changed for DART, ASQS and the partner managers](/projects/two-way-communication/illus-teams-change.png "Illustration · What changed for each team.")
 
 A case can start in two places: a developer asking for help, or ASQS asking for a document. Both now land in the same case.
+
+The step-by-step flows for a document request and a help request are in the appendix.
+
+![One case moving between the developer, DART and ASQS](/projects/two-way-communication/illus-flow-combined.png "User flow · One case moves between the developer, DART and ASQS. It replaces three separate flows.")
+
+## An assistant answers first, and hands off only when it must | 07 · Phase 2
+
+::: rows
+What Phase 1 showed | Tickets fell by about 47% and duplicates dropped. The North Star was the next step: stop routine questions becoming tickets.
+Decision | Once Phase 1 launched, the North Star was picked up as Phase 2. The plan had placed the assistant in Phase 3.
+Outcome | About 87% fewer tickets than the baseline.
+:::
+
+::: decision When to build the assistant
+Options | Phase 3, as the plan placed it · Phase 2, straight after Phase 1
+Chose | Phase 2
+Because | Phase 1 built the case pages, so the assistant had somewhere to hand off to. Once Phase 1 launched, the North Star was picked up next.
+:::
+
+![Three behaviours: answer, never dead-end, escalate](/projects/two-way-communication/illus-assistant-logic.png "Illustration · What I defined with the MarTech team, so answers come from documentation we already had.")
+
+### The North Star: chat from anywhere
+**Problem.** Routine questions still became tickets.
+
+**Solution.** Chat first, from anywhere. Only if the chat cannot resolve it does it become a case, linked to the case page.
+
+![The North Star flow: chat first, then a case if it is needed](/projects/two-way-communication/illus-flow-northstar.png "The North Star flow · Phase 1 built the place where the handoff lands.")
+
+### The handoff, designed
+**Problem.** A chat that can't answer must never leave a developer at a dead end.
+
+**Solution.** With no answer, the chat opens a case, gives its ID and links to it.
+
+![Chat frames: a question, then a handoff to a case](/projects/two-way-communication/chat-widget.png "The handoff · With no answer found, the chat opens a case and links to it. Example data.")
+
+### The assistant opens over the console
+**Problem.** Asking for help meant leaving the page where the problem happened.
+
+**Solution.** A panel in the corner, so a developer can ask from that page.
+
+![The assistant open on the app list](/projects/two-way-communication/devassistant-panel.png "The panel · It opens over the console.")
+
+### It expands, with cited answers
+**Problem.** Answers had to come from documentation the team already had.
+
+**Solution.** A full view with a chat history. Answers carry numbered references to the documentation.
+
+![The expanded assistant with a cited answer](/projects/two-way-communication/devassistant-full.png "The expanded view · A step-by-step answer with references to the documentation.")
+
+## About 87% fewer tickets, and turnaround roughly halved | 08 · Impact
+
+I measured tickets reaching support, and how many were duplicates, against the same baseline for both phases.
+
+![Tickets remaining for every 100 at the baseline: 100, about 53 after Phase 1, about 13 after Phase 2](/projects/two-way-communication/illus-dots-impact.png "Illustration · Tickets remaining against the baseline.")
+
+1. **About 47% fewer tickets after Phase 1,** against the support team's baseline. Duplicates dropped, because developers could see their own cases.
+2. **About 87% fewer after Phase 2,** with the assistant answering routine questions first.
+3. **Turnaround roughly halved,** and the tickets that still reach support are mostly the critical ones.
+
+Fewer tickets only counts if developers were helped. I have no satisfaction results to show that.
+
+## Most of the drop came from removing the reason for a second ticket | 09 · Reflection
+
+1. **Sequence by dependency.** Finding first gave the case pages somewhere to be reached from. The case system gave the assistant somewhere to hand off to.
+2. **Change the model.** From "submit and wait" to "open a thread". Most of the drop came from removing the reason to raise a second ticket.
+3. **Structure carries the work.** Inside a design system I did not own, my leverage was what is shown, in what order, and whose move it is.
+4. **Measure next.** Satisfaction after an assistant answer, drop-off on the longer form, and how often resolved cases are re-opened.
+
+## Team flows, benchmark, user stories and form | Appendix
+
+**Internal team flows.** A case can start with ASQS asking for a document, or with a developer asking for help.
 
 **When ASQS needs a document.** Before, a developer with a question about the request had to raise a new case through the Contact Us form. The category they picked decided whether it reached ASQS directly or went through DART first. Now ASQS opens the case itself, and every question and reply stays on it.
 
@@ -148,62 +212,16 @@ A case can start in two places: a developer asking for help, or ASQS asking for 
 
 ![After: prompted links first, then one case that DART answers and updates](/projects/two-way-communication/illus-flow-dart.png "User flow · After. Prompted links first, then one case. Dark steps are new.")
 
-![One case moving between the developer, DART and ASQS](/projects/two-way-communication/illus-flow-combined.png "User flow · One case moves between the developer, DART and ASQS. It replaces three separate flows.")
+**Benchmark detail.** What the Google Play Console benchmark and the plan settled.
 
-## Phase 2: answer before it becomes a ticket | 2 · Answer first
-
-::: rows
-What Phase 1 showed | Tickets fell by about 47% and duplicates dropped. The North Star was the next step: stop routine questions becoming tickets.
-Decision | Once Phase 1 launched, the North Star was picked up as Phase 2. The plan had placed the assistant in Phase 3.
-Outcome | About 87% fewer tickets than the baseline.
-:::
-
-![Three behaviours: answer, never dead-end, escalate](/projects/two-way-communication/illus-assistant-logic.png "Illustration · What I defined with the MarTech team, so answers come from documentation we already had.")
-
-### The North Star: chat from anywhere
-Only if the chat cannot resolve it does it become a case, linked to the case page.
-
-![The North Star flow: chat first, then a case if it is needed](/projects/two-way-communication/illus-flow-northstar.png "The North Star flow · Phase 1 built the place where the handoff lands.")
-
-### The handoff, designed
-With no answer, the chat opens a case, gives its ID and links to it.
-
-![Chat frames: a question, then a handoff to a case](/projects/two-way-communication/chat-widget.png "The handoff · With no answer found, the chat opens a case and links to it. Example data.")
-
-### The assistant opens over the console
-A panel in the corner, so a developer can ask from the page where the problem happened.
-
-![The assistant open on the app list](/projects/two-way-communication/devassistant-panel.png "The panel · It opens over the console.")
-
-### It expands, with cited answers
-A full view with a chat history. Answers carry numbered references to the documentation.
-
-![The expanded assistant with a cited answer](/projects/two-way-communication/devassistant-full.png "The expanded view · A step-by-step answer with references to the documentation.")
-
-## Impact
-
-I measured tickets reaching support, and how many were duplicates, against the same baseline for both phases.
-
-![Tickets remaining for every 100 at the baseline: 100, about 53 after Phase 1, about 13 after Phase 2](/projects/two-way-communication/illus-dots-impact.png "Illustration · Tickets remaining against the baseline.")
+![Google Play Console's contact page suggesting resources before a case is submitted](/projects/two-way-communication/benchmark-google-play.png "Benchmark · Google Play Console. Suggested resources appear before a case is submitted.")
 
 ::: rows
-Support team | Far fewer tickets each day, and mostly critical ones. The assistant answers routine questions.
-Developers | They can see their own cases, so duplicates dropped.
-Turnaround | Roughly halved.
+Articles first | Links to documentation before a case is raised, and later an assistant that answers from them.
+Tracking | A case page with a status and a history in one place.
+One thread | Developers asked for an email-like thread, which the case page became.
+Back end | Four case tools were compared.
 :::
-
-Fewer tickets only counts if developers were helped. I have no satisfaction results to show that.
-
-## Reflection
-
-::: rows
-Sequence by dependency | Finding first gave the case pages somewhere to be reached from. The case system gave the assistant somewhere to hand off to.
-Change the model | From "submit and wait" to "open a thread". Most of the drop came from removing the reason to raise a second ticket.
-Structure carries the work | Inside a design system I did not own, my leverage was what is shown, in what order, and whose move it is.
-Next measure | Satisfaction after an assistant answer, drop-off on the longer form, and how often resolved cases are re-opened.
-:::
-
-## Appendix: user stories and form structure | Appendix
 
 **The plan as written.** Product management wrote it in late 2023.
 
