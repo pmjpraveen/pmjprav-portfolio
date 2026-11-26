@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { BEHANCE_URL, BOOKING_URL, SOCIAL_LINKS } from "../../content/social";
 import { EMAIL } from "../../lib/site";
+import { BookingButton } from "./BookingButton";
 import { HomeNav } from "./HomeNav";
 import { LinkArrow } from "./LinkArrow";
 import { Signature } from "./Signature";
@@ -54,20 +55,7 @@ export function HomeSidebar() {
         <p className="mt-3 max-w-[18rem] text-body-sm leading-body-sm text-smoke">
           I design the software people use all day at work, and make the complicated parts feel obvious.
         </p>
-        {/* At rest the label is centred alone. On hover or focus the arrow opens to
-            its width while the side padding shrinks by the same amount, so the
-            label and arrow re-centre together and the button keeps its size. */}
-        <a
-          href={booking.href}
-          {...(booking.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-          className="group mt-6 inline-flex items-center justify-center rounded-full bg-ink px-6 py-2 text-body-sm leading-body-sm text-eggshell transition-[padding,opacity] duration-200 ease-ui hover:px-[calc(1.5rem-0.5em)] hover:opacity-85 focus-visible:px-[calc(1.5rem-0.5em)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink motion-reduce:transition-none"
-        >
-          Book an intro call
-          {booking.external ? <span className="sr-only"> (opens in a new tab)</span> : null}
-          <span className="inline-flex w-0 overflow-hidden transition-[width,margin] duration-200 ease-ui group-hover:ml-[0.25em] group-hover:w-[0.75em] group-focus-visible:ml-[0.25em] group-focus-visible:w-[0.75em] motion-reduce:transition-none">
-            <LinkArrow />
-          </span>
-        </a>
+        <BookingButton href={booking.href} external={booking.external} />
       </div>
 
       <div className="mt-10 grid grid-cols-2 gap-8 lg:mt-0 lg:flex lg:flex-1 lg:flex-col lg:justify-between lg:pt-40">

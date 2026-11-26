@@ -16,6 +16,13 @@ const switzer = localFont({
   ],
 });
 
+// Geist Pixel, Circle style (OFL), for the intro-call button only.
+const geistPixel = localFont({
+  variable: "--font-geist-pixel",
+  display: "swap",
+  src: [{ path: "../public/fonts/geist-pixel/GeistPixel-Circle.woff2", weight: "400", style: "normal" }],
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   applicationName: SITE_NAME,
@@ -61,7 +68,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${switzer.variable} h-full antialiased`}
+      className={`${switzer.variable} ${geistPixel.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
         {children}

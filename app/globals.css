@@ -22,6 +22,8 @@
     "Segoe UI", Roboto, sans-serif;
   --font-display: var(--font-sans);
   --font-mono: var(--font-sans);
+  /* The one exception: Geist Pixel Circle on the intro-call button. */
+  --font-pixel: var(--font-geist-pixel), var(--font-sans);
 
   /* Type scale — small and quiet: 14px UI text, 16px reading text */
   --text-caption: 11px;

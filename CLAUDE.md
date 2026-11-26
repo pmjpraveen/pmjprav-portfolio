@@ -109,7 +109,7 @@ Avoid unnecessary dependencies.
 
 One typeface across the entire site: **Switzer** (300, 400, 500), self-hosted from `public/fonts/switzer/` via `next/font/local` in `app/layout.tsx`. Headings, body, navigation, buttons and labels all use it; `--font-display` and `--font-mono` point at Switzer too.
 
-Do not introduce any other typeface. The only exception is imagery the system generates (e.g. the Open Graph image, case-study illustrations), which may keep its current font combination.
+Do not introduce any other typeface. The exceptions: the "Book an intro call" button uses Geist Pixel, Circle style (`public/fonts/geist-pixel/`, OFL, via `--font-pixel`), and imagery the system generates (e.g. the Open Graph image, case-study illustrations) may keep its current font combination.
 
 Display typography should use approximately:
 
@@ -175,6 +175,8 @@ Flat canvas colour, no background texture. Depth comes from 3D objects, hairline
 # 9b. 3D and sound
 
 None. The Enigma loader, 3D objects, link sounds, custom cursor and dark theme were removed; the site is light-only, static and quiet. Do not reintroduce them, or `three`, `gsap` or `pullcord`.
+
+The one exception: hovering the "Book an intro call" button with a mouse plays a short, quiet retro arpeggio (C E G C on a triangle wave), synthesised in `app/lib/cta-sound.ts` (no audio files). Do not add sounds anywhere else.
 
 ---
 
