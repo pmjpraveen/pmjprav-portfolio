@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { ABOUT } from "../../content/about";
 import { pageMetadata } from "../../lib/metadata";
 
@@ -12,13 +12,14 @@ export const metadata: Metadata = pageMetadata({
 
 /**
  * `==phrase==` becomes a highlighter mark, so the key facts stand out on a
- * quick scan, drawn like a real highlighter pen (see .highlighter).
+ * quick scan, drawn like a real highlighter pen (see .highlighter). `order`
+ * numbers the marks down the page, so they are drawn one after another.
  */
-function withHighlights(text: string): ReactNode[] {
+function withHighlights(text: string, order: { next: number }): ReactNode[] {
   return text.split(/(==[^=]+==)/g).map((part, i) => {
     const match = /^==([^=]+)==$/.exec(part);
     return match ? (
-      <mark key={i} className="highlighter">
+      <mark key={i} className="highlighter" style={{ "--mark": order.next++ } as CSSProperties}>
         {match[1]}
       </mark>
     ) : (
@@ -40,6 +41,7 @@ function List({ title, children }: { title: string; children: ReactNode }) {
 export default function AboutPage() {
   const { background, experience, ai } = ABOUT;
   const paragraphs = [ABOUT.intro, ...background.paragraphs];
+  const order = { next: 0 };
 
   return (
     <article className="flex max-w-[35rem] flex-col gap-16">
@@ -48,7 +50,7 @@ export default function AboutPage() {
       <div className="flex flex-col gap-4">
         {paragraphs.map((paragraph) => (
           <p key={paragraph} className="text-ui leading-[1.75] text-ink">
-            {withHighlights(paragraph)}
+            {withHighlights(paragraph, order)}
           </p>
         ))}
       </div>
@@ -60,7 +62,7 @@ export default function AboutPage() {
         <div className="mt-3 flex flex-col gap-4">
           {ai.paragraphs.map((paragraph) => (
             <p key={paragraph} className="text-ui leading-[1.75] text-ink">
-              {withHighlights(paragraph)}
+              {withHighlights(paragraph, order)}
             </p>
           ))}
         </div>

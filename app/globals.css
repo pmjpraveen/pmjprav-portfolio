@@ -327,6 +327,28 @@
     mix-blend-mode: multiply;
     -webkit-box-decoration-break: clone;
     box-decoration-break: clone;
+    background-repeat: no-repeat;
+    background-size: 100% 100%, 100% 100%;
+    /* Drawn left to right, one mark after another down the page (--mark is
+       each mark's place in that order). The smudge settles as the pen lifts. */
+    animation: highlighter-draw 520ms cubic-bezier(0.3, 0.6, 0.35, 1) both;
+    animation-delay: calc(450ms + var(--mark, 0) * 220ms);
+  }
+
+  @keyframes highlighter-draw {
+    from {
+      background-size: 0% 100%, 0% 100%;
+      text-shadow: none;
+    }
+    70% {
+      text-shadow: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .highlighter {
+      animation: none;
+    }
   }
 
   /* Tag chip: hairline outline, barely-there fill, 3px corners. */
