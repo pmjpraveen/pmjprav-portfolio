@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Appstore Developer Console — Case Study</title>
+<style>
+@font-face{font-family:Switzer;font-weight:300;src:url(../../public/fonts/Switzer/Switzer-Light.woff2)}
+@font-face{font-family:Switzer;font-weight:400;src:url(../../public/fonts/Switzer/Switzer-Regular.woff2)}
+@font-face{font-family:Switzer;font-weight:500;src:url(../../public/fonts/Switzer/Switzer-Medium.woff2)}
+@page{size:A4;margin:16mm 16mm 18mm}
+:root{--canvas:#fdfcfc;--surface:#f5f3f1;--line:#ebe8e4;--ink:#000;--graphite:#44403b;--smoke:#777169;--ash:#a59f97}
+*{box-sizing:border-box}
+html{background:var(--canvas);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{margin:0;font:400 10pt/1.5 Switzer,sans-serif;letter-spacing:.01em;color:var(--graphite)}
+.mono{font-family:"Geist Mono",ui-monospace,Menlo,monospace;font-size:7pt;text-transform:uppercase;letter-spacing:.08em;color:var(--smoke)}
+h1{font-weight:300;font-size:30pt;line-height:1.1;letter-spacing:-.02em;color:var(--ink);margin:10pt 0 12pt}
+h2{font-weight:400;font-size:15pt;letter-spacing:-.01em;color:var(--ink);margin:0 0 8pt}
+h3{font-weight:500;font-size:10.5pt;color:var(--ink);margin:12pt 0 3pt}
+p{margin:0 0 7pt}
+b,strong{font-weight:500;color:var(--ink)}
+ul{margin:0 0 7pt;padding-left:14pt}li{margin:0 0 3pt}
+.tags{display:flex;gap:6pt;margin:0 0 14pt}
+.tag{background:var(--surface);border-radius:99px;padding:2pt 9pt;font-size:8.5pt;font-weight:500;color:var(--graphite)}
+.lead{font-size:12.5pt;line-height:1.45;color:var(--smoke);margin-bottom:14pt}
+.meta{display:grid;grid-template-columns:repeat(4,1fr);gap:10pt;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:9pt 0;margin-bottom:16pt}
+.meta div span{display:block;margin-bottom:2pt}
+.meta div{font-size:9pt;color:var(--ink)}
+.hero{width:84%;border-radius:14pt;border:1px solid var(--line);display:block}
+.sec{display:block;padding:16pt 0;border-top:1px solid var(--line);overflow:hidden}
+.sec>.label{float:left;width:34mm;padding-top:3pt}
+.sec>div:not(.label){margin-left:44mm}
+.sec>.label .mono{display:block}
+.stats{break-inside:avoid;display:grid;grid-template-columns:repeat(3,1fr);gap:8pt;margin:10pt 0 12pt}
+.stat{background:var(--surface);border-radius:12pt;padding:11pt 12pt}
+.stat b{display:block;font-weight:300;font-size:17pt;letter-spacing:-.02em;line-height:1.1}
+.stat span{font-size:8.5pt;color:var(--smoke);line-height:1.35;display:block;margin-top:3pt}
+figure{margin:9pt 0 10pt;break-inside:avoid}
+figure img{width:100%;display:block;border-radius:10pt;border:1px solid var(--line)}
+figcaption{font-size:8pt;color:var(--smoke);margin-top:4pt}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10pt}
+.grid2 figure{margin:6pt 0 8pt}
+.card{background:var(--surface);border-radius:12pt;padding:10pt 12pt;margin:8pt 0 10pt;break-inside:avoid}
+.card p:last-child{margin:0}
+.quote{border-left:2px solid var(--line);padding-left:10pt;color:var(--smoke);font-size:10pt;margin:8pt 0 10pt}
+.steps{counter-reset:s;list-style:none;padding:0}
+.steps li{counter-increment:s;position:relative;padding-left:20pt;margin-bottom:5pt}
+.steps li:before{content:counter(s);position:absolute;left:0;top:1pt;font:500 7.5pt "Geist Mono",monospace;color:var(--smoke)}
+table{width:100%;border-collapse:collapse;font-size:9pt;margin:6pt 0 8pt}
+th{text-align:left;font-weight:400}td,th{padding:5pt 6pt 5pt 0;border-bottom:1px solid var(--line);vertical-align:top}
+.model{font:400 7.2pt/1.5 "Geist Mono",ui-monospace,Menlo,monospace;white-space:pre;color:var(--graphite)}
+.note{font-size:8pt;color:var(--smoke)}
+.sec{break-inside:auto}.card,tr{break-inside:avoid}
+h2,h3{break-after:avoid}
+
+.time{display:inline-block;margin-top:5pt;background:var(--surface);border-radius:99px;padding:1.5pt 7pt;font:400 7pt "Geist Mono",monospace;color:var(--smoke)}
+.talk{border:1px dashed var(--ash);border-radius:12pt;padding:9pt 12pt;margin:10pt 0 0;break-inside:avoid}
+.talk .mono{display:block;margin-bottom:3pt}
+.talk ul{margin:0;font-size:9pt;color:var(--smoke)}
+.persona{display:grid;grid-template-columns:repeat(3,1fr);gap:8pt;margin:6pt 0 10pt}
+.persona div{background:var(--surface);border-radius:12pt;padding:9pt 10pt;font-size:8.5pt;line-height:1.45;break-inside:avoid}
+.persona b{display:block;font-size:9.5pt}.persona .mono{display:block;margin-bottom:3pt}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8pt}.grid3 figure{margin:6pt 0 8pt}
+.dec{border-top:1px solid var(--line);padding:6pt 0;break-inside:avoid;font-size:9.5pt}.dec p{margin:0 0 3pt}
+.flow{font:400 7.6pt/1.5 "Geist Mono",monospace;white-space:pre;background:var(--surface);border-radius:12pt;padding:9pt 12pt;margin:6pt 0 10pt;break-inside:avoid}
+h3.first{margin-top:0}
+.pg{break-before:page}
+</style>
+</head>
+<body>
+<div class="mono">Case study · Product design · Developer tools · Presentation edition (45–60 min)</div>
+<h1>Helping a major app marketplace’s developers ship to every device in parallel, cutting review waits from ~7 days to ~2.</h1>
+<div class="tags"><span class="tag">Hook</span><span class="tag">Key visual</span><span class="tag">Impact</span></div>
+<p class="lead">What began as a request to upload binaries in parallel became a ground-up rethink of how app submission is organised in the marketplace’s developer console.</p>
+<div class="meta">
+  <div><span class="mono">Role</span>Lead Designer, App Submissions</div>
+  <div><span class="mono">Team</span>~12 across PM, TPM, design, engineering, QA, research, support</div>
+  <div><span class="mono">Platform</span>Web · Developer console</div>
+  <div><span class="mono">Company</span>A major app marketplace (anonymised)</div>
+</div>
+<img class="hero" src="img/p1-after-3-versions.png" alt="Release tracks: one lane live at 100% while another is in review">
+<p class="note" style="margin-top:4pt">After · Release tracks. One lane is live at 100% while another is in review, impossible in the old console. Sample data.</p>
+<table style="margin-top:14pt;break-inside:avoid">
+<tr><th class="mono">Section</th><th class="mono">What it covers</th><th class="mono">Time</th></tr>
+<tr><td>01 Summary</td><td>The headline, the move, the outcome</td><td>~3 min</td></tr>
+<tr><td>02 Problem framing</td><td>Context, stakes, people, the old console</td><td>~7 min</td></tr>
+<tr><td>03 Role &amp; team</td><td>What I owned, who I worked with</td><td>~3 min</td></tr>
+<tr><td>04 Approach</td><td>Research, the reframe, phasing</td><td>~13 min</td></tr>
+<tr><td>05 Challenges</td><td>Pushback, constraints, gaps</td><td>~6 min</td></tr>
+<tr><td>06 Solution</td><td>Phases 1–3, decisions, release and testing</td><td>~16 min</td></tr>
+<tr><td>07 Results &amp; impact</td><td>What shipped and what changed</td><td>~5 min</td></tr>
+<tr><td>08 Next steps</td><td>What’s ahead and what I’d carry forward</td><td>~5 min</td></tr>
+</table>
+<p class="note">≈ 58 min including a few minutes of slack. Cut the Solution decisions and the reviewer panel to land at 45.</p>
+<section class="sec" style="border-top:0"><div class="label"><span class="mono">01</span><h2>Summary</h2><span class="time">~3 min</span></div><div>
+
+<p>A marketplace’s developers ship apps to several device families: TVs, tablets and, soon, TVs running a brand-new operating system. Each family has its own binary, its own codebase and often its own release rhythm. The console, however, treated an app as <b>one thing with one submission</b>. While any version was in review, nothing else could be submitted.</p>
+<p>The brief I was handed was narrow: enable parallel binary submission. Research with the platform’s highest-revenue partners, and a hard look at how the console was organised, showed the narrow brief was a symptom. The deeper problem was the information architecture: submissions, metadata, testing, rollout and release were tangled into a single linear path that could only hold one version at a time.</p>
+<p>I led design for the redesigned submission experience. Its central idea is the <b>release track</b>: an independent lane per platform, each with its own releases, devices, status and roll-out, running alongside the others instead of queuing behind them. Later phases extended lanes to device types and gave each track its own store listing.</p>
+<div class="stats">
+  <div class="stat"><b>~7 → ~2</b><span>days of review wait, falling gradually</span></div>
+  <div class="stat"><b>Q2 2025</b><span>Phases 1 and 2 shipped, meeting the new-OS device launch</span></div>
+  <div class="stat"><b>7</b><span>strategic partners in the research that reframed the brief</span></div>
+</div>
+<table>
+<tr><td class="mono" style="width:22%">Problem</td><td>One in-review version blocked every other submission, including test builds and builds for other devices.</td></tr>
+<tr><td class="mono">Evidence</td><td>Two-week study, 7 strategic partners. Review waits of about 7 days; about a 2-week lag against other mobile platforms.</td></tr>
+<tr><td class="mono">Move</td><td>Reframed “parallel upload” as an IA redesign around release tracks, then split the work into three phases.</td></tr>
+<tr><td class="mono">Constraint</td><td>A launch blocker for a new device OS (target Q2 2025), and engineering limits on how much of the back end could change.</td></tr>
+<tr><td class="mono">Outcome</td><td>Phases 1 and 2 shipped in Q2 2025. Review wait fell from ~7 to ~2 days. Phase 3, a full platform overhaul, was in progress when I left.</td></tr>
+</table>
+<div class="talk"><span class="mono">Talk track</span><ul><li>Open with the outcome, then say: “the brief was a feature, the problem was a structure.” That sentence carries the whole talk.</li><li>Name the three phases now so the audience can track where each later screen sits.</li><li>Invite questions to be held for the end of each section.</li></ul></div></div></section>
+<section class="sec"><div class="label"><span class="mono">02</span><h2>Problem framing</h2><span class="time">~7 min</span></div><div>
+
+<h3 class="first">Why this mattered now</h3>
+<p>The marketplace was preparing to support a new device running a new OS, alongside its TV and tablet lines. For developers that meant another binary type, one that could not run on the other devices and vice versa. A developer shipping across device types had two options, and both were bad:</p>
+<ul>
+  <li><b>Submit everything together.</b> One submission, one set of metadata, released at the pace of the slowest platform.</li>
+  <li><b>Stagger submissions.</b> Wait for one binary to go live before starting the next, a week or more each time.</li>
+</ul>
+<p>A third workaround, separate listings per device, lets developers move independently but breaks something customers rely on: in-app purchases made in one listing can’t be redeemed in the other unless the developer meticulously mirrors them.</p>
+<div class="quote">“They submit a TV build and it’s in review. In the meantime they want to send a tablet build. Currently, they are unable to.”<br><span class="note">Feedback summarised in the BRD from two large streaming partners</span></div>
+<h3>The business stake</h3>
+<p>The project was flagged as a <b>blocker for the new device’s launch</b>, targeted for Q2 2025, and results were to be shared with senior leadership across the Appstore and developer-experience organisations. The research plan rated the risk of not doing the research at the highest level (“can’t move forward”), which is why a concept evaluation was scoped for the earliest stage.</p>
+<h3>Who we were designing for</h3>
+<p>The BRD defines three personas (names are fictional). Each maps to a distinct pressure on the experience.</p>
+<div class="persona">
+<div><span class="mono">Lead developer · streaming</span><b>Sarah Chen</b>Manages a streaming service across TV, tablet and the new-OS TV, with separate codebases. A tablet review in progress delays TV and new-OS updates. Critical fixes wait on unrelated reviews.</div>
+<div><span class="mono">Independent game developer</span><b>Marcus Johnson</b>Runs a small studio making educational games for children. Limited resources force him to choose which platform to update first. Delays hurt revenue and seasonal updates.</div>
+<div><span class="mono">Reviewer · internal</span><b>Josh Brown</b>Reviews thousands of submissions a month. Struggles to track related submissions across platforms and has limited device- and OS-specific context.</div>
+</div>
+<p>Sarah and Marcus sit at opposite ends of scale yet share one need: <b>release cadence should be set by the team’s capacity, not by the submission system’s constraints.</b> Josh adds an easy-to-forget third: every control a developer gains creates work for someone downstream.</p>
+<h3>The console I started from</h3>
+<p>The old console asked developers to move through four steps in order: upload the app file, target the app, set the store settings, review the information. Everything about a version, from binary to marketing content, lived in that one sequence.</p>
+<div class="grid2">
+<figure><img src="img/p1-step1.png" alt="Old step 1"><figcaption>Step 1 · Upload. Details are pre-filled from the package, but a single upload slot assumes a single file.</figcaption></figure><figure><img src="img/p1-step2.png" alt="Old step 2"><figcaption>Step 2 · Distribution details. Devices, regions, audience and compliance share one long page.</figcaption></figure></div>
+<div class="grid2">
+<figure><img src="img/p1-step3.png" alt="Old step 3"><figcaption>Step 3 · Store details. Rich and well grouped, but tied to the same submission as the binary.</figcaption></figure><figure><img src="img/before-3-assets.png" alt="Old device assets"><figcaption>Step 3 · Device-specific store assets. Change a screenshot and you are inside the release flow.</figcaption></figure></div>
+<p class="note">Brand elements redacted, sample data. Steps 4 (review and submit), status and new-version screens exist in the original but are not yet exported, so they are described, not shown.</p>
+<h3>Six structural problems, visible before any research</h3>
+<ul>
+  <li><b>Step names don’t match contents.</b> “Upload your app file” also holds title, SKU, category, languages and support contact.</li>
+  <li><b>The flow says two opposite things.</b> Steps can be done in any order, yet device selection is blocked until a file is uploaded.</li>
+  <li><b>“Target your app” mixes unrelated decisions.</b> Devices follow the binary; availability, audience, rating and privacy are app-level, with different owners.</li>
+  <li><b>Everything about a version lives in one pass,</b> so metadata could never differ between binaries.</li>
+  <li><b>Testing, in-app items and promotions sit outside the flow,</b> matching the finding that test builds were blocked.</li>
+  <li><b>Release decisions are absent from steps 1–3.</b> Timing arrives last and rollout is nowhere.</li>
+</ul>
+<p><b>What this told me.</b> The four steps were organised by form sections, not by the decisions a developer makes. A developer thinks “what is my app, and what am I releasing now?” The old console asked “which form comes next?”</p>
+<div class="talk"><span class="mono">Talk track</span><ul><li>Spend the time on the quote and the old-console screens: the audience needs to feel the one-lane constraint.</li><li>Use personas to set up the third user (the reviewer) early. It pays off in Challenges.</li><li>Land the point that parallel upload could not be solved by adding a button.</li></ul></div></div></section>
+<section class="sec"><div class="label"><span class="mono">03</span><h2>Role &amp; team</h2><span class="time">~3 min</span></div><div>
+
+<p>I was the lead designer for app submissions. I partnered closely with the research team to bring out the gaps in the current experience and helped shape the first draft of the research plan. I worked day to day with a PM (who authored the BRD), a TPM, a design manager, an engineering lead and team, a QA lead with two testers, a researcher and the support team: roughly twelve people.</p>
+<ul>
+  <li><b>Start.</b> The PM brought requirements for parallel binary submission. I held an initial discussion on the BRD and pulled the research team in early, so we understood the problem before designing anything.</li>
+  <li><b>Research.</b> I sat with the research team to shape the questions, structure and methods. They wrote the questionnaires with us and ran the study.</li>
+  <li><b>Decision.</b> I took the research outcome to the PM and leadership and drove the decision to phase the work.</li>
+  <li><b>Hands-on scope.</b> Flows, UI, prototypes and design-system work through full handoff. After engineering built it, I ran visual QA against the designs and gave sign-off.</li>
+  <li><b>Engineering and support</b> were brought in at the very start, so their constraints shaped the work from the first discussions.</li>
+  <li><b>Outside my scope.</b> The reviewer-facing certification tool, a separate internal product. My focus was the developer console.</li>
+</ul>
+<div class="talk"><span class="mono">Talk track</span><ul><li>Be precise about what you owned and what research owned. Credit the team.</li><li>One line on how you pulled engineering and support in early: it sets up the pushback story.</li></ul></div></div></section>
+<section class="sec pg"><div class="label"><span class="mono">04</span><h2>Approach</h2><span class="time">~13 min</span></div><div>
+
+<h3 class="first">Research: what we learned, and from whom</h3>
+<p>The study ran for two weeks with <b>seven strategic partners</b>, the managed developers who account for a disproportionate share of platform revenue, using card sorting, interviews and survey questions. A single problem for them can move the platform’s numbers more than any number of smaller developers combined.</p>
+<p><b>Research questions.</b> Do you submit different apps for TVs and tablets? Which submission features do you use most? How useful are future release dates, staged rollout and a simple flow? And the one we had to leave knowing: does parallel binary submission hold up?</p>
+<ol class="steps">
+  <li><b>Developers waited on reviews to submit their other bundles.</b> A second bundle couldn’t go until the first cleared.</li>
+  <li><b>A review took about seven days.</b> A blocked queue adds a week to every dependent release.</li>
+  <li><b>Partners fell about two weeks behind</b> their own releases on other mobile platforms, so the marketplace showed stale versions.</li>
+  <li><b>Even single-bundle partners couldn’t get test builds out.</b> Production review held back the testing cycle.</li>
+  <li><b>Staged rollout was hard to find and hard to operate.</b> No clear way to raise the percentage or discard a staged version.</li>
+</ol>
+<p><b>It didn’t start from a blank page.</b> Earlier research (four interviews and a survey of 39 developers) found 72% rated satisfaction 4 or higher out of 5 and 23% rated it 3. They liked the submission UI’s simplicity. They disliked slow review, vague rejections and testing that waited on review.</p>
+<div class="quote">“I would like it if the processing/review time for Live App Testing were shorter, or if there were an internal testing track that bypassed the review process.”<br><span class="note">Developer, earlier survey</span></div>
+<div class="quote">“It would be great if the UI was more in line with [the other major store].”<br><span class="note">Developer, earlier survey</span></div>
+<p>The first anticipated Finding 4; the second anticipated the card sort. Seeing both recur gave me confidence they were real patterns.</p>
+<p><b>In developers’ words.</b> A survey of about 130 developers asked what they wanted from staged rollout. Verbatim, names withheld:</p>
+<div class="quote">“When the build has major changes which there are risk of errors and crashes, allows us to halt the release.”</div>
+<div class="quote">“The more flexibility we have to control who gets the update is better.”</div>
+<div class="quote">“Perhaps stop the rollout if there are a lot of crashes.”</div>
+<p>The same survey adds a counterweight: many developers release on larger platforms first and treat that as their safety check. So the goal was <b>clarity rather than more controls</b>.</p>
+<div class="card"><p><b>What changed in my thinking.</b> Findings 1–3 fit the original brief. Findings 4 and 5 did not: they had nothing to do with binaries or devices. They were about how <i>releasing</i> is modelled. That mismatch made me stop treating this as a feature and start treating it as an architecture problem.</p></div>
+<p><b>The card sort</b> showed developers did not want a new mental model. Most partners already knew a competing console’s structure and were comfortable in it, which pulled the design toward conventions they knew. <b>Validation:</b> when the first draft of the restructured flow was walked through with partners, they found it more convenient, with a lower learning curve than the old console. <b>Reach:</b> the features were rolled out to smaller developers too.</p>
+
+<h3>The reframe: from a feature to an information architecture</h3>
+<p>Mapped end to end, the old model was a single straight line that assumed one live version at a time:</p>
+<div class="flow">Create a submission
+  └── Upload a binary
+        └── Wait for review
+              └── Publish
+                    └── (only now) start a new submission</div>
+<p>Parallel upload could not be bolted on without breaking its assumptions. Each question below is an IA question, not a UI one:</p>
+<ul>
+  <li><b>Where does metadata live?</b> Two binaries need different notes and screenshots.</li>
+  <li><b>What does “status” mean?</b> One label can’t describe three versions in three states.</li>
+  <li><b>What does rollout apply to?</b> A percentage of “the app” is meaningless across independent binaries.</li>
+  <li><b>Where does testing fit?</b> Inside a production submission it is always blocked by it.</li>
+</ul>
+<div class="card"><p><b>The design principle.</b> Separate what is true of the <b>app</b> from what is true of a <b>release</b>. App-level information (availability, privacy, content rating) is set once and shared. Everything about a version (binary, device targets, notes, rollout, date) belongs to a lane of its own.</p></div>
+<div class="flow">App
+ ├── App setup  (set once, shared)
+ │     general info · store listing · pricing and availability · policies
+ └── Release tracks
+       ├── OS A track    →  releases: build · devices · status · roll-out
+       └── New-OS track  →  releases: build · devices · status · roll-out
+       (Phase 2: tracks by device type, each with its own store listing)</div>
+
+<h3>Taking it to the PM and leadership</h3>
+<p>The PM arrived with a scoped requirement. I took the findings back to the PM and leadership and made the case explicitly: this was not one blocked feature but a workflow whose architecture could not support what developers needed. Rather than asking for a larger single project, we agreed to <b>break the work into three phases</b> so the launch blocker could still be unblocked first.</p>
+<ol class="steps">
+  <li><b>Unblock parallel binary submissions</b> and simplify the navigation. Protects the launch date.</li>
+  <li><b>Re-architect information and content:</b> guided app setup, device-scoped tracks, store listings and history that belong to a track. Carries the test-build and rollout findings further.</li>
+  <li><b>Redesign the developer platform:</b> a new design system and structure built around the jobs a developer does.</li>
+</ol>
+<p><b>Why this order.</b> Phase 1 solves the immediate blocker with the smallest structural change that works. Phase 2 puts that change on a coherent hierarchy rather than another layer of patches. Phase 3 only makes sense once the model is settled; a redesigned platform on the old structure would just move the confusion around. Phases 1 and 2 shipped. Phase 3 was in progress when I left.</p>
+<div class="talk"><span class="mono">Talk track</span><ul><li>This is the section to slow down in. Walk the five findings, then pause on Findings 4 and 5: that is the moment the brief changes.</li><li>Show the straight-line diagram, then ask the audience where a second version would go.</li><li>End on phasing as a design decision, not a project-management one.</li></ul></div></div></section>
+<section class="sec"><div class="label"><span class="mono">05</span><h2>Challenges</h2><span class="time">~6 min</span></div><div>
+
+<ul>
+  <li><b>A fixed launch date.</b> The project blocked a new device OS, targeted for Q2 2025. A full restructure risked it, so Phase 1 used the smallest structural change that still worked.</li>
+  <li><b>Engineering pushback.</b> Restructuring the information architecture would need a large back-end change and stretch the timeline. The objection was legitimate, so I treated it as a design input: a lighter IA change the existing back end could support, with the deeper shift held for the Phase 3 redesign.</li>
+  <li><b>The reviewer as a constraint.</b> Parallel submissions multiply what a reviewer must look at. The certification side needed visibility of active tracks and their device types, first-in-first-out processing across a developer’s tracks, results shared back with clear next steps, and device- and OS-specific checklists. Keeping the reviewer in view kept the project honest, and it is why the first lanes followed OS boundaries, where packages are incompatible and can never collide. <i>(The reviewer tool itself was outside my scope.)</i></li>
+  <li><b>Gaps at launch.</b> Four known limits: no platform-specific tracks (only per OS), no separate store listings per track, no region-specific listings, and no release history. They became the Phase 2 agenda.</li>
+  <li><b>What shipped vs the plan.</b> The BRD described device-scoped tracks, up to three per app. At launch tracks were per OS with devices listed inside each release. Device-level tracks with their own listings are what Phase 2 delivered.</li>
+  <li><b>Serving everyone.</b> Research focused on the highest-revenue partners. The risk was a console that fits their workflow and overwhelms a solo developer. Progressive disclosure and a non-linear first-time flow were the guardrails.</li>
+</ul>
+<div class="talk"><span class="mono">Talk track</span><ul><li>Tell the pushback story as a negotiation: legitimate objection, design response.</li><li>Be honest about the gaps. Shipping on time meant living with them, and that is a strength of the story.</li></ul></div></div></section>
+<section class="sec pg"><div class="label"><span class="mono">06</span><h2>Solution</h2><span class="time">~16 min</span></div><div>
+
+<h3 class="first">Phase 1 · Unblock: what launched</h3>
+<p>One job: stop one version from blocking another. Three moves did the work.</p>
+<p><b>1 · Simplify the navigation.</b> The four-step sequence gave way to a persistent left navigation: Publish, Monetize, Test and Services. Under Publish, <b>App setup</b> groups app-level material in four sections (general information, store listing, pricing and availability, policies and compliance), with <b>Release tracks</b> beside it. What is true of the app is set up once, in any order. Testing and monetisation became peers of publishing, not footnotes to it.</p>
+<figure><img src="img/p1-after-1-nav.png" alt="App setup and release tracks"><figcaption>Launch · Four app-level sections under one heading, with Release tracks as a sibling.</figcaption></figure>
+<p><b>2 · Give each platform its own lane.</b> One lane per operating system. Each starts with a clear empty state (“No releases created”) and its own <b>Create a release</b> action. Nothing about starting one platform’s release depends on the other, so the old “one submission at a time” rule has no place to live.</p>
+<figure><img src="img/p1-after-2-tracks.png" alt="Release tracks empty state"><figcaption>Launch · Release tracks, empty state. One lane per OS.</figcaption></figure>
+<p><b>3 · Manage upcoming versions side by side.</b> Each lane is a small table: build, supported devices, release date, status, <b>staged roll-out</b>, and links to status and the release. In the example one lane is live at 100% while another is in review, impossible before. Rollout was a hidden feature; now it is a column every developer reads.</p>
+<figure><img src="img/p1-after-3-versions.png" alt="Release tracks with releases"><figcaption>Launch · One lane live at 100% while another is in review.</figcaption></figure>
+<h3>Phase 2 · Let the track own its content</h3>
+<p>Two developer-experience outcomes mapped directly to the Phase 1 gaps. Both launched.</p>
+<p><b>Outcome 1 · Know what data is needed,</b> with relevance, minimal scroll, quickly. If every track and region can have its own information, the risk is a form so long nobody can find their place. The response: field-level instructions with links to technical docs, and clear indicators with quick navigation.</p>
+<div class="grid2">
+<figure><img src="img/p2-2-setup-intro.png" alt="App setup intro"><figcaption>App setup opens by explaining its role as the hub for app-level information.</figcaption></figure><figure><img src="img/p2-1-setup-nav.png" alt="Section index"><figcaption>A section index lists nine sections so developers can see the whole form and jump to any part.</figcaption></figure></div>
+<p><b>Outcome 2 · Set up and manage information, quickly and with confidence.</b> Simplified track creation, and structured configuration workflows with <b>role-based permissions</b> so designated team members can own independent tasks. Creating a track is two choices: platform, then device types, as a combined release or a track per device type. Each track is now an object with an editable name, a line stating the devices it covers, and two independent first steps: set up the store listing, and create the first release. It also carries a release summary, <b>Releases</b> and <b>Store Listings</b> tabs, and a release history for audit and troubleshooting.</p>
+<div class="grid2">
+<figure><img src="img/p2-3-create-track.png" alt="Creating a track"><figcaption>Creating a track. Choose an OS, then device types.</figcaption></figure><figure><img src="img/p2-4-track-page.png" alt="A named track"><figcaption>A named track with two parallel first steps.</figcaption></figure></div>
+
+<h3>Phase 3 · Rebuild the console around the developer</h3>
+<p>A complete overhaul of the developer platform: new structure, new guidance, new design system. <i>In progress when I left, so shown as design, not as shipped.</i> The navigation names the work a developer does: <b>Dashboard, Release, Testing, Monetization and Monitoring</b>. Monitoring is new as a first-class area. The dashboard opens with “Get started setting up your app” and a checklist that answers “what should I do now?”, with specific alerts that come with a “Fix now” action, so problems are resolved in one step instead of discovered in review. Guidance sits beside the task: relevant docs, search in the header, and an always-available assistant.</p>
+<figure><img src="img/p3-dashboard.png" alt="Phase 3 dashboard"><figcaption>Phase 3 · The new dashboard. Structure, visual language and guidance are all new. Sample data.</figcaption></figure>
+<div class="grid3">
+<figure><img src="img/p3-ex-dashboard.png" alt="App dashboard"><figcaption>App dashboard: release, app health, monetisation, KPIs.</figcaption></figure><figure><img src="img/p3-ex-general.png" alt="General information"><figcaption>Setup with a notifications panel beside the form.</figcaption></figure><figure><img src="img/p3-ex-allapps.png" alt="All apps"><figcaption>All apps, with a pinned app summarised at the top.</figcaption></figure></div>
+<p>The app dashboard shows the latest release with its roll-out percentage, app vitals (crash rate, ANR rate, rating, 28 days against the previous 28), monetisation, and a KPI area the developer fills. Setup keeps the Phase 1–2 structure inside the new navigation, with urgent items (such as an API level due before updates can ship) shown beside the form with a direct action. The home screen treats a developer with several apps as the norm. The <b>new design system</b> matches the marketplace’s own devices, so there is no visual break between the hardware developers build for and the console they build in. It was as much a product decision as a visual one: building on shared components kept structure, guidance and look consistent.</p>
+
+<h3>The decisions that shaped it</h3>
+<div class="dec"><p><b>1 · Separate the app from its releases.</b> Four steps became two places: app and store details, and the release. <i>Why:</i> separates marketing content from the release, so a copy edit no longer rides along with a binary. <i>Constraint:</i> engineering’s back-end concern made this the lighter structural change.</p></div>
+<div class="dec"><p><b>2 · Group by the jobs developers do.</b> Publish, Monetize, Test, Services. <i>Why:</i> testing and in-app items sat outside the path developers walked, and test builds were blocked. The card sort also pointed to a structure developers already knew.</p></div>
+<div class="dec"><p><b>3 · Lanes by OS first, then by device.</b> An OS boundary is the cleanest line: packages are incompatible, so lanes can never collide. Device-level tracks add control but also states to manage, so they came after.</p></div>
+<div class="dec"><p><b>4 · Make rollout a column, not a feature.</b> A separate setting still has to be discovered; a column is seen every time a developer looks at their releases. Clarity, not extra controls.</p></div>
+<div class="dec"><p><b>5 · Let a long form show where you are.</b> A section index turns a scroll into a map as listings and regions multiply.</p></div>
+<div class="dec"><p><b>6 · Make the track an object that owns things.</b> At launch a track was only a lane. Giving it a listing, history and its own tabs is what the earlier decisions were leading to.</p></div>
+
+<h3>Making release a first-class journey</h3>
+<p><b>Rollout.</b> Release controls let developers choose an immediate publish, a fixed future date, or manual publishing after approval. Partial or full rollout is chosen up front and shown as a column, so a developer sees at once whether a release is at 100%.</p>
+<p><b>Testing without being blocked.</b> Testing has its own route: choose what to test with (a developer-test option, or a physical device farm) and add testers manually or by upload. A test release no longer waits for production review. Production release setup stays locked until mandatory information is complete, so nobody reaches the final step with gaps.</p>
+<p><b>An onboarding path that isn’t a straight line.</b> First-time setup is four groups: app basics, monetisation, release track and release, with early dev testing in parallel. Monetisation can be skipped, payment details can come later, and “Save and exit” is always available.</p>
+<div class="talk"><span class="mono">Talk track</span><ul><li>Walk Phase 1 as three moves with the three screens. It is the clearest before/after in the talk.</li><li>Phase 2: emphasise that the same app/release separation was applied again, one level down, to each track.</li><li>Phase 3: be explicit that it is design, not shipped. Use the decisions list as your Q&A prompts, and cut it first if time is short.</li></ul></div></div></section>
+<section class="sec"><div class="label"><span class="mono">07</span><h2>Results &amp; impact</h2><span class="time">~5 min</span></div><div>
+
+<div class="stats">
+  <div class="stat"><b>~7 → ~2 days</b><span>review wait, gradually rather than overnight</span></div>
+  <div class="stat"><b>Q2 2025</b><span>Phases 1 and 2 shipped, in time for the new-OS device launch</span></div>
+  <div class="stat"><b>~2 weeks</b><span>platform lag partners could close by submitting in parallel</span></div>
+</div>
+<ul>
+  <li><b>Parallel submission shipped.</b> A developer could ship a build for one OS without waiting on another.</li>
+  <li><b>The restructured hierarchy shipped,</b> with the four-step flow reduced to store details and a production release.</li>
+  <li><b>Phase 2 shipped.</b> Tracks extended to device-level releases, each with its own store listing, plus release history and guided app setup.</li>
+  <li><b>Partners</b> could submit multiple binaries at once, or while another was in review, matching their timing on other platforms and closing the ~2-week lag.</li>
+  <li>They found the flow <b>easier and quicker to learn</b> because it matched console conventions they already knew.</li>
+  <li>The same abilities were <b>extended to smaller developers.</b></li>
+</ul>
+<table>
+  <tr><th class="mono">Before</th><th class="mono">After</th></tr>
+  <tr><td>One submission at a time; others wait on review</td><td>Independent submissions per OS, in parallel</td></tr>
+  <tr><td>Four sequential steps: upload, target, store settings, review</td><td>Two steps: store details and production release</td></tr>
+  <tr><td>Store content and release tied together</td><td>Release editable on its own; marketing content managed separately</td></tr>
+  <tr><td>Staged rollout hard to find</td><td>Partial or full release chosen up front</td></tr>
+  <tr><td>Review wait ~7 days</td><td>Review wait ~2 days (gradual)</td></tr>
+</table>
+<p class="note">Partner feedback is paraphrased from the project owner’s account, not verbatim. Company, device, OS and partner names are anonymised.</p>
+<div class="talk"><span class="mono">Talk track</span><ul><li>Say plainly that the 7-to-2-day drop was gradual and the research baseline was ~7 days.</li><li>Tie each “after” row back to a numbered finding from Approach.</li></ul></div></div></section>
+<section class="sec"><div class="label"><span class="mono">08</span><h2>Next steps</h2><span class="time">~5 min</span></div><div>
+
+<p><b>Phase 3</b> was in progress when I left: the new design system and structure for the whole developer platform, built on the model Phases 1 and 2 settled.</p>
+<p><b>The north star: experiments.</b> The BRD closes with a longer-term vision. Tracks could be of two kinds, <b>production</b> and <b>experiment</b>. In an experiment track a developer could test store-listing changes (logos, descriptions, screenshots) or app-feature changes across control and treatment groups, split by device type, family and region, then promote the winning variant to production with a staged rollout. It was explicitly future work, and it shows why the track model was worth getting right: the foundation that experimentation, staged rollout and independent releases can all sit on. The BRD’s example performance numbers are illustrative and are not results.</p>
+<h3>What I’d carry forward</h3>
+<ul>
+  <li><b>Treat the brief as a hypothesis.</b> “Allow parallel uploads” was a reasonable request and the wrong problem. Ask “what model does this feature assume?” before designing it.</li>
+  <li><b>Design for the most valuable users without forgetting the rest.</b> Progressive disclosure and a non-linear first-time flow were the guardrails.</li>
+  <li><b>Every capability has a second user.</b> The reviewer’s needs constrained how many parallel lanes were reasonable at launch.</li>
+  <li><b>Let constraints shape the sequence, not just the scope.</b> Engineering’s objection produced a better plan: ship what the back end can carry now, hold the deeper shift for the redesign.</li>
+  <li><b>Familiar beats novel.</b> Designing toward the structure developers already trusted cut the learning curve.</li>
+</ul>
+<div class="talk"><span class="mono">Talk track</span><ul><li>Close on the habit, not the feature: treat the brief as a hypothesis.</li><li>Leave 5–10 minutes for questions. Likely ones: why OS before device, what you’d do differently, how you handled the pushback.</li></ul></div></div></section>
+<p class="note" style="margin-top:14pt">Sources: Parallel Binary Submission BRD · developer research plan · developer console user-flow maps · earlier app submission study · staged rollout survey · Phase 2 and Phase 3 design screens.</p></body></html>
