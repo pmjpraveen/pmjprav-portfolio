@@ -42,6 +42,8 @@ export type Project = {
   number: string;
   title: string;
   category: string;
+  /** Company the work was done for, shown beside the title on the homepage. */
+  client?: string;
   /** Short description/thesis shown in the homepage intro and case-study header. */
   description: string;
   role: string;
@@ -81,6 +83,7 @@ export type Project = {
 export const projects: Project[] = [
   {
     slug: "appstore-console",
+    client: "Amazon",
     number: "01",
     title: "Appstore Developer Console",
     category: "Developer Tools · Platform",
@@ -106,6 +109,7 @@ export const projects: Project[] = [
 
   {
     slug: "two-way-communication",
+    client: "Amazon",
     number: "02",
     title: "Developer Support",
     category: "Developer Tools · Support",
@@ -131,6 +135,7 @@ export const projects: Project[] = [
 
   {
     slug: "recur-spark",
+    client: "Recur",
     number: "03",
     title: "Spark by Recur",
     category: "Fintech · Financing",
@@ -152,6 +157,7 @@ export const projects: Project[] = [
 
   {
     slug: "nytro-pitch",
+    client: "Nytro.ai",
     number: "04",
     title: "Nytro Pitch App",
     category: "B2B · SaaS",
@@ -174,6 +180,7 @@ export const projects: Project[] = [
 
   {
     slug: "honeywell-comments",
+    client: "Honeywell",
     number: "05",
     title: "Comments in a Digital Dashboard",
     category: "Enterprise · ERP",

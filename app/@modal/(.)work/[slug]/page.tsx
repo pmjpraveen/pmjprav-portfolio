@@ -24,10 +24,11 @@ export default async function ModalProjectPage({ params }: ModalProjectPageProps
   const next = getNextRealProject(slug);
 
   return (
-    <ProjectOverlay>
+    <ProjectOverlay key={slug}>
       <ProjectPage
         project={withMarkdownContent(project)}
         nextProject={next ? toNextProjectData(next) : undefined}
+        variant="sheet"
       />
     </ProjectOverlay>
   );

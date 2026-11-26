@@ -19,6 +19,8 @@ type NextProjectData = {
 type ProjectPageProps = {
   project: Project;
   nextProject?: NextProjectData;
+  /** "sheet" drops the section index, which needs more width than the sheet has. */
+  variant?: "page" | "sheet";
 };
 
 /**
@@ -27,7 +29,7 @@ type ProjectPageProps = {
  * exist, their order, and their content comes from `project` — this
  * component only controls the parts every case study shares.
  */
-export function ProjectPage({ project, nextProject }: ProjectPageProps) {
+export function ProjectPage({ project, nextProject, variant = "page" }: ProjectPageProps) {
   const sections = project.sections ?? [];
 
   const navItems = sections
@@ -36,7 +38,7 @@ export function ProjectPage({ project, nextProject }: ProjectPageProps) {
 
   // Only worth a sidebar once there's enough to navigate between — below
   // that, sections render full-width with their own dividers (ProjectSection).
-  const hasNav = navItems.length >= 2;
+  const hasNav = variant === "page" && navItems.length >= 2;
 
   return (
     <>
@@ -58,7 +60,7 @@ export function ProjectPage({ project, nextProject }: ProjectPageProps) {
       ) : null}
 
       {hasNav ? (
-        <section className="border-t border-stone py-16 sm:py-20 lg:py-24">
+        <section className="py-16 sm:py-20 lg:py-24">
           <Container>
             <div className="lg:grid lg:grid-cols-[200px_1fr] lg:gap-16">
               <ProjectNavigation items={navItems} />
@@ -68,7 +70,7 @@ export function ProjectPage({ project, nextProject }: ProjectPageProps) {
                     key={section.id}
                     id={section.id}
                     className={`scroll-mt-24 ${
-                      index > 0 ? "border-t border-stone pt-16 sm:pt-20 lg:pt-24" : ""
+                      index > 0 ? "pt-16 sm:pt-20 lg:pt-24" : ""
                     } ${index < sections.length - 1 ? "pb-16 sm:pb-20 lg:pb-24" : ""}`}
                   >
                     {renderProjectSectionContent(section)}
