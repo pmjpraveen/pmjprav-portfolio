@@ -18,7 +18,7 @@ export function HomeNav() {
 
   const link = (href: string, label: string, current: boolean) => (
     <li key={href}>
-      <Link href={href} aria-current={current ? "page" : undefined} className={`${item} ${current ? "text-ink" : idle}`}>
+      <Link href={href} scroll={false} aria-current={current ? "page" : undefined} className={`${item} ${current ? "text-ink" : idle}`}>
         {label}
       </Link>
     </li>

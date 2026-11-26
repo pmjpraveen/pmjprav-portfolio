@@ -22,6 +22,7 @@ export function HomeSidebar() {
     <aside className="flex flex-col pt-10 lg:sticky lg:top-0 lg:h-svh lg:pb-12 lg:pt-12">
       <Link
         href="/"
+        scroll={false}
         aria-label="Praveenkumar, home"
         className="w-fit rounded-input"
       >
