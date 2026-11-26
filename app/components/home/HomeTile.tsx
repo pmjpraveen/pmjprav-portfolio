@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Ref } from "react";
 import type { ClientLogo } from "../../content/clients";
+import { PreloadLink, type ImagePreload } from "./PreloadLink";
 
 export type TileFaceProps = {
   title: string;
@@ -71,10 +72,21 @@ export function TileFace({ title, aside, logo, image, imageAlt = "", priority, h
   );
 }
 
-type HomeTileProps = TileFaceProps & { href: string };
+type HomeTileProps = TileFaceProps & {
+  href: string;
+  /** The destination's opening image, preloaded on hover or focus. */
+  preloadImage?: ImagePreload;
+};
 
 /** A tile that links to a page on this site, e.g. a case study. */
-export function HomeTile({ href, ...face }: HomeTileProps) {
+export function HomeTile({ href, preloadImage, ...face }: HomeTileProps) {
+  if (preloadImage) {
+    return (
+      <PreloadLink href={href} className={tileClass} image={preloadImage}>
+        <TileFace {...face} />
+      </PreloadLink>
+    );
+  }
   return (
     <Link href={href} className={tileClass}>
       <TileFace {...face} />

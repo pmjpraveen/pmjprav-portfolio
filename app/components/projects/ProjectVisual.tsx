@@ -1,5 +1,9 @@
 import Image from "next/image";
 
+/** The case-study opener's image settings, shared with the tiles that preload it. */
+export const OPENER_SIZES = "(min-width: 1024px) 960px, 100vw";
+export const OPENER_QUALITY = 90;
+
 const ASPECT_CLASSES = {
   "16/10": "aspect-[16/10]",
   "4/3": "aspect-[4/3]",
@@ -45,9 +49,9 @@ export function ProjectVisual({
             src={thumbnail}
             alt={alt}
             fill
-            sizes={bleed ? "(min-width: 1024px) 960px, 100vw" : "(min-width: 1024px) 1152px, 100vw"}
+            sizes={bleed ? OPENER_SIZES : "(min-width: 1024px) 1152px, 100vw"}
             priority={priority}
-            quality={90}
+            quality={OPENER_QUALITY}
             className={`object-cover ${objectTop ? "object-top" : ""} transition-transform duration-300 ease-out-strong group-hover:scale-[1.02]`}
           />
         ) : (
