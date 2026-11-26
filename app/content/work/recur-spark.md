@@ -1,6 +1,6 @@
 ## Founders had one real lever, and it was equity | 01 · Problem
 
-Talking to founders and reviewing the market, one pattern kept surfacing: dilution was treated as ==the only lever==. Most early-stage capital stacks leaned almost entirely on equity, at every stage, not just at seed.
+Talking to founders and reviewing the market, one pattern kept surfacing: dilution was treated as the only lever. Most early-stage capital stacks leaned almost entirely on equity, at every stage, not just at seed.
 
 ![Equity, bank debt and the gap between them](/projects/recur-spark/illus-options.png "Illustration · Founders had one real lever, and it was expensive.")
 
@@ -13,7 +13,7 @@ Talking to founders and reviewing the market, one pattern kept surfacing: diluti
 ::: rows
 The brief | A platform that gives founders non-dilutive capital.
 How it should feel | Founder-friendly rather than extractive, helping founders grow sustainably instead of trading long-term ownership for short-term runway.
-North star | Speed. A founder should raise through Spark and have ==usable cash within two days==, not the weeks a bank would take.
+North star | Speed. A founder should raise through Spark and have usable cash within two days, not the weeks a bank would take.
 Longer term | Turn Recur into an exchange for recurring revenue contracts, giving companies the best financing terms and the insight to scale.
 :::
 
@@ -21,7 +21,7 @@ Longer term | Turn Recur into an exchange for recurring revenue contracts, givin
 
 The project was constrained by speed, so there was no long discovery phase. The research we had time for looked at where the product creates value, how a handful of competitors approach the problem, and what fundraising feels like for the founders we could talk to. The full questions are in the appendix.
 
-An early brainstorm with the team mapped a simple onboarding shape, and ==two problems surfaced straight away==.
+An early brainstorm with the team mapped a simple onboarding shape, and two problems surfaced straight away.
 
 ![Two problems from the brainstorm, and the decision each one set](/projects/recur-spark/illus-decisions.png "Illustration · Each problem set a decision.")
 
@@ -33,7 +33,7 @@ Because | Onboarding to funded capital was already running past seven days end t
 
 ## Capital arrives while underwriting does its work | 04 · User flow
 
-Before designing any single screen, I mapped the full path a company takes from signup to funded capital, including the underwriting handoff and the HNI-investor side of the marketplace. Spark had to ==work for both sides of the exchange at once==. The full flow map is in the appendix.
+Before designing any single screen, I mapped the full path a company takes from signup to funded capital, including the underwriting handoff and the HNI-investor side of the marketplace. Spark had to work for both sides of the exchange at once. The full flow map is in the appendix.
 
 ![The first shape: onboard, review, terms, then capital, over more than seven days](/projects/recur-spark/illus-flow-before.png "User flow · The first shape. The founder waited for everything.")
 
@@ -44,7 +44,7 @@ Before designing any single screen, I mapped the full path a company takes from 
 ::: rows
 Problem | Founders waited more than seven days for any capital, while underwriting worked through their documents.
 Decision | Ask for the minimum, connect the data founders already have, and release capital before verification finishes.
-Outcome | ==A same-day application==, with capital released in as little as two days.
+Outcome | A same-day application, with capital released in as little as two days.
 :::
 
 ### Company onboarding
@@ -81,7 +81,7 @@ Because | Users completed the flow with less friction and fewer backtracks, and 
 
 ![Horizontal steps against vertical steps, with vertical chosen](/projects/recur-spark/illus-wizard.png "Illustration · The behaviour and the stated preference agreed.")
 
-I also explored a lighter, more spacious layout against a denser, sidebar-led one. The calmer one won, because ==a quieter register builds more trust== when people are handing over sensitive financial data.
+I also explored a lighter, more spacious layout against a denser, sidebar-led one. The calmer one won, because a quieter register builds more trust when people are handing over sensitive financial data.
 
 ## From weeks to days | 07 · Impact
 
@@ -89,11 +89,11 @@ I also explored a lighter, more spacious layout against a denser, sidebar-led on
 
 1. **A same-day application,** where banks traditionally take weeks to underwrite a company like this.
 2. **Capital in as little as two days,** against more than seven in the first shape.
-3. **Upfront capital while waiting,** up to ₹5L, ==available while documents are still being verified==.
+3. **Upfront capital while waiting,** up to ₹5L, available while documents are still being verified.
 
 ## Speed is a design material | 08 · Reflection
 
-1. **Speed is a design material.** ==The biggest decision wasn't a screen.== It was releasing capital before verification finished, so the wait stopped being the bottleneck a founder feels.
+1. **Speed is a design material.** The biggest decision wasn't a screen. It was releasing capital before verification finished, so the wait stopped being the bottleneck a founder feels.
 2. **Automate what adds time, not judgement.** Underwriting kept its judgement; the steps around it got faster.
 3. **Visibility beats convention.** Vertical steps tested better than the familiar horizontal pattern, because founders could see what was ahead.
 4. **Calm builds trust.** When people hand over financial data, a quieter layout earns more trust than a dense one.

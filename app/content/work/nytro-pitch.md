@@ -12,7 +12,7 @@
 ![Five steps: analysis, information architecture, wireframes and prototype, usability testing, visual design and style guide](/projects/nytro-pitch/illus-process.png "Illustration · Each test fed back into the design.")
 
 1. **Analysis.** The Customer Success team gathered customer feedback on the challenges users faced.
-2. **Information architecture.** Using that feedback, I redesigned the layout and content ==to put user needs first==.
+2. **Information architecture.** Using that feedback, I redesigned the layout and content to put user needs first.
 3. **Wireframes and prototype.** I sketched the new design, refined it from user feedback, then built a detailed prototype to test.
 4. **Usability testing.** I tested with my team, the Customer Success team and a range of users, and improved the design from their feedback.
 5. **Style guide.** I defined a consistent look, covering colour, type and icons, and wrote a guide to keep it consistent in later updates.
@@ -22,7 +22,7 @@
 ::: rows
 Problem | Inconsistent actions, unstructured cards and reports that didn't explain themselves.
 Decision | Redesign the three areas that changed most: the pitch overview, categories and reports.
-Outcome | ==Features are easier to find==, and the content creation flow is shorter.
+Outcome | Features are easier to find, and the content creation flow is shorter.
 :::
 
 Each pair shows the original on the left and the redesign on the right.
@@ -67,7 +67,7 @@ Because | Showing both dates needed a reason, so each stays only where it's need
 
 ![84% engagement, CSAT up 26% from a 34% baseline, and three changes behind them](/projects/nytro-pitch/illus-results.png "Illustration · Easier to find, faster to make, more to engage with.")
 
-1. **84% customer engagement,** and ==CSAT up 26% from a 34% baseline==.
+1. **84% customer engagement,** and CSAT up 26% from a 34% baseline.
 2. **Features are easier to find,** because the layout puts user needs first.
 3. **Content is quicker to create,** with a shorter flow, so pitches take less time to make.
 4. **More to engage with,** from the new reports and customisation.
@@ -79,7 +79,7 @@ Because | Showing both dates needed a reason, so each stays only where it's need
 
 1. **Start from what customers say.** The redesign began with the feedback Customer Success gathered from customers.
 2. **Test with more than one group.** My team, Customer Success and a range of users all tested it, and each round improved the design.
-3. **Write the system down.** A style guide ==kept later updates consistent== after the redesign shipped.
+3. **Write the system down.** A style guide kept later updates consistent after the redesign shipped.
 
 ## The redesigned app in full | Appendix
 

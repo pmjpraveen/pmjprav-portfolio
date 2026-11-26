@@ -6,14 +6,14 @@
 2. **Hard to understand.** Once found, they were hard to make sense of.
 3. **A fixed view.** There was no way to personalise the view or use widgets.
 
-Together, they meant ==new users struggled to get started==.
+Together, they meant new users struggled to get started.
 
 ## A simpler, more organised layout | 02 · Results
 
 ::: rows
 Problem | Comments were hard to find and understand, and new users struggled.
 Decision | Redesign comments into a simpler, more organised layout.
-Outcome | ==Comments are easier to find and use.==
+Outcome | Comments are easier to find and use.
 :::
 
 ![Before: hard to find and understand. After: easier to find and use, in a simpler layout](/projects/honeywell-comments/illus-before-after.png "Illustration · Before and after, at summary level.")
@@ -23,6 +23,6 @@ Outcome | ==Comments are easier to find and use.==
 
 ## The detail is available on request | 03 · Walkthrough
 
-Company policy rules out showing the underlying data here. If you'd like ==a walkthrough of the detailed work==, get in touch.
+Company policy rules out showing the underlying data here. If you'd like a walkthrough of the detailed work, get in touch.
 
 ![The digital dashboard overview](/projects/honeywell-comments/hero.png "The digital dashboard. Summary level only, under NDA. Click to enlarge.")

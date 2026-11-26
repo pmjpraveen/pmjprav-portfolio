@@ -345,23 +345,8 @@
     }
   }
 
-  /* In case studies: drawn as the mark scrolls into view, where the browser
-     can tie an animation to scrolling. Elsewhere it is simply shown. */
-  .highlighter-inview {
-    animation: none;
-  }
-  @supports (animation-timeline: view()) {
-    .highlighter-inview {
-      animation: highlighter-draw linear both;
-      animation-timeline: view();
-      animation-range: entry 10% cover 35%;
-      animation-delay: 0s;
-    }
-  }
-
   @media (prefers-reduced-motion: reduce) {
-    .highlighter,
-    .highlighter-inview {
+    .highlighter {
       animation: none;
     }
   }

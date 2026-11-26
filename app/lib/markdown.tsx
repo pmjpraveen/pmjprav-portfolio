@@ -30,16 +30,11 @@ type Block =
   | { kind: "h3"; text: string }
   | { kind: "step"; title: string; body: Block[] };
 
-/**
- * `**bold**` and `==highlight==` only; everything else renders as plain text.
- * A highlight is the site's highlighter pen, drawn as it scrolls into view.
- */
+/** `**bold**` only; everything else renders as plain text. */
 function renderInline(text: string): ReactNode[] {
-  return text.split(/(\*\*[^*]+\*\*|==[^=]+==)/g).map((part, i) => {
+  return text.split(/(\*\*[^*]+\*\*)/g).map((part, i) => {
     const bold = /^\*\*([^*]+)\*\*$/.exec(part);
     if (bold) return <strong key={i}>{bold[1]}</strong>;
-    const mark = /^==([^=]+)==$/.exec(part);
-    if (mark) return <mark key={i} className="highlighter highlighter-inview">{mark[1]}</mark>;
     return part;
   });
 }

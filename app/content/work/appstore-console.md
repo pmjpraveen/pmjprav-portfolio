@@ -1,6 +1,6 @@
 ## The console let one version through at a time | 01 · Problem
 
-The marketplace was preparing a new device with a new operating system, beside its TV and tablet lines. Its packages could not run on the other devices, and theirs could not run on it. The console treated an app as one thing with one submission, so ==nothing else could go out while a version was in review==.
+The marketplace was preparing a new device with a new operating system, beside its TV and tablet lines. Its packages could not run on the other devices, and theirs could not run on it. The console treated an app as one thing with one submission, so nothing else could go out while a version was in review.
 
 ![One version in review, with the TV, new-OS and test builds waiting behind it](/projects/appstore-console/illus-queue.png "Illustration · One version in review held up everything behind it.")
 
@@ -40,7 +40,7 @@ I sat with the research team to shape the questions, structure and methods. The 
 ::: rows
 Earlier research | Four interviews and a survey of 39 developers. 72% rated satisfaction 4 or higher out of 5, and 23% rated it 3. They liked the simple UI, and disliked slow review, vague rejections and testing that waited on review.
 Staged roll-out survey | About 130 developers, asked what they wanted from staged roll-out.
-The counterweight | Many developers release on larger platforms first and treat that as their safety check, so ==the goal was clarity rather than more controls==.
+The counterweight | Many developers release on larger platforms first and treat that as their safety check, so the goal was clarity rather than more controls.
 Card sort | Most partners already knew a competing console's structure and were comfortable in it.
 :::
 
@@ -67,7 +67,7 @@ Because | Metadata, status, roll-out and testing each broke as soon as a second 
 
 ![The structural change: one linear submission became shared app setup plus independent release tracks](/projects/appstore-console/ia-before-after.png "The structural shift · App setup is set once and shared. Each release lives in a lane of its own.")
 
-The card sort set a second principle: design toward ==the console structure partners already trusted==, not a model they would have to learn.
+The card sort set a second principle: design toward the console structure partners already trusted, not a model they would have to learn.
 
 ::: decision How to sequence it
 Options | One larger project · Three phases, in dependency order
@@ -84,7 +84,7 @@ I took the findings to the PM and leadership and made the case that this was a w
 ::: rows
 Problem | A new OS was blocked behind an existing one, and nothing else could ship while a version was in review.
 Decision | One release track per operating system, under a new navigation that separates app setup from releases.
-Outcome | Developers could ==submit builds for each OS independently, in parallel==.
+Outcome | Developers could submit builds for each OS independently, in parallel.
 :::
 
 ![Two lanes side by side: one live at 100%, one in review](/projects/appstore-console/illus-lanes.png "Illustration · Each operating system gets a lane of its own.")
@@ -148,7 +148,7 @@ Outcome | Tracks by device type, each with its own listing, plus release history
 ### A track you can combine or split
 **Problem.** Every device in an operating system shared one release pipeline.
 
-**Solution.** Choose the OS, then the device types, as ==one combined track or a track for each==.
+**Solution.** Choose the OS, then the device types, as one combined track or a track for each.
 
 ![Create a track: choose the OS, then device types, as one track or one per device type](/projects/appstore-console/illus-flow-track.png "User flow · After, Phase 2. Dark steps are new.")
 
@@ -179,7 +179,7 @@ Outcome | Tracks by device type, each with its own listing, plus release history
 
 ## Reviewers had to absorb every new lane | 06 · Reviewers
 
-Parallel submissions multiply what a reviewer has to look at. The reviewers' tool was a separate product I did not design, but ==its requirements shaped my design==.
+Parallel submissions multiply what a reviewer has to look at. The reviewers' tool was a separate product I did not design, but its requirements shaped my design.
 
 ::: rows
 Visibility | How many tracks are active, and which device types they target.
@@ -194,7 +194,7 @@ At launch | This is why the first lanes followed OS boundaries, where packages c
 ::: rows
 Aim | A complete overhaul of the developer platform: new structure, new guidance and a new design system matched to Amazon's devices.
 Structure | Organised by jobs: Dashboard, Release, Testing, Monetization and Monitoring.
-Status | In progress when I left, so ==shown as design, not as shipped==. Sample data throughout. More screens are in the appendix.
+Status | In progress when I left, so shown as design, not as shipped. Sample data throughout. More screens are in the appendix.
 :::
 
 ![The Phase 3 dashboard](/projects/appstore-console/p3-dashboard.png "Phase 3 · The dashboard answers what to do next. Design in progress.")
@@ -207,7 +207,7 @@ Status | In progress when I left, so ==shown as design, not as shipped==. Sample
 2. **Phases 1 and 2 shipped in Q2 2025,** meeting the new-OS device launch the project was blocking.
 3. **Strategic partners could submit several binaries at once,** or while another was in review, and match their timing on other platforms.
 4. **Partners found the flow quicker to learn,** because it matched console conventions they already knew.
-5. **The same abilities went to smaller developers,** ==not only strategic partners==.
+5. **The same abilities went to smaller developers,** not only strategic partners.
 
 ::: rows
 Before · one at a time | After · independent submissions per OS, in parallel
@@ -220,7 +220,7 @@ Partner feedback is paraphrased from my account of the response, not quoted.
 
 ## Treat the brief as a hypothesis | 09 · Reflection
 
-1. **Treat the brief as a hypothesis.** "Allow parallel uploads" was a reasonable request and ==the wrong problem==. Ask what model a feature assumes before designing it.
+1. **Treat the brief as a hypothesis.** "Allow parallel uploads" was a reasonable request and the wrong problem. Ask what model a feature assumes before designing it.
 2. **Every capability has a second user.** The reviewer's needs set how many lanes were reasonable at launch.
 3. **Let constraints shape the sequence.** Engineering's objection produced a better plan: ship what the back end can carry, hold the deeper shift.
 4. **Familiar beats novel.** Designing toward conventions developers trusted cut the learning curve.
