@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { RESUME_URL } from "../../content/social";
+import { LinkArrow } from "./LinkArrow";
 
 const item = "text-body-sm leading-body-sm transition-colors duration-150 ease-ui";
 const idle = "text-smoke hover:text-ink";
@@ -31,9 +32,10 @@ export function HomeNav() {
         <li className={`${item} text-ash`}>Experiments (coming soon)</li>
         {link("/about", "About", pathname.startsWith("/about"))}
         <li>
-          <a href={RESUME_URL} target="_blank" rel="noopener noreferrer" className={`${item} ${idle}`}>
+          <a href={RESUME_URL} target="_blank" rel="noopener noreferrer" className={`${item} ${idle} group inline-flex items-center gap-1`}>
             Resume
             <span className="sr-only"> (PDF, opens in a new tab)</span>
+            <LinkArrow />
           </a>
         </li>
       </ul>

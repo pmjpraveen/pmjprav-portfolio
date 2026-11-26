@@ -3,6 +3,7 @@ import Link from "next/link";
 import { BEHANCE_URL, SOCIAL_LINKS } from "../../content/social";
 import { EMAIL } from "../../lib/site";
 import { HomeNav } from "./HomeNav";
+import { LinkArrow } from "./LinkArrow";
 import { Signature } from "./Signature";
 
 const linkClass = "text-body-sm leading-body-sm text-smoke transition-colors duration-150 ease-ui hover:text-ink";
@@ -58,11 +59,12 @@ export function HomeSidebar() {
             <li key={label}>
               <a
                 href={href}
-                className={linkClass}
+                className={`${linkClass} group inline-flex items-center gap-1`}
                 {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
               >
                 {label}
                 {external ? <span className="sr-only"> (opens in a new tab)</span> : null}
+                <LinkArrow />
               </a>
             </li>
           ))}
