@@ -57,7 +57,6 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      data-theme="light"
       className={`${switzer.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">

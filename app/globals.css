@@ -6,8 +6,8 @@
    ========================================================= */
 
 @theme {
-  /* Colors. Dark is the default. These light values are the paper tones: cream
-     canvas, warm ink. Source of the whole palette: https://www.mithun.zip */
+  /* Colours: one neutral family. Ink for text, a muted grey for labels,
+     and canvas / surface / hairline neutrals. No accent colour. */
   --color-eggshell: #fcfcfb; /* page canvas */
   --color-warm-taupe: #f0f0ee; /* surfaces */
   --color-stone: #e3e3e0; /* hairlines */
@@ -15,15 +15,6 @@
   --color-graphite: #3a3a3a;
   --color-smoke: #737373; /* muted text, mono labels */
   --color-ash: #a3a3a3; /* disabled / decorative only: below AA contrast */
-  --color-accent: var(--color-ink); /* no accent colour: anything still using it renders in ink */
-  --color-violet: #0447ff;
-
-  /* Kept for the 3D scenes and older components. */
-  --color-paper: #fbfaf6; /* a print / photo mount that stays light in both themes */
-  --color-brass: var(--color-accent);
-  --color-lamp: #b8860b; /* a lit lamp */
-  --color-oak: #7a4a22;
-  --color-bakelite: var(--color-warm-taupe);
 
   /* Fonts — Switzer only. Display and mono point at it too, so any
      font-display / font-mono use still renders in Switzer. */
@@ -61,8 +52,7 @@
   --tracking-body: 0em;
   --tracking-body-sm: 0em;
 
-  /* Radius, named by role */
-  /* Radius — small and tight, after the reference */
+  /* Radius — small and tight, named by role */
   --radius-input: 4px;
   --radius-small: 6px; /* avatar, greeting pill, wordmark */
   --radius-image: 8px; /* images inside a case study */
@@ -78,33 +68,7 @@
   --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-/* =========================================================
-   Dark (default). Near-black canvas, warm cream text, one coral accent:
-   the palette of https://www.mithun.zip, applied to a different site.
-   Applied by ThemeToggle setting [data-theme="dark"] on <html>.
-   ========================================================= */
-:root[data-theme="dark"] {
-  --color-eggshell: #131313;
-  --color-warm-taupe: #1a1815;
-  --color-stone: #2c2a26;
-  --color-ink: #efe8da;
-  --color-graphite: #d8d1c4;
-  --color-smoke: #b4ad9f;
-  --color-ash: #8a8478;
-  --color-accent: var(--color-ink);
-  --color-paper: #f1ece2;
-  --color-lamp: #ffd36a;
-  color-scheme: dark;
-}
-
-/* Pullcord (theme toggle): positioned clear of the header nav's right edge,
-   colored to match the current theme rather than the package's default gray.
-   z above the header's own z-30 (see Header.tsx) so it stays visible/
-   grabbable through the header's show/hide transform either way. */
 :root {
-  --pullcord-right: 1.25rem;
-  --pullcord-ink: var(--color-smoke);
-  --pullcord-z: 40;
   color-scheme: light;
 }
 
@@ -230,17 +194,6 @@
     outline-offset: 4px;
   }
 
-  /* Native cursor hidden only once CustomCursor confirms a fine-pointer device
-     and actually mounts — never set unconditionally, so a JS failure or a
-     touch/coarse-pointer visitor always keeps the real cursor. */
-  .custom-cursor-active,
-  .custom-cursor-active * {
-    cursor: none !important;
-  }
-
-  /* Scroll/entrance reveals are handled by GSAP (see useGsapReveal, Hero) —
-     it checks prefers-reduced-motion itself and skips the hidden state
-     entirely for those visitors, so there's nothing to override here. */
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
@@ -258,33 +211,7 @@
 }
 
 /* =========================================================
-   Footer marquee — a seamless infinite scroll: the track holds
-   two identical copies of the wordmark and translates by exactly
-   -50% (one copy's width), so it loops with no visible seam.
-   ========================================================= */
-@keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .footer-marquee-track {
-    animation: none !important;
-    transform: none !important;
-  }
-  .footer-marquee-track > *:nth-child(2) {
-    display: none;
-  }
-}
-
-/* =========================================================
    Case-study image lightbox (ProjectFigure) — a modal <dialog>.
-   It sits in the top layer, above the custom cursor, so the
-   native cursor is restored inside it.
    ========================================================= */
 .lightbox {
   position: fixed;
@@ -333,10 +260,6 @@
   font-family: var(--font-mono);
   font-size: var(--text-body-sm);
   color: var(--color-ink);
-}
-.custom-cursor-active .lightbox,
-.custom-cursor-active .lightbox * {
-  cursor: zoom-out !important;
 }
 @keyframes lightbox-in {
   from {
@@ -403,4 +326,3 @@
     --page-gutter: 48px;
   }
 }
-

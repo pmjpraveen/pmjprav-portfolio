@@ -82,7 +82,7 @@ Use:
 * App Router
 * TypeScript
 * Tailwind CSS v4
-* Motion
+* Motion (not installed yet; add it only when an interaction needs it)
 * Lucide React
 * Next/Image
 * Git
@@ -174,7 +174,7 @@ Flat canvas colour, no background texture. Depth comes from 3D objects, hairline
 
 # 9b. 3D and sound
 
-3D objects are a defining part of the design: the Enigma desk in the loader, and a rotor, patch lead and lampboard per homepage section (`app/components/three/Scene3D.tsx`). They mount only near the viewport, free their WebGL context when far away, react to the pointer and scroll, and render a single still frame under reduced motion. Keep them procedural and lightweight, and keep the 3D palette to the tokens above plus warm lamp light. Every link click plays a soft Enigma keystroke (`LinkSound`), muted by the loader's Sound toggle.
+None. The Enigma loader, 3D objects, link sounds, custom cursor and dark theme were removed; the site is light-only, static and quiet. Do not reintroduce them, or `three`, `gsap` or `pullcord`.
 
 ---
 
