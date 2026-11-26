@@ -137,6 +137,16 @@ Two teams sat behind the form. Each had to work with the case system.
 
 A case can start in two places: a developer asking for help, or ASQS asking for a document. Both now land in the same case.
 
+**When ASQS needs a document.** Before, a developer with a question about the request had to raise a new case through the Contact Us form. The category they picked decided whether it reached ASQS directly or went through DART first. Now ASQS opens the case itself, and every question and reply stays on it.
+
+![Before: a question about a document request meant a new Contact Us case, routed by category](/projects/two-way-communication/illus-flow-asqs-before.png "User flow · Before. A question about the request meant a new case.")
+
+![After: ASQS opens the case, and questions and replies stay on it](/projects/two-way-communication/illus-flow-asqs-after.png "User flow · After. The case does the talking. Dark steps are new.")
+
+**When a developer needs help.** Prompted links come first. A developer who still needs help opens one case in the console, and DART answers, triages and follows up on that same case until it is resolved.
+
+![After: prompted links first, then one case that DART answers and updates](/projects/two-way-communication/illus-flow-dart.png "User flow · After. Prompted links first, then one case. Dark steps are new.")
+
 ![One case moving between the developer, DART and ASQS](/projects/two-way-communication/illus-flow-combined.png "User flow · One case moves between the developer, DART and ASQS. It replaces three separate flows.")
 
 ## Phase 2: answer before it becomes a ticket | 2 · Answer first
