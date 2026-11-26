@@ -110,7 +110,7 @@ export const projects: Project[] = [
     slug: "appstore-console",
     client: "Amazon",
     number: "02",
-    title: "Appstore Developer Console",
+    title: "App Submissions Workflow",
     category: "Developer Tools · Platform",
     description:
       "On Amazon's Appstore developer console, one version in review blocked every other submission, test builds included. I led the redesign that separated the app from its releases, giving each version a track of its own. Review waits fell from about 7 days to 2, in time for a new device OS launch.",
