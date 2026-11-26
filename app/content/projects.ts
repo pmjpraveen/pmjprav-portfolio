@@ -98,11 +98,11 @@ export const projects: Project[] = [
       platform: "Web · Developer console",
     },
     // Story lives in app/content/work/two-way-communication.md.
-    thumbnail: "/projects/two-way-communication/cover.webp",
-    imageAlt: "Support requests list showing case ID, related app, status, subject, creator and last updated",
+    thumbnail: "/projects/two-way-communication/tile.webp",
+    imageAlt: "Amazon Developer Support: a support case shown as a thread, with replies from Amazon Support",
     heroVisual: {
-      src: "/projects/two-way-communication/cover.webp",
-      alt: "Support requests list showing case ID, related app, status, subject, creator and last updated",
+      src: "/projects/two-way-communication/tile.webp",
+      alt: "Amazon Developer Support: a support case shown as a thread, with replies from Amazon Support",
     },
   },
 
@@ -118,11 +118,11 @@ export const projects: Project[] = [
     year: "2025",
     layout: "offset",
     featured: true,
-    thumbnail: "/projects/appstore-console/cover.webp",
-    imageAlt: "App setup page of the developer console, showing pricing, availability and target audience",
+    thumbnail: "/projects/appstore-console/tile.webp",
+    imageAlt: "Amazon App Submissions Workflow: the App setup page, with basic details and a section index",
     heroVisual: {
-      src: "/projects/appstore-console/cover.webp",
-      alt: "App setup page of the developer console, showing pricing, availability and target audience",
+      src: "/projects/appstore-console/tile.webp",
+      alt: "Amazon App Submissions Workflow: the App setup page, with basic details and a section index",
     },
     meta: {
       team: "~12: PM, TPM, design manager, engineering, QA, research, support",
@@ -147,11 +147,11 @@ export const projects: Project[] = [
     featured: true,
     meta: { platform: "Web app" },
     // Story lives in app/content/work/recur-spark.md.
-    thumbnail: "/projects/recur-spark/hero.webp",
-    imageAlt: "Spark, the revenue-based financing product inside Recur",
+    thumbnail: "/projects/recur-spark/tile.webp",
+    imageAlt: "Recur Spark: the upfront capital offer of up to ₹4.0 crores, with the unlock card to start an application",
     heroVisual: {
-      src: "/projects/recur-spark/hero.webp",
-      alt: "Spark, the revenue-based financing product inside Recur",
+      src: "/projects/recur-spark/tile.webp",
+      alt: "Recur Spark: the upfront capital offer of up to ₹4.0 crores, with the unlock card to start an application",
     },
   },
 
@@ -169,11 +169,11 @@ export const projects: Project[] = [
     featured: true,
     meta: { platform: "Web app" },
     // Story lives in app/content/work/nytro-pitch.md.
-    thumbnail: "/projects/nytro-pitch/pitch-overview-after.png",
-    imageAlt: "The redesigned Nytro pitch overview",
+    thumbnail: "/projects/nytro-pitch/tile.webp",
+    imageAlt: "Nytro.ai Pitch App: the redesigned pitch overview, with published pitches shown as cards",
     heroVisual: {
-      src: "/projects/nytro-pitch/pitch-overview-after.png",
-      alt: "The redesigned Nytro pitch overview",
+      src: "/projects/nytro-pitch/tile.webp",
+      alt: "Nytro.ai Pitch App: the redesigned pitch overview, with published pitches shown as cards",
     },
   },
 
@@ -196,11 +196,11 @@ export const projects: Project[] = [
       label: "Open project file",
       url: "https://www.figma.com/deck/9D599SrWHZOJ1bP1Yjh9ZY/Digital-Dashboard?node-id=1-42&viewport=-109%2C-41%2C0.52&t=AHnTHauv0JKAv4ql-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1",
     },
-    thumbnail: "/projects/honeywell-comments/hero.png",
-    imageAlt: "The digital dashboard overview",
+    thumbnail: "/projects/honeywell-comments/tile.webp",
+    imageAlt: "Honeywell Digital Dashboard: the overview with KPI cards, scorecard and release timeline",
     heroVisual: {
-      src: "/projects/honeywell-comments/hero.png",
-      alt: "The digital dashboard overview",
+      src: "/projects/honeywell-comments/tile.webp",
+      alt: "Honeywell Digital Dashboard: the overview with KPI cards, scorecard and release timeline",
     },
   },
 ];
