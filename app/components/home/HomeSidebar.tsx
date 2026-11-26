@@ -46,8 +46,7 @@ export function HomeSidebar() {
           </span>
         </p>
         <p className="mt-3 max-w-[18rem] text-body-sm leading-body-sm text-smoke">
-          I turn complex, data-heavy workflows into clear experiences, from research and interaction design through
-          to shipped product
+          I design the software people use all day at work, and make the complicated parts feel obvious.
         </p>
         <Signature className="mt-5 h-14 w-auto" />
       </div>

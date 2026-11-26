@@ -88,7 +88,7 @@ export const projects: Project[] = [
     title: "Developer Support",
     category: "Developer Tools · Support",
     description:
-      "Developers on Amazon's app marketplace could open a support case but not follow it. I turned each case into a page they can follow, and case volume fell by about 47%, then about 87% with an AI help widget.",
+      "Developers on Amazon's Appstore could open a support case, then lose track of it in email. As the only designer, I brought support into the developer console and gave every case a page to follow. Cases fell by about 47%, then by about 87% once an AI assistant answered first.",
     role: "Lead Designer, Support Cases",
     year: "2024",
     layout: "standard",
@@ -113,7 +113,7 @@ export const projects: Project[] = [
     title: "Appstore Developer Console",
     category: "Developer Tools · Platform",
     description:
-      "Amazon's app developer console let only one version through review at a time. I redesigned it around parallel release tracks, and review waits fell from about 7 days to 2.",
+      "On Amazon's Appstore developer console, one version in review blocked every other submission, test builds included. I led the redesign that separated the app from its releases, giving each version a track of its own. Review waits fell from about 7 days to 2, in time for a new device OS launch.",
     role: "Lead Designer, App Submissions",
     year: "2025",
     layout: "offset",
@@ -140,7 +140,7 @@ export const projects: Project[] = [
     title: "Spark by Recur",
     category: "Fintech · Financing",
     description:
-      "Onboarding, verification and approval for Spark, a revenue-based financing product from Recur. Founders borrow against recurring revenue instead of selling equity, and see capital in as little as two days.",
+      "Startups that needed capital mostly had to sell equity, because banks couldn't underwrite subscription revenue. I designed onboarding, verification and approval for Spark, Recur's financing against recurring revenue. An application banks take weeks over became same-day, with capital in as little as two days.",
     role: "",
     year: "",
     layout: "standard",
@@ -162,7 +162,7 @@ export const projects: Project[] = [
     title: "Nytro Pitch App",
     category: "B2B · SaaS",
     description:
-      "Nytro.ai trains sales reps with pitch practice and analytics. I redesigned the app so teams can find features and create content faster.",
+      "Nytro.ai trains sales reps with pitch practice and analytics, but its app hid key features and made content slow to create. I owned the pitch experience and redesigned creation, recording and reports from customer feedback. Customer engagement reached 84%, and CSAT rose 26% from a 34% baseline.",
     role: "Product Designer",
     year: "2021–22",
     layout: "offset",
@@ -185,7 +185,7 @@ export const projects: Project[] = [
     title: "Comments in a Digital Dashboard",
     category: "Enterprise · ERP",
     description:
-      "Comments in an internal ERP dashboard were hard to find and use. I led the redesign. Under NDA, so shown at summary level.",
+      "Comments in Honeywell's internal ERP dashboard, used to run a $1.6 billion business, were hard to find and hard to understand. I led the redesign into a simpler, more organised layout. The work is under NDA, so this is a summary; I can walk through the detail on request.",
     role: "Lead Designer",
     year: "2023",
     layout: "offset",
