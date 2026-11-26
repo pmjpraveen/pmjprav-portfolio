@@ -42,11 +42,29 @@ An earlier 39-developer survey had pointed at the same themes, which suggested t
 
 ![App setup and Release tracks in the new navigation](/projects/appstore-console/p1-after-1-nav.png "Phase 1 · App setup and Release tracks sit side by side under Publish.")
 
+A release inside a lane, step by step:
+
+![The binary uploading inside an OS lane](/projects/appstore-console/p1-upload-progress.png "Phase 1 · 1 of 3. The binary uploads inside its lane, with progress shown.")
+
+![A release that cannot be submitted until app setup is complete](/projects/appstore-console/p1-release-blocked.png "Phase 1 · 2 of 3. Until app setup is complete, the release says so and holds submission.")
+
+![The staged roll-out dialog, from 1% to a full release](/projects/appstore-console/p1-rollout-dialog.png "Phase 1 · 3 of 3. Staged roll-out is chosen when submitting for review, from 1% to a full release.")
+
 **Phase 2: let the track own its content.** Creating a track became two choices: pick the platform, then the device types, as a combined release or one track per device type. Each track now owns its store listing, releases and history, with a section index and field-level guidance so long forms stay navigable.
 
 ![Creating a release track](/projects/appstore-console/p2-3-create-track.png "Phase 2 · Choose an OS, then device types, as one combined release or a track for each.")
 
 ![A named release track](/projects/appstore-console/p2-4-track-page.png "Phase 2 · Store listing and first release are independent first steps inside each track.")
+
+A release inside a track, step by step:
+
+![Creating a release inside a track](/projects/appstore-console/p2-create-release.png "Phase 2 · 1 of 3. Release details, notes, files and date on one page.")
+
+![Each uploaded file lists the devices it supports](/projects/appstore-console/p2-devices-per-file.png "Phase 2 · 2 of 3. Each uploaded file lists the devices it supports.")
+
+![The track with its release summary, the release in review and its history](/projects/appstore-console/p2-track-state.png "Phase 2 · 3 of 3. The track shows its summary, the release in review and its history.")
+
+![A banner on the app list introducing staged roll-out](/projects/appstore-console/p2-rollout-banner.png "Phase 2 · A banner on the app list introduces staged roll-out.")
 
 ## Results and impact
 
