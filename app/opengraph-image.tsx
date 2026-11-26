@@ -1,33 +1,11 @@
-import { ImageResponse } from "next/og";
+import { OG_SIZE, renderCard } from "./_og/card";
 
-export const alt = "Praveenkumar, AI-native product designer and design engineer";
-export const size = { width: 1200, height: 630 };
+export const alt = "Praveenkumar, product designer and design engineer: I design the software people use all day at work.";
+export const size = OG_SIZE;
 export const contentType = "image/png";
 
 export default function OpengraphImage() {
-  return new ImageResponse(
-    (
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          background: "#131313",
-          color: "#efe8da",
-          padding: 80,
-        }}
-      >
-        <div style={{ display: "flex", fontSize: 28, letterSpacing: 3, color: "#b4ad9f" }}>PORTFOLIO</div>
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ display: "flex", fontSize: 148, lineHeight: 1, letterSpacing: -5 }}>Praveenkumar</div>
-          <div style={{ display: "flex", fontSize: 44, marginTop: 28, color: "#efe8da" }}>
-            Product designer and design engineer
-          </div>
-        </div>
-      </div>
-    ),
-    size,
-  );
+  return renderCard({
+    headline: "I design the software people use all day at work, and make the complicated parts feel obvious.",
+  });
 }

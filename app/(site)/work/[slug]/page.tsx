@@ -9,6 +9,7 @@ import {
   getRealProjects,
   toNextProjectData,
 } from "../../../content/projects";
+import { pageMetadata } from "../../../lib/metadata";
 import { withMarkdownContent } from "../../../lib/project-content";
 
 type PageProps = {
@@ -26,20 +27,13 @@ export async function generateMetadata({
   const project = findRealProject(slug);
   if (!project) return {};
 
-  return {
-    title: project.title,
+  // The share image is this route's opengraph-image.tsx.
+  return pageMetadata({
+    title: project.client ? `${project.title} at ${project.client}` : project.title,
     description: project.description,
-    openGraph: {
-      title: project.title,
-      description: project.description,
-      type: "article",
-      // Social platforms handle PNG/JPG reliably; other formats fall back to the site-wide card.
-      images:
-        project.thumbnail && /\.(png|jpe?g)$/i.test(project.thumbnail)
-          ? [project.thumbnail]
-          : [{ url: "/opengraph-image", width: 1200, height: 630 }],
-    },
-  };
+    path: `/work/${project.slug}`,
+    type: "article",
+  });
 }
 
 export default async function Page({ params }: PageProps) {

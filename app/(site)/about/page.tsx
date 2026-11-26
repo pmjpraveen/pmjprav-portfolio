@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { ABOUT } from "../../content/about";
+import { pageMetadata } from "../../lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "About",
-  description: ABOUT.intro,
-};
+  description:
+    "Product designer and design engineer in Bengaluru. Eight years designing developer consoles, enterprise dashboards and the workflows inside them, most recently at Amazon.",
+  path: "/about",
+});
 
 /** A short list under a small muted heading, rows split by hairlines. */
 function List({ title, children }: { title: string; children: ReactNode }) {

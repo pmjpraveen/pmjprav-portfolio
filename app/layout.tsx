@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_TITLE } from "./lib/metadata";
 import { SITE_URL } from "./lib/site";
 import "./globals.css";
 
@@ -17,14 +18,18 @@ const switzer = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
+  applicationName: SITE_NAME,
+  authors: [{ name: "Praveenkumar", url: SITE_URL }],
+  creator: "Praveenkumar",
+  // Pages set their own share text (app/lib/metadata.ts); this is the fallback.
   openGraph: {
     type: "website",
-    siteName: "Praveenkumar",
-    title: "Praveenkumar — Product designer & design engineer",
-    description:
-      "Praveenkumar is a product designer and design engineer in Bengaluru. Case studies in developer tools and enterprise software, plus side projects and AI explorations, designed and built by Praveenkumar.",
+    siteName: SITE_NAME,
+    locale: "en_US",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
   },
-  twitter: { card: "summary_large_image" },
+  twitter: { card: "summary_large_image", title: SITE_TITLE, description: SITE_DESCRIPTION },
   // Two files, picked by the browser's colour scheme (the tab strip follows
   // the browser theme, not the site's own toggle): dark mark on light tabs,
   // light mark on dark tabs.
@@ -35,11 +40,10 @@ export const metadata: Metadata = {
     ],
   },
   title: {
-    default: "Praveenkumar — Product designer & design engineer",
-    template: "%s — Praveenkumar",
+    default: SITE_TITLE,
+    template: `%s — ${SITE_NAME}`,
   },
-  description:
-    "Praveenkumar is a product designer and design engineer in Bengaluru. Case studies in developer tools and enterprise software, plus side projects and AI explorations, designed and built by Praveenkumar.",
+  description: SITE_DESCRIPTION,
 };
 
 export const viewport: Viewport = {

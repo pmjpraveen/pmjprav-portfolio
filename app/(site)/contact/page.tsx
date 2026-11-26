@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import { CopyEmail } from "../../components/ui/CopyEmail";
 import { SOCIAL_LINKS } from "../../content/social";
+import { pageMetadata } from "../../lib/metadata";
 import { EMAIL } from "../../lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Contact",
-  description: `Get in touch with Praveenkumar at ${EMAIL}.`,
-};
+  description: "Praveenkumar is open to full-time product design roles and consulting. Write by email or find him on LinkedIn.",
+  path: "/contact",
+});
 
 /** "https://www.linkedin.com/in/pmjpraveen/" → "linkedin.com/in/pmjpraveen" */
 function handle(href: string) {

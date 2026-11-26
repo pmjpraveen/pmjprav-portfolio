@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import { ExpandTile } from "../../components/home/ExpandTile";
 import { personalProjects } from "../../content/personal-projects";
+import { pageMetadata } from "../../lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Side projects",
-  description: "Apps Praveenkumar designs and builds on his own time.",
-};
+  description:
+    "Along, a group-trip planner, and Knockout, a tournament app: products Praveenkumar designed and coded with AI, from the first screen to a live product.",
+  path: "/side-projects",
+});
 
 export default function SideProjectsPage() {
   return (
