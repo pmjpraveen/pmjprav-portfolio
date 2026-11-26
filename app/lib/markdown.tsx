@@ -24,6 +24,7 @@ type Block =
   | { kind: "images"; items: ImageBlock[] }
   | { kind: "stats"; items: Pair[] }
   | { kind: "rows"; items: Pair[] }
+  | { kind: "quote"; text: string; cite?: string }
   | { kind: "h3"; text: string }
   | { kind: "step"; title: string; body: Block[] };
 
@@ -74,6 +75,14 @@ function splitBlocks(rawLines: string[]): Block[] {
           return [a.trim(), rest.join("|").trim()];
         });
       return { kind: fence[1] as "stats" | "rows", items };
+    }
+
+    // `> quote` lines, with an optional `> — Name, role` attribution line.
+    if (chunkLines.every((l) => l.startsWith(">"))) {
+      const inner = chunkLines.map((l) => l.replace(/^>\s?/, ""));
+      const citeLine = inner.find((l) => /^[—–-]\s/.test(l));
+      const text = inner.filter((l) => l !== citeLine).join(" ").trim();
+      return { kind: "quote", text, cite: citeLine?.replace(/^[—–-]\s*/, "") };
     }
 
     if (chunkLines.length === 1 && chunkLines[0].startsWith("### ")) {
@@ -148,11 +157,24 @@ function renderBlock(block: Block, key: number, stepIndex = 0) {
             key={term}
             className="grid gap-1 sm:grid-cols-[180px_1fr] sm:gap-8"
           >
-            <dt className="text-body text-smoke">{term}</dt>
-            <dd className="text-body text-ink">{detail}</dd>
+            <dt className="pt-0.5 text-body-sm leading-body-sm text-smoke">{term}</dt>
+            <dd className="text-body leading-body text-ink">{renderInline(detail)}</dd>
           </div>
         ))}
       </dl>
+    );
+  }
+
+  if (block.kind === "quote") {
+    return (
+      <figure key={key} className="!my-10 max-w-[40rem] border-l-2 border-stone pl-6">
+        <blockquote className="text-heading leading-[1.4] font-light tracking-heading text-ink">
+          {renderInline(block.text)}
+        </blockquote>
+        {block.cite ? (
+          <figcaption className="mt-4 text-body-sm leading-body-sm text-smoke">{block.cite}</figcaption>
+        ) : null}
+      </figure>
     );
   }
 
@@ -166,13 +188,13 @@ function renderBlock(block: Block, key: number, stepIndex = 0) {
     return (
       <div
         key={key}
-        className="flex flex-col gap-4 pt-4 first:pt-0"
+        className="flex flex-col gap-5 pt-6 first:pt-0"
       >
         <div>
           <p className="label">{String(stepIndex + 1).padStart(2, "0")}</p>
-          <h3 className="mt-1 text-body text-ink">{block.title}</h3>
+          <h3 className="mt-1 text-heading-sm leading-heading-sm font-normal tracking-heading-sm text-ink">{block.title}</h3>
           {text.length ? (
-            <div className="mt-2 space-y-3 [&_p]:text-body [&_p]:leading-body [&_ul]:text-body">
+            <div className="mt-3 space-y-5">
               {text.map((b, i) => renderBlock(b, i))}
             </div>
           ) : null}
@@ -184,7 +206,7 @@ function renderBlock(block: Block, key: number, stepIndex = 0) {
 
   if (block.kind === "list") {
     return (
-      <ul key={key} className="max-w-prose list-disc space-y-2 pl-5 text-body leading-body text-ink marker:text-smoke">
+      <ul key={key} className="max-w-[40rem] list-disc space-y-2 pl-5 text-body-lg leading-body-lg text-ink marker:text-smoke">
         {block.items.map((item, i) => (
           <li key={i}>{renderInline(item)}</li>
         ))}
@@ -193,7 +215,7 @@ function renderBlock(block: Block, key: number, stepIndex = 0) {
   }
 
   return (
-    <p key={key} className="max-w-prose text-body leading-body text-ink">
+    <p key={key} className="max-w-[40rem] text-body-lg leading-body-lg text-ink">
       {renderInline(block.text)}
     </p>
   );
@@ -206,6 +228,7 @@ function renderBlock(block: Block, key: number, stepIndex = 0) {
  *   ## Heading | Short    -> same, with "Short" as the sidebar-nav label
  *   blank-line-separated  -> paragraphs (**bold** supported inline)
  *   - item / - item       -> bulleted list (highlights, key points)
+ *   > quote / > — Name    -> pull quote with its attribution
  *   ![alt](src "caption") -> full-width image, reusing ProjectVisual
  * Renders straight to ProjectSectionData["custom"] (content: ReactNode),
  * the existing freeform escape hatch — no new section type needed.
@@ -230,12 +253,15 @@ export function parseCaseStudyMarkdown(markdown: string): ProjectSectionData[] {
       type: "custom",
       content: (
         <div>
+          {title && navLabel ? (
+            <p className="mb-3 text-body-sm leading-body-sm text-smoke">{navLabel}</p>
+          ) : null}
           {title ? (
-            <h2 className="text-heading-sm leading-heading-sm tracking-heading-sm text-ink">
+            <h2 className="text-[length:clamp(1.625rem,3.2vw,var(--text-section))] leading-section font-normal tracking-section text-ink">
               {title}
             </h2>
           ) : null}
-          <div className={`space-y-6 ${title ? "mt-4" : ""}`}>
+          <div className={`space-y-6 ${title ? "mt-6" : ""}`}>
             {blocks.map((block, i) =>
               renderBlock(block, i, blocks.slice(0, i).filter((b) => b.kind === "step").length),
             )}
