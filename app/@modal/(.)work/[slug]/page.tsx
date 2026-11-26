@@ -28,7 +28,6 @@ export default async function ModalProjectPage({ params }: ModalProjectPageProps
       <ProjectPage
         project={withMarkdownContent(project)}
         nextProject={next ? toNextProjectData(next) : undefined}
-        variant="sheet"
       />
     </ProjectOverlay>
   );

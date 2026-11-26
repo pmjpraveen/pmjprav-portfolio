@@ -1,28 +1,11 @@
 import type { ProjectSectionData } from "../../content/projects";
 import { Container } from "../container";
 
-type ProjectSectionProps = {
-  section: ProjectSectionData;
-};
-
-/**
- * Shared shell (scroll anchor, divider, spacing, Container) for every
- * narrative section — this is the "section renderer" the architecture routes
- * ProjectSectionData through. Individual section-type components only
- * render their inner content, never their own outer spacing/divider.
- */
-export function ProjectSection({ section }: ProjectSectionProps) {
+/** One narrative section of a case study: a scroll anchor with even spacing, no divider. */
+export function ProjectSection({ section }: { section: ProjectSectionData }) {
   return (
-    <section
-      id={section.id}
-      className="scroll-mt-24 py-8 sm:py-10"
-    >
-      <Container>{renderProjectSectionContent(section)}</Container>
+    <section id={section.id} className="scroll-mt-24 py-6 sm:py-8">
+      <Container>{section.content}</Container>
     </section>
   );
-}
-
-/** Exposed so ProjectPage can render section content inside its own shell (the sidebar-nav grid) instead of this component's own full-width section/divider. */
-export function renderProjectSectionContent(section: ProjectSectionData) {
-  return <>{section.content}</>;
 }

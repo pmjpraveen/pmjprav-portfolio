@@ -22,9 +22,9 @@ export type ProjectVisualData = {
 export type MetaEntry = { label: string; value?: string };
 
 type SectionBase = {
-  /** Stable id — used as the React key, the scroll-anchor target, and (with navLabel) the ProjectNavigation link target. */
+  /** Stable id — used as the React key and the scroll-anchor target. */
   id: string;
-  /** Shown in ProjectNavigation. Omit to keep a section out of the section index (e.g. a closing external-link CTA). */
+  /** A short label for the section, kept from the markdown heading (`## Long title | Short`). */
   navLabel?: string;
 };
 
@@ -224,10 +224,8 @@ export function getNextRealProject(slug: string): Project | undefined {
 export function toNextProjectData(project: Project) {
   return {
     slug: project.slug,
-    number: project.number,
     title: project.title,
-    category: project.category,
-    description: project.description,
+    client: project.client,
     thumbnail: project.thumbnail,
     imageAlt: project.imageAlt,
   };

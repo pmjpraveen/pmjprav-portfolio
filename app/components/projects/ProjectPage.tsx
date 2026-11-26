@@ -1,45 +1,21 @@
 import type { Project } from "../../content/projects";
-import { Container } from "../container";
-import { NextProject } from "./NextProject";
-import { ProjectHeader } from "./ProjectHeader";
-import { ProjectNavigation } from "./ProjectNavigation";
+import { NextProject, type NextProjectData } from "./NextProject";
 import { ProjectExternalLink } from "./ProjectExternalLink";
-import { ProjectSection, renderProjectSectionContent } from "./ProjectSection";
-
-type NextProjectData = {
-  slug: string;
-  number: string;
-  title: string;
-  category: string;
-  description: string;
-  thumbnail?: string;
-  imageAlt?: string;
-};
+import { ProjectHeader } from "./ProjectHeader";
+import { ProjectSection } from "./ProjectSection";
 
 type ProjectPageProps = {
   project: Project;
   nextProject?: NextProjectData;
-  /** "sheet" drops the section index, which needs more width than the sheet has. */
-  variant?: "page" | "sheet";
 };
 
 /**
- * The shared shell: Header → (external case study) → section index →
- * project-specific sections → Next project. Everything about WHICH sections
- * exist, their order, and their content comes from `project` — this
- * component only controls the parts every case study shares.
+ * A case study as it reads inside the sheet: header, then (if any) the link to
+ * a deeper case study hosted elsewhere, then the project's own sections, then
+ * the next project. Which sections exist, their order and their content all
+ * come from `project`.
  */
-export function ProjectPage({ project, nextProject, variant = "page" }: ProjectPageProps) {
-  const sections = project.sections ?? [];
-
-  const navItems = sections
-    .filter((section) => section.navLabel)
-    .map((section) => ({ id: section.id, label: section.navLabel! }));
-
-  // Only worth a sidebar once there's enough to navigate between — below
-  // that, sections render full-width with their own dividers (ProjectSection).
-  const hasNav = variant === "page" && navItems.length >= 2;
-
+export function ProjectPage({ project, nextProject }: ProjectPageProps) {
   return (
     <>
       <ProjectHeader project={project} />
@@ -49,40 +25,14 @@ export function ProjectPage({ project, nextProject, variant = "page" }: ProjectP
           section={{
             id: "external-case-study",
             type: "custom",
-            content: (
-              <ProjectExternalLink
-                label={project.externalCaseStudy.label}
-                url={project.externalCaseStudy.url}
-              />
-            ),
+            content: <ProjectExternalLink label={project.externalCaseStudy.label} url={project.externalCaseStudy.url} />,
           }}
         />
       ) : null}
 
-      {hasNav ? (
-        <section className="py-16 sm:py-20 lg:py-24">
-          <Container>
-            <div className="lg:grid lg:grid-cols-[200px_1fr] lg:gap-16">
-              <ProjectNavigation items={navItems} />
-              <div>
-                {sections.map((section, index) => (
-                  <div
-                    key={section.id}
-                    id={section.id}
-                    className={`scroll-mt-24 ${
-                      index > 0 ? "pt-16 sm:pt-20 lg:pt-24" : ""
-                    } ${index < sections.length - 1 ? "pb-16 sm:pb-20 lg:pb-24" : ""}`}
-                  >
-                    {renderProjectSectionContent(section)}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </Container>
-        </section>
-      ) : (
-        sections.map((section) => <ProjectSection key={section.id} section={section} />)
-      )}
+      {(project.sections ?? []).map((section) => (
+        <ProjectSection key={section.id} section={section} />
+      ))}
 
       <NextProject project={nextProject} />
     </>

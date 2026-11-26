@@ -57,7 +57,6 @@ export default async function Page({ params }: PageProps) {
         <ProjectPage
           project={withMarkdownContent(project)}
           nextProject={next ? toNextProjectData(next) : undefined}
-          variant="sheet"
         />
       </ProjectOverlay>
     </>

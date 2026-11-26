@@ -19,13 +19,14 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
   return (
     <section aria-labelledby="project-title" className="pt-10 sm:pt-14 lg:pt-16">
       <Container>
-        <p className="label">
-          {project.number} / {category}
+        <p className="text-body-sm text-smoke">
+          {project.client ? `${project.client} · ` : ""}
+          {category}
         </p>
 
         <h1
           id="project-title"
-          className="mt-4 max-w-3xl text-[length:clamp(1.875rem,4vw,var(--text-display))] leading-display tracking-display text-ink"
+          className="mt-2 max-w-3xl text-[length:clamp(1.875rem,4vw,var(--text-display))] leading-display tracking-display text-ink"
         >
           {title}
         </h1>
@@ -34,7 +35,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
           {description}
         </p>
 
-        <div className="mt-8">
+        <div className="mt-6">
           <ProjectMeta
             items={[
               { label: "Role", value: role },
@@ -47,7 +48,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
           />
         </div>
 
-        <div className="mt-10 lg:mt-12">
+        <div className="mt-8">
           <ProjectVisual
             thumbnail={heroVisual?.src}
             alt={heroVisual?.alt ?? `${title} preview`}
