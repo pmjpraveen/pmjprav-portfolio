@@ -44,6 +44,10 @@ export function ExpandTile({ description, link, ...face }: ExpandTileProps) {
   const scrimRef = useRef<HTMLDivElement>(null);
   const captionRef = useRef<HTMLDivElement>(null);
   const closing = useRef(false);
+  // Opened by mouse or touch: when focus returns to the tile on close, keep its
+  // focus frame hidden (it would look stuck in hover) until the keyboard is used.
+  const openedByPointer = useRef(false);
+  const [quiet, setQuiet] = useState(false);
 
   const reduced = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -96,6 +100,7 @@ export function ExpandTile({ description, link, ...face }: ExpandTileProps) {
     closing.current = true;
     const dialog = dialogRef.current;
     const finish = () => {
+      if (openedByPointer.current) setQuiet(true);
       dialog?.close();
       setOpen(false);
     };
@@ -119,7 +124,15 @@ export function ExpandTile({ description, link, ...face }: ExpandTileProps) {
     <>
       <button
         type="button"
-        onClick={() => setOpen(true)}
+        onClick={(event) => {
+          // `detail` counts clicks; it is 0 when Enter or Space activated the button.
+          openedByPointer.current = event.detail > 0;
+          setQuiet(false);
+          setOpen(true);
+        }}
+        onKeyDown={() => setQuiet(false)}
+        onBlur={() => setQuiet(false)}
+        data-quiet={quiet || undefined}
         aria-haspopup="dialog"
         className={`${tileClass} cursor-zoom-in`}
       >

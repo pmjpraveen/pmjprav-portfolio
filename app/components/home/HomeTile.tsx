@@ -20,8 +20,10 @@ export type TileFaceProps = {
 
 // On hover or keyboard focus the whole tile grows slightly (as on the reference
 // site: scale 1.008 over 220ms) while a hairline frame appears 10px around it.
+// `data-quiet` keeps the focus state hidden while focus sits on a tile only
+// because a viewer opened by mouse handed it back (see ExpandTile).
 export const tileClass =
-  "group relative isolate block w-full rounded-card text-left outline-none transition-transform duration-[220ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.008] focus-visible:scale-[1.008] motion-reduce:transition-none motion-reduce:hover:scale-100 motion-reduce:focus-visible:scale-100";
+  "group relative isolate block w-full rounded-card text-left outline-none transition-transform duration-[220ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.008] [&:focus-visible:not([data-quiet])]:scale-[1.008] motion-reduce:transition-none motion-reduce:hover:scale-100 motion-reduce:[&:focus-visible]:scale-100";
 
 /**
  * What every homepage tile looks like: a large visual with the title and
@@ -33,7 +35,7 @@ export function TileFace({ title, aside, logo, image, imageAlt = "", priority, h
     <>
       <span
         aria-hidden="true"
-        className="absolute -inset-2.5 -z-10 rounded-frame border border-stone opacity-0 shadow-[0_4px_20px_rgb(0_0_0/0.04)] transition-opacity duration-[220ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-100 group-focus-visible:opacity-100 motion-reduce:transition-none"
+        className="absolute -inset-2.5 -z-10 rounded-frame border border-stone opacity-0 shadow-[0_4px_20px_rgb(0_0_0/0.04)] transition-opacity duration-[220ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-100 group-[:focus-visible:not([data-quiet])]:opacity-100 motion-reduce:transition-none"
       />
       <span ref={mediaRef} className="relative block aspect-[5/3] overflow-hidden rounded-card bg-warm-taupe">
         {image ? (
