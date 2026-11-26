@@ -15,7 +15,7 @@ export function ProjectSection({ section }: ProjectSectionProps) {
   return (
     <section
       id={section.id}
-      className="scroll-mt-24 border-t border-stone py-16 sm:py-20 lg:py-24"
+      className="scroll-mt-24 py-8 sm:py-10"
     >
       <Container>{renderProjectSectionContent(section)}</Container>
     </section>

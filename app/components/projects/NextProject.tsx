@@ -21,26 +21,26 @@ export function NextProject({ project }: NextProjectProps) {
   return (
     <section
       aria-labelledby="next-project-heading"
-      className="border-t border-stone py-20 sm:py-24 lg:py-32"
+      className="pb-16 pt-8 sm:pb-20"
     >
       <Container>
         <p className="label">
-          <span className="text-accent">{project.number}</span> / Next project
+          Next project
         </p>
 
         <h2
           id="next-project-heading"
-          className="mt-6 max-w-3xl text-[clamp(2.5rem,5.5vw,4.75rem)] leading-[1] tracking-[-0.03em] text-ink"
+          className="mt-6 max-w-3xl text-[length:clamp(1.875rem,4vw,var(--text-display))] leading-display tracking-display text-ink"
         >
           <Link
             href={`/work/${project.slug}`}
-            className="transition-colors duration-150 hover:text-accent"
+            className="transition-opacity duration-150 hover:opacity-70"
           >
             {project.title}
           </Link>
         </h2>
 
-        <p className="mt-4 max-w-prose text-body-lg leading-body-lg text-smoke">
+        <p className="mt-4 max-w-prose text-body-lg leading-body-lg text-ink">
           {project.description}
         </p>
 

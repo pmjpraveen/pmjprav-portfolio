@@ -105,15 +105,11 @@ Avoid unnecessary dependencies.
 
 # 5. Typography
 
-## Typefaces
+## Typeface
 
-Three open-source typefaces, self-hosted at build time with `next/font/google`:
+One typeface across the entire site: **Switzer** (300, 400, 500), self-hosted from `public/fonts/switzer/` via `next/font/local` in `app/layout.tsx`. Headings, body, navigation, buttons and labels all use it; `--font-display` and `--font-mono` point at Switzer too.
 
-* Display and headings: **Faculty Glyphic** 400
-* Body, navigation, buttons: **Geist** 400 (500 for buttons / emphasis)
-* Technical metadata and labels: **Geist Mono** 400
-
-Do not use Waldenburg, Inter or Switzer. Do not introduce additional typefaces.
+Do not introduce any other typeface. The only exception is imagery the system generates (e.g. the Open Graph image, case-study illustrations), which may keep its current font combination.
 
 Display typography should use approximately:
 
@@ -131,7 +127,7 @@ Do not simply scale every type size proportionally on mobile. Preserve hierarchy
 
 # 6. Font Files
 
-Fonts load through `next/font/google` in `app/layout.tsx`; there are no local font files to maintain. The old Switzer files under `public/fonts/` are unused.
+Switzer lives in `public/fonts/switzer/` (Light, Regular, Medium). There is no bold file, so bold text uses 500.
 
 ---
 
@@ -158,7 +154,7 @@ Canvas #f1ece2   Surface #e9e3d6   Hairline #d6cfbf
 Text   #1a1815   Muted   #676158   Accent   #d8402f
 ```
 
-Use the accent sparingly: section index numbers, links, one phrase per headline, 3D highlights. Mono labels are muted, not accented. Violet and orange (`#0447ff`, `#ff4704`) are only for project visuals. Do not use pure white `#ffffff` as a background.
+No accent colour. The site is a single colour family: ink for text and headings, a muted grey for small labels and captions, and the canvas/surface/hairline neutrals. Do not use orange (or any coral/red accent) anywhere; `--color-accent` maps to ink. Do not use pure white `#ffffff` as a background.
 
 ---
 
@@ -239,12 +235,14 @@ Whitespace is part of the design.
 Use the established radius system.
 
 ```text
-Cards:          20px
-Large cards:    24px
-Buttons:        9999px
-Tags:           9999px
-Inputs:         4px
-Small elements: 4px–10px
+Work tiles, covers, viewer:  12px  (--radius-card)
+Case-study sheet:            16px  (--radius-large)
+Tile hover frame:            20px  (--radius-frame)
+Images inside a case study:   8px  (--radius-image)
+Avatar, small elements:       6px  (--radius-small)
+Inputs, wordmark:             4px  (--radius-input)
+Tags / chips:                 3px
+Buttons:                   9999px
 ```
 
 Do not round every container.
@@ -1042,6 +1040,7 @@ Do not:
 * Introduce random colors
 * Use Waldenburg
 * Use Inter
+* Use any typeface other than Switzer
 * Add excessive shadows
 * Use glassmorphism
 * Turn Selected Works into a generic card grid

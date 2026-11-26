@@ -8,16 +8,15 @@
 @theme {
   /* Colors. Dark is the default. These light values are the paper tones: cream
      canvas, warm ink. Source of the whole palette: https://www.mithun.zip */
-  --color-eggshell: #f1ece2; /* page canvas */
-  --color-warm-taupe: #e9e3d6; /* surfaces */
-  --color-stone: #d6cfbf; /* hairlines */
-  --color-ink: #1a1815; /* primary text */
-  --color-graphite: #3a352e;
-  --color-smoke: #676158; /* muted text, mono labels */
-  --color-ash: #8f887b;
-  --color-accent: #d8402f; /* the one accent: links, index numbers, one phrase per headline */
+  --color-eggshell: #fcfcfb; /* page canvas */
+  --color-warm-taupe: #f0f0ee; /* surfaces */
+  --color-stone: #e3e3e0; /* hairlines */
+  --color-ink: #1c1c1c; /* primary text */
+  --color-graphite: #3a3a3a;
+  --color-smoke: #737373; /* muted text, mono labels */
+  --color-ash: #a3a3a3; /* disabled / decorative only: below AA contrast */
+  --color-accent: var(--color-ink); /* no accent colour: anything still using it renders in ink */
   --color-violet: #0447ff;
-  --color-ember-orange: #ff4704;
 
   /* Kept for the 3D scenes and older components. */
   --color-paper: #fbfaf6; /* a print / photo mount that stays light in both themes */
@@ -26,42 +25,50 @@
   --color-oak: #7a4a22;
   --color-bakelite: var(--color-warm-taupe);
 
-  /* Fonts — Geist for body, Faculty Glyphic for headlines, Geist Mono for labels */
-  --font-sans: var(--font-geist), ui-sans-serif, system-ui, -apple-system,
+  /* Fonts — Switzer only. Display and mono point at it too, so any
+     font-display / font-mono use still renders in Switzer. */
+  --font-sans: var(--font-switzer), ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", Roboto, sans-serif;
-  --font-display: var(--font-faculty), Georgia, "Times New Roman", serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo,
-    Monaco, Consolas, monospace;
+  --font-display: var(--font-sans);
+  --font-mono: var(--font-sans);
 
-  /* Type scale */
+  /* Type scale — small and quiet: 14px UI text, 16px reading text */
   --text-caption: 11px;
-  --text-body-sm: 14px;
-  --text-body: 16px;
-  --text-body-lg: 20px;
-  --text-heading-sm: 32px;
-  --text-heading: 36px;
-  --text-display: 48px;
+  --text-meta: 13px; /* metadata under a title */
+  --text-body-sm: 14px; /* sidebar, nav, eyebrows */
+  --text-ui: 15px; /* tile titles */
+  --text-body: 16px; /* reading text */
+  --text-body-lg: 18px; /* lead paragraphs */
+  --text-heading-sm: 20px; /* section headings */
+  --text-heading: 24px;
+  --text-display: 38px; /* page / case-study titles */
 
   /* Line height, per size */
-  --leading-caption: 1.6;
-  --leading-body-sm: 1.5;
-  --leading-body: 1.5;
-  --leading-body-lg: 1.35;
-  --leading-heading-sm: 1.13;
-  --leading-heading: 1.17;
-  --leading-display: 1.08;
+  --leading-caption: 1.5;
+  --leading-meta: 1.6;
+  --leading-body-sm: 1.57;
+  --leading-ui: 1.5;
+  --leading-body: 1.7;
+  --leading-body-lg: 1.65;
+  --leading-heading-sm: 1.4;
+  --leading-heading: 1.3;
+  --leading-display: 1.25;
 
-  /* Letter spacing — display/heading sizes share -0.02em, body sizes share 0.01em */
-  --tracking-display: -0.02em;
+  /* Letter spacing — headings tighten slightly, text stays neutral */
+  --tracking-display: -0.025em;
   --tracking-heading: -0.02em;
   --tracking-heading-sm: -0.02em;
-  --tracking-body: 0.01em;
-  --tracking-body-sm: 0.01em;
+  --tracking-body: 0em;
+  --tracking-body-sm: 0em;
 
   /* Radius, named by role */
+  /* Radius — small and tight, after the reference */
   --radius-input: 4px;
-  --radius-card: 20px;
-  --radius-large: 24px;
+  --radius-small: 6px; /* avatar, greeting pill, wordmark */
+  --radius-image: 8px; /* images inside a case study */
+  --radius-card: 12px; /* work tiles, covers, the full-screen viewer */
+  --radius-large: 16px; /* the case-study sheet */
+  --radius-frame: 20px; /* the hover frame around a tile */
   --radius-pill: 9999px;
 
   /* Easing — shared curves so hover/reveal motion feels like one system.
@@ -84,7 +91,7 @@
   --color-graphite: #d8d1c4;
   --color-smoke: #b4ad9f;
   --color-ash: #8a8478;
-  --color-accent: #ec5a48;
+  --color-accent: var(--color-ink);
   --color-paper: #f1ece2;
   --color-lamp: #ffd36a;
   color-scheme: dark;
@@ -166,6 +173,12 @@
     margin: 0;
   }
 
+  /* Switzer ships 300–500 here; keep bold text on a real weight, not a synthesised one. */
+  strong,
+  b {
+    font-weight: 500;
+  }
+
   h1,
   h2,
   h3,
@@ -173,8 +186,8 @@
   h5,
   h6 {
     font-family: var(--font-display);
-    font-weight: 400;
-    letter-spacing: var(--tracking-display);
+    font-weight: 500;
+    letter-spacing: var(--tracking-heading);
   }
 
   p {
@@ -209,10 +222,6 @@
 
   ::selection {
     background: var(--color-ink);
-    color: var(--color-eggshell);
-  }
-  ::selection {
-    background: var(--color-accent);
     color: var(--color-eggshell);
   }
 
@@ -305,13 +314,13 @@
   max-width: min(100%, 1800px);
   max-height: calc(100dvh - 8rem);
   object-fit: contain;
-  border-radius: var(--radius-card);
+  border-radius: var(--radius-image);
 }
 .lightbox-caption {
   max-width: 60ch;
   text-align: center;
   font-family: var(--font-mono);
-  font-size: var(--text-caption);
+  font-size: var(--text-meta);
   color: var(--color-smoke);
 }
 .lightbox-close {
@@ -322,9 +331,7 @@
   border-radius: var(--radius-pill);
   background: var(--color-warm-taupe);
   font-family: var(--font-mono);
-  font-size: var(--text-caption);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  font-size: var(--text-body-sm);
   color: var(--color-ink);
 }
 .custom-cursor-active .lightbox,
@@ -346,13 +353,11 @@
    Shared pieces. In the components layer so any utility still wins.
    ========================================================= */
 @layer components {
-  /* Mono label: small caps, wide tracking, muted. */
+  /* Label: small, sentence case, muted. */
   .label {
     font-family: var(--font-mono);
-    font-size: 13px;
-    line-height: 1.4;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
+    font-size: var(--text-meta);
+    line-height: var(--leading-meta);
     color: var(--color-smoke);
   }
 
@@ -370,11 +375,11 @@
     border-radius: 3px;
   }
 
-  /* The one accent link: mono, coral, underlined. */
+  /* A plain text link: ink, underlined. */
   .link-accent {
     font-family: var(--font-mono);
-    font-size: 15px;
-    color: var(--color-accent);
+    font-size: var(--text-body-sm);
+    color: var(--color-ink);
     border-bottom: 1px solid currentColor;
     padding-bottom: 2px;
     transition: opacity 150ms var(--ease-ui);
@@ -383,3 +388,19 @@
     opacity: 0.75;
   }
 }
+
+/* =========================================================
+   Case study inside the sheet (ProjectOverlay): narrower than
+   the page, so tighter gutters.
+   ========================================================= */
+.project-sheet {
+  --content-max-width: none;
+  --page-gutter: 20px;
+}
+
+@media (min-width: 640px) {
+  .project-sheet {
+    --page-gutter: 48px;
+  }
+}
+

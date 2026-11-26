@@ -22,7 +22,7 @@ export default function OpengraphImage() {
         <div style={{ display: "flex", fontSize: 28, letterSpacing: 3, color: "#b4ad9f" }}>PORTFOLIO</div>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ display: "flex", fontSize: 148, lineHeight: 1, letterSpacing: -5 }}>Praveenkumar</div>
-          <div style={{ display: "flex", fontSize: 44, marginTop: 28, color: "#ec5a48" }}>
+          <div style={{ display: "flex", fontSize: 44, marginTop: 28, color: "#efe8da" }}>
             Product designer and design engineer
           </div>
         </div>

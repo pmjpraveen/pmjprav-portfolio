@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { Plate } from "../ui/Plate";
 
 const ASPECT_CLASSES = {
   "16/10": "aspect-[16/10]",
@@ -35,7 +34,7 @@ export function ProjectVisual({
   const frame = (
       <div
         className={`relative w-full overflow-hidden bg-warm-taupe ${
-          bleed ? "" : "rounded-xl"
+          bleed ? "" : "rounded-card"
         } ${ASPECT_CLASSES[aspect]}`}
       >
         {thumbnail ? (
@@ -49,20 +48,24 @@ export function ProjectVisual({
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center">
-            <p className="font-mono text-caption uppercase tracking-wide text-ash">
+            <p className="text-body-sm text-ash">
               Visual in progress
             </p>
           </div>
+        )}
+        {/* A faint inner hairline so light covers keep their edge on the light canvas. */}
+        {bleed ? null : (
+          <span aria-hidden="true" className="pointer-events-none absolute inset-0 rounded-[inherit] ring-1 ring-inset ring-ink/[0.06]" />
         )}
       </div>
   );
 
   return (
     <figure>
-      {bleed ? frame : <Plate>{frame}</Plate>}
+      {frame}
 
       {caption ? (
-        <figcaption className="mt-3 font-mono text-caption text-smoke">
+        <figcaption className="mt-3 text-meta leading-meta text-smoke">
           {caption}
         </figcaption>
       ) : null}

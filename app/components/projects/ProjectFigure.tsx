@@ -33,7 +33,7 @@ export function ProjectFigure({ src, alt, caption, width, height }: ProjectFigur
         type="button"
         onClick={() => setOpen(true)}
         aria-label={`View larger: ${alt}`}
-        className="group relative block w-full overflow-hidden rounded-large bg-warm-taupe"
+        className="group relative block w-full overflow-hidden rounded-image bg-warm-taupe after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-inset after:ring-ink/[0.06]"
       >
         <Image
           src={src}
@@ -45,14 +45,14 @@ export function ProjectFigure({ src, alt, caption, width, height }: ProjectFigur
         />
         <span
           aria-hidden
-          className="pointer-events-none absolute right-3 top-3 rounded-pill bg-eggshell/90 px-3 py-1 font-mono text-caption uppercase tracking-wide text-ink opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100"
+          className="pointer-events-none absolute right-3 top-3 rounded-pill bg-eggshell/90 px-3 py-1 text-meta text-ink opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100"
         >
           Expand
         </span>
       </button>
 
       {caption ? (
-        <figcaption className="mt-3 font-mono text-caption text-smoke">{caption}</figcaption>
+        <figcaption className="mt-3 text-meta leading-meta text-smoke">{caption}</figcaption>
       ) : null}
 
       <dialog
@@ -75,7 +75,7 @@ export function ProjectFigure({ src, alt, caption, width, height }: ProjectFigur
             />
             {caption ? <p className="lightbox-caption">{caption}</p> : null}
             <button type="button" className="lightbox-close" aria-label="Close">
-              Close · Esc
+              Close
             </button>
           </>
         ) : null}

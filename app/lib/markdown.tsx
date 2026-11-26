@@ -143,14 +143,14 @@ function renderBlock(block: Block, key: number, stepIndex = 0) {
 
   if (block.kind === "rows") {
     return (
-      <dl key={key} className="border-b border-stone">
+      <dl key={key} className="flex flex-col gap-4">
         {block.items.map(([term, detail]) => (
           <div
             key={term}
-            className="grid gap-1 border-t border-stone py-5 sm:grid-cols-[220px_1fr] sm:gap-8"
+            className="grid gap-1 sm:grid-cols-[180px_1fr] sm:gap-8"
           >
-            <dt className="text-body text-ink">{term}</dt>
-            <dd className="text-body text-smoke">{detail}</dd>
+            <dt className="text-body text-smoke">{term}</dt>
+            <dd className="text-body text-ink">{detail}</dd>
           </div>
         ))}
       </dl>
@@ -161,10 +161,10 @@ function renderBlock(block: Block, key: number, stepIndex = 0) {
     return (
       <div
         key={key}
-        className="grid gap-6 border-t border-stone pt-10 first:border-t-0 first:pt-0 lg:grid-cols-[5fr_7fr] lg:gap-12"
+        className="grid gap-6 pt-6 first:pt-0 lg:grid-cols-[5fr_7fr] lg:gap-12"
       >
         <div>
-          <p className="label text-accent">{String(stepIndex + 1).padStart(2, "0")}</p>
+          <p className="label">{String(stepIndex + 1).padStart(2, "0")}</p>
           <h3 className="mt-3 text-body-lg text-ink">{block.title}</h3>
           <div className="mt-3 space-y-3 [&_p]:text-body [&_p]:leading-body [&_ul]:text-body">
             {block.body.map((b, i) => renderBlock(b, i))}
@@ -179,7 +179,7 @@ function renderBlock(block: Block, key: number, stepIndex = 0) {
 
   if (block.kind === "list") {
     return (
-      <ul key={key} className="max-w-prose list-disc space-y-2 pl-5 text-body-lg leading-body-lg text-smoke">
+      <ul key={key} className="max-w-prose list-disc space-y-2 pl-5 text-body leading-body text-ink marker:text-smoke">
         {block.items.map((item, i) => (
           <li key={i}>{renderInline(item)}</li>
         ))}
@@ -188,7 +188,7 @@ function renderBlock(block: Block, key: number, stepIndex = 0) {
   }
 
   return (
-    <p key={key} className="max-w-prose text-body-lg leading-body-lg text-smoke">
+    <p key={key} className="max-w-prose text-body leading-body text-ink">
       {renderInline(block.text)}
     </p>
   );
@@ -226,7 +226,7 @@ export function parseCaseStudyMarkdown(markdown: string): ProjectSectionData[] {
       content: (
         <div>
           {title ? (
-            <h2 className="text-[length:clamp(2rem,4vw,3rem)] leading-[1.05] tracking-[-0.02em] text-ink">
+            <h2 className="text-heading leading-heading tracking-heading text-ink">
               {title}
             </h2>
           ) : null}

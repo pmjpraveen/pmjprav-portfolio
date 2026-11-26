@@ -67,7 +67,7 @@ export function ProjectNavigation({ items }: ProjectNavigationProps) {
                 activeId === item.id ? "!text-ink" : "hover:!text-ink"
               }`}
             >
-              <span className={activeId === item.id ? "text-accent" : ""}>{String(index + 1).padStart(2, "0")}</span> {item.label}
+              <span className={activeId === item.id ? "text-ink" : ""}>{String(index + 1).padStart(2, "0")}</span> {item.label}
             </a>
           </li>
         ))}
