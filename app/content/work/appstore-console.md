@@ -62,12 +62,19 @@ I sat with the research team to shape the questions, structure and methods. The 
 
 ::: rows
 Earlier research | Four interviews and a survey of 39 developers. 72% rated satisfaction 4 or higher out of 5, and 23% rated it 3. They liked the simple UI, and disliked slow review, vague rejections and testing that waited on review.
-On testing | "I would like it if the processing/review time for Live App Testing were shorter, or if there were an internal testing track that bypassed the review process."
-On the console | "It would be great if the UI was more in line with [the other major store]."
-Staged roll-out survey | About 130 developers. "The more flexibility we have to control who gets the update is better."
+Staged roll-out survey | About 130 developers, asked what they wanted from staged roll-out.
 The counterweight | Many developers release on larger platforms first and treat that as their safety check, so the goal was clarity rather than more controls.
 Card sort | Most partners already knew a competing console's structure and were comfortable in it.
 :::
+
+> “I would like it if the processing/review time for Live App Testing were shorter, or if there were an internal testing track that bypassed the review process.”
+> — A developer, in the earlier survey
+
+> “It would be great if the UI was more in line with [the other major store].”
+> — A developer, in the earlier survey
+
+> “The more flexibility we have to control who gets the update is better.”
+> — A developer, in the staged roll-out survey
 
 The requirements named three people to design for. Their names are fictional.
 

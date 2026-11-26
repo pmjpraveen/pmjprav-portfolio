@@ -53,10 +53,11 @@ The plan came with research on who writes in, and a look at how other platforms 
 
 ![Where the cases went: DART, ASQS and content policy](/projects/two-way-communication/illus-dots-split.png "Illustration · Where the cases went.")
 
-::: rows
-Developer forum | “I have just stopped putting any apps here, and cannot recommend any developer to get into this store without support.”
-Research feedback | “I have written many times in over three years, but have never received an actual response.”
-:::
+> “I have just stopped putting any apps here, and cannot recommend any developer to get into this store without support.”
+> — A developer, on the forum
+
+> “I have written many times in over three years, but have never received an actual response.”
+> — A developer, in research feedback
 
 **Benchmark: Google Play Console** suggests articles before a case can be submitted, then lets a developer track it across teams.
 

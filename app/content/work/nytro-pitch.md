@@ -37,7 +37,7 @@ I designed by hypothesis: form a view, test it with people, refine it.
 
 Three areas changed the most. Each pair below shows the original on the left and the redesign on the right, with what was wrong in the original underneath.
 
-**Pitch overview**
+### Pitch overview
 
 ![Pitch overview, before](/projects/nytro-pitch/pitch-overview-before.png "Before")
 ![Pitch overview, after](/projects/nytro-pitch/pitch-overview-after.png "After")
@@ -47,7 +47,7 @@ Three areas changed the most. Each pair below shows the original on the left and
 - Showing both "Created date" and "Published date" needed a reason, so keep both only where they are needed.
 - The kebab menu was hard to see when a thumbnail image was present.
 
-**Pitch categories**
+### Pitch categories
 
 ![Pitch categories, before](/projects/nytro-pitch/pitch-categories-before.png "Before")
 ![Pitch categories, after](/projects/nytro-pitch/pitch-categories-after.png "After")
@@ -56,7 +56,7 @@ Three areas changed the most. Each pair below shows the original on the left and
 - The category listing was not visually appealing.
 - Each category could show how many pitches are published, drafted and so on.
 
-**Pitch reports**
+### Pitch reports
 
 ![Pitch reports, before](/projects/nytro-pitch/pitch-reports-before.png "Before")
 ![Pitch reports, after](/projects/nytro-pitch/pitch-reports-after.png "After")
@@ -69,6 +69,5 @@ Three areas changed the most. Each pair below shows the original on the left and
 
 Features are easier to find. The content creation flow is shorter, so pitches take less time to make. The new reports and customisation gave users more to engage with.
 
-"With our fresh visual branding and refined language, the pitch app distinctly encapsulates the essence of both our current and target customer base, as well as our core values."
-
-Ravish Kamath, Founder and CEO, Nytro.ai
+> “With our fresh visual branding and refined language, the pitch app distinctly encapsulates the essence of both our current and target customer base, as well as our core values.”
+> — Ravish Kamath, Founder and CEO, Nytro.ai

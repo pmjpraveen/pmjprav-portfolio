@@ -24,9 +24,8 @@ Comments were hard to find and hard to understand, so new users struggled to get
 
 Comments are easier to find and use, in a simpler, more organised layout.
 
-"Praveenkumar did an outstanding job designing the UI for internal dashboards and tools used for running our $1.6B business. He had a great vision and a great relationship with the developers on the team. He was able to quickly understand the use case and create a design for the key personas, then iterate with the developers to quickly bring it to life."
-
-Jeffrey Ulrich, VP of Transformation, Honeywell
+> “Praveenkumar did an outstanding job designing the UI for internal dashboards and tools used for running our $1.6B business. He had a great vision and a great relationship with the developers on the team. He was able to quickly understand the use case and create a design for the key personas, then iterate with the developers to quickly bring it to life.”
+> — Jeffrey Ulrich, VP of Transformation, Honeywell
 
 ## Talk it through
 
