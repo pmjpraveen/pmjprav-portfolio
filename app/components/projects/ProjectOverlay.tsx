@@ -90,7 +90,7 @@ export function ProjectOverlay({ children, closeHref }: ProjectOverlayProps) {
 
   return (
     <div className="fixed inset-0 z-40">
-      <div ref={scrimRef} aria-hidden="true" className="absolute inset-0 bg-[rgb(20_20_20/0.72)]" />
+      <div ref={scrimRef} aria-hidden="true" className="absolute inset-0 bg-[rgb(20_20_20/0.55)] backdrop-blur-md" />
       <div
         ref={scrollerRef}
         className="absolute inset-0 overflow-y-auto overscroll-contain px-3 py-3 sm:px-6 sm:py-12"

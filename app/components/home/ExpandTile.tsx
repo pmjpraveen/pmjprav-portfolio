@@ -139,7 +139,7 @@ export function ExpandTile({ description, link, ...face }: ExpandTileProps) {
           }}
           className="fixed inset-0 m-0 size-full max-h-none max-w-none overflow-hidden bg-transparent p-0 backdrop:bg-transparent"
         >
-          <div ref={scrimRef} onClick={close} aria-hidden="true" className="absolute inset-0 cursor-zoom-out bg-[rgb(20_20_20/0.86)]" />
+          <div ref={scrimRef} onClick={close} aria-hidden="true" className="absolute inset-0 cursor-zoom-out bg-[rgb(20_20_20/0.8)] backdrop-blur-md" />
 
           <div ref={frameRef} className="fixed overflow-hidden rounded-card bg-warm-taupe">
             <Image src={face.image} alt={face.imageAlt ?? ""} fill sizes="100vw" className="object-cover" />
