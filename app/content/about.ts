@@ -1,12 +1,13 @@
 // Every fact here is Praveenkumar's own, from his case studies and roles:
 // the outcomes, companies and products are documented elsewhere on the site.
 // The wording was tightened; nothing was invented.
+// ==text== marks a highlight for a quick scan; the About page renders it as <mark>.
 export const ABOUT = {
   eyebrow: "About",
   headline: "I'm a product designer and ",
   accent: "design engineer.",
   intro:
-    "I'm Praveenkumar, a product designer and design engineer in Bengaluru. For more than eight years I've designed the software people use to get their work done: developer consoles, enterprise dashboards and the workflows inside them. I'm drawn to briefs that turn out to be symptoms, where the real fix sits in the structure underneath.",
+    "I'm Praveenkumar, ==a product designer and design engineer== in Bengaluru. For ==more than eight years== I've designed the software people use to get their work done: ==developer consoles, enterprise dashboards== and the workflows inside them. I'm drawn to briefs that turn out to be symptoms, where the real fix sits in the structure underneath.",
 
   facts: [
     { label: "Based in", value: "Bengaluru, India" },
@@ -19,8 +20,8 @@ export const ABOUT = {
     label: "Background",
     lead: "I design the software people use to do their jobs.",
     paragraphs: [
-      "At Amazon I led design for the Appstore developer console, growing from individual contributor to design lead with a team of two. Rebuilding submission around parallel release tracks cut review waits from about seven days to two. Turning support cases into pages developers could follow cut case volume by about 47%, and by about 87% once an AI help widget answered first. Before Amazon I designed enterprise platforms at Honeywell and the pitch experience at Nytro.ai.",
-      "Most recently I co-founded Sparklit, a hyperlocal home-services marketplace, and led its product and design. I'm open to full-time roles and consulting.",
+      "At Amazon I ==led design for the Appstore developer console==, growing from individual contributor to design lead with a team of two. Rebuilding submission around parallel release tracks cut review waits ==from about seven days to two==. Turning support cases into pages developers could follow cut case volume ==by about 47%==, and ==by about 87%== once an AI help widget answered first. Before Amazon I designed enterprise platforms at Honeywell and the pitch experience at Nytro.ai.",
+      "Most recently I ==co-founded Sparklit==, a hyperlocal home-services marketplace, and led its product and design. I'm ==open to full-time roles and consulting==.",
     ],
   },
 
@@ -56,8 +57,8 @@ export const ABOUT = {
   ai: {
     label: "Working with AI",
     paragraphs: [
-      "I design AI into products, and I use it to build them. At Amazon I shaped the help assistant on the developer console: what it shows, and when it hands a developer to a person. With the assistant answering first, support cases fell by about 87%. At Honeywell I owned design for an AI-powered cybersecurity product.",
-      "In my own work I use AI at every stage, from research and concepts to prototypes and working code, mostly with Claude Code and ChatGPT. I write the rules that carry my standards, so Claude Code reviews and tests each feature as soon as it's built. The judgment stays with me: I still test every flow myself, because a person catches what AI can't. Along, a group-trip planner, and Knockout, a tournament app, are the proof. I designed and coded both with AI, from the first screen to a live product.",
+      "==I design AI into products, and I use it to build them==. At Amazon I shaped the help assistant on the developer console: what it shows, and when it hands a developer to a person. With the assistant answering first, support cases fell by about 87%. At Honeywell I owned design for an ==AI-powered cybersecurity product==.",
+      "In my own work I use AI at every stage, from research and concepts to prototypes and working code, mostly with ==Claude Code and ChatGPT==. I write the rules that carry my standards, so Claude Code reviews and tests each feature as soon as it's built. The judgment stays with me: ==I still test every flow myself==, because a person catches what AI can't. Along, a group-trip planner, and Knockout, a tournament app, are the proof. I ==designed and coded both with AI==, from the first screen to a live product.",
     ],
   },
 

@@ -287,6 +287,48 @@
     color: var(--color-smoke);
   }
 
+  /* Highlighter pen: fluorescent yellow ink laid over the text. Translucent and
+     multiplied so the letters show through; streaky, uneven edges that fade at
+     each end, like a chisel tip dragged across the line. The one place the site
+     uses colour, on purpose, because a highlighter has its own colour. */
+  .highlighter {
+    --ink: 255 230 0;
+    margin: 0 -0.3em;
+    padding: 0.08em 0.3em 0.02em;
+    border-radius: 0.8em 0.3em 0.9em 0.25em;
+    background-image:
+      linear-gradient(
+        100deg,
+        rgb(var(--ink) / 0) 0.6%,
+        rgb(var(--ink) / 0.75) 2.6%,
+        rgb(var(--ink) / 0.55) 6%,
+        rgb(var(--ink) / 0.5) 50%,
+        rgb(var(--ink) / 0.3) 92%,
+        rgb(var(--ink) / 0.7) 96%,
+        rgb(var(--ink) / 0) 98.8%
+      ),
+      linear-gradient(
+        182deg,
+        rgb(var(--ink) / 0) 0%,
+        rgb(var(--ink) / 0.35) 12%,
+        rgb(var(--ink) / 0) 30%,
+        rgb(var(--ink) / 0) 72%,
+        rgb(var(--ink) / 0.25) 88%,
+        rgb(var(--ink) / 0) 100%
+      );
+    background-color: transparent;
+    color: inherit;
+    /* The pen drags a little of the black ink with it: letters soften, and a
+       faint grey-olive haze trails along the stroke, mostly to the right. */
+    text-shadow:
+      0 0 0.5px rgb(28 28 28 / 0.55),
+      0.6px 0.2px 1.2px rgb(60 58 30 / 0.35),
+      1.6px 0.3px 2.4px rgb(80 76 30 / 0.18);
+    mix-blend-mode: multiply;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
   /* Tag chip: hairline outline, barely-there fill, 3px corners. */
   .chip {
     display: inline-flex;

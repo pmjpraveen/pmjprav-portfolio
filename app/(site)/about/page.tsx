@@ -10,6 +10,23 @@ export const metadata: Metadata = pageMetadata({
   path: "/about",
 });
 
+/**
+ * `==phrase==` becomes a highlighter mark, so the key facts stand out on a
+ * quick scan, drawn like a real highlighter pen (see .highlighter).
+ */
+function withHighlights(text: string): ReactNode[] {
+  return text.split(/(==[^=]+==)/g).map((part, i) => {
+    const match = /^==([^=]+)==$/.exec(part);
+    return match ? (
+      <mark key={i} className="highlighter">
+        {match[1]}
+      </mark>
+    ) : (
+      part
+    );
+  });
+}
+
 /** A short list under a small muted heading, rows split by hairlines. */
 function List({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -31,7 +48,7 @@ export default function AboutPage() {
       <div className="flex flex-col gap-4">
         {paragraphs.map((paragraph) => (
           <p key={paragraph} className="text-ui leading-[1.75] text-ink">
-            {paragraph}
+            {withHighlights(paragraph)}
           </p>
         ))}
       </div>
@@ -43,7 +60,7 @@ export default function AboutPage() {
         <div className="mt-3 flex flex-col gap-4">
           {ai.paragraphs.map((paragraph) => (
             <p key={paragraph} className="text-ui leading-[1.75] text-ink">
-              {paragraph}
+              {withHighlights(paragraph)}
             </p>
           ))}
         </div>
