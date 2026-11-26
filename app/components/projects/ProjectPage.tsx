@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import type { Project } from "../../content/projects";
 import { NextProject, type NextProjectData } from "./NextProject";
 import { ProjectExternalLink } from "./ProjectExternalLink";
@@ -16,8 +17,12 @@ type ProjectPageProps = {
  * come from `project`.
  */
 export function ProjectPage({ project, nextProject }: ProjectPageProps) {
+  // The client's colour reaches the case study through --tint (see .tinted).
+  const tint = project.tint
+    ? ({ "--tint": project.tint, ...(project.glanceColor ? { "--glance": project.glanceColor } : {}) } as CSSProperties)
+    : undefined;
   return (
-    <>
+    <div className={project.tint ? "tinted" : undefined} style={tint}>
       <ProjectHeader project={project} />
 
       {project.externalCaseStudy ? (
@@ -35,6 +40,6 @@ export function ProjectPage({ project, nextProject }: ProjectPageProps) {
       ))}
 
       <NextProject project={nextProject} />
-    </>
+    </div>
   );
 }

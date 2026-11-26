@@ -30,7 +30,7 @@ function readingMinutes(markdown: string): number {
 export function withMarkdownContent(project: Project): Project {
   const markdown = readMarkdown(project.slug);
   if (!markdown) return project;
-  const sections = parseCaseStudyMarkdown(markdown);
+  const sections = parseCaseStudyMarkdown(markdown, { splitSteps: project.splitSteps });
   return {
     ...project,
     sections,

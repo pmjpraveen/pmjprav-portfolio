@@ -36,8 +36,15 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
   // numbers, then the glance card, all before the cover.
   if (project.headline) {
     return (
-      <section aria-labelledby="project-title" className="pt-10 sm:pt-14 lg:pt-16">
-        <Container>
+      <section aria-labelledby="project-title">
+        {/* The opener: the cover runs edge to edge across the top of the sheet. */}
+        <ProjectVisual
+          bleed
+          priority
+          thumbnail={heroVisual?.src}
+          alt={heroVisual?.alt ?? `${title} preview`}
+        />
+        <Container className="pt-10 sm:pt-12">
           <p className="text-body-sm text-smoke">
             {[project.client, title, category].filter(Boolean).join(" · ")}
           </p>
@@ -47,9 +54,9 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
           >
             {project.headline}
           </h1>
-          <p className="mt-3 text-body-sm leading-body-sm text-smoke">
-            {[role, project.client, year].filter(Boolean).join(" · ")}
-          </p>
+          {role || year ? (
+            <p className="mt-3 text-body-sm leading-body-sm text-smoke">{[role, year].filter(Boolean).join(" · ")}</p>
+          ) : null}
 
           <p className="mt-6 max-w-prose text-body-lg leading-body-lg text-ink">{description}</p>
 
@@ -71,8 +78,6 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
           ) : (
             <div className="mt-6">{meta_}</div>
           )}
-
-          <div className="mt-8">{cover}</div>
         </Container>
       </section>
     );

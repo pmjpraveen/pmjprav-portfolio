@@ -104,13 +104,16 @@ export function ProjectOverlay({ children, closeHref }: ProjectOverlayProps) {
           tabIndex={-1}
           className="project-sheet relative mx-auto max-w-[44rem] lg:max-w-[60rem] overflow-clip rounded-large bg-eggshell outline-none"
         >
-          <button
-            type="button"
-            onClick={close}
-            className="sticky top-3 z-10 float-right mr-3 mt-3 rounded-full bg-warm-taupe px-3 py-1.5 text-body-sm text-smoke transition-colors duration-150 ease-ui hover:text-ink sm:mr-4 sm:mt-4"
-          >
-            Close<span className="sr-only"> case study</span>
-          </button>
+          {/* A zero-height sticky row, so Close floats over the opener without taking space. */}
+          <div className="sticky top-0 z-10 flex h-0 justify-end">
+            <button
+              type="button"
+              onClick={close}
+              className="mr-3 mt-3 h-fit rounded-full bg-warm-taupe px-3 py-1.5 text-body-sm text-smoke transition-colors duration-150 ease-ui hover:text-ink sm:mr-4 sm:mt-4"
+            >
+              Close<span className="sr-only"> case study</span>
+            </button>
+          </div>
           {children}
         </div>
       </div>

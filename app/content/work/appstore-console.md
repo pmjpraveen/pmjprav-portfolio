@@ -1,27 +1,6 @@
-## Overview
+## The console let one version through at a time | 01 · Problem
 
-On Amazon's app developer console, one version in review blocked every other submission, including test builds and builds for other devices. The brief asked for parallel uploads. I led the redesign that separated the app from its releases and gave each operating system a release track of its own.
-
-**Short on time?** Read this overview, the table that opens each phase, and Impact.
-
-::: stats
-~2 days | review wait, down from about 7
-Q2 2025 | Phases 1 and 2 shipped, on time for the new-OS launch
-7 | strategic partners in the research that reframed the brief
-:::
-
-::: rows
-Role | Lead designer for app submissions
-Team | About twelve: PM, TPM, design manager, engineering lead and team, QA lead and two testers, researcher, support
-Status | Phases 1 and 2 shipped in Q2 2025. Phase 3 was in progress when I left.
-Owned | Flows, UI, prototypes and design-system work through handoff, then visual QA and sign-off on the build
-Research | I shaped the study's questions and methods with the research team, who ran it
-Outside my scope | The reviewers' certification tool, a separate internal product
-:::
-
-## One more binary, one blocked queue | The challenge
-
-The marketplace was preparing a new device with a new operating system, beside its TV and tablet lines. Its packages could not run on the other devices, and theirs could not run on it. The console treated an app as one thing with one submission, so nothing else could go out while a version was in review.
+The marketplace was preparing a new device with a new operating system, beside its TV and tablet lines. Its packages could not run on the other devices, and theirs could not run on it. The console treated an app as one thing with one submission, so ==nothing else could go out while a version was in review==.
 
 ![One version in review, with the TV, new-OS and test builds waiting behind it](/projects/appstore-console/illus-queue.png "Illustration · One version in review held up everything behind it.")
 
@@ -45,16 +24,14 @@ The old console, step by step:
 
 Reading the old screens showed six structural problems before any research:
 
-::: rows
-Names didn't match contents | "Upload your app file" also held the title, SKU, category, languages and support contact.
-Optional and mandatory at once | Steps could be done in any order, yet device selection was blocked until a file was uploaded.
-One step, unrelated decisions | Devices follow the binary. Availability, audience, rating and privacy are about the app, with different owners.
-One pass per version | Every field sat in one submission, so metadata could never differ between binaries.
-Testing outside the flow | Testing, in-app items and promotions sat apart in the sidebar.
-No release decisions | Timing arrived last, and staged roll-out was nowhere in the path.
-:::
+1. **Names didn't match contents.** "Upload your app file" also held the title, SKU, category, languages and support contact.
+2. **Optional and mandatory at once.** Steps could be done in any order, yet device selection was blocked until a file was uploaded.
+3. **One step, unrelated decisions.** Devices follow the binary. Availability, audience, rating and privacy are about the app, with different owners.
+4. **One pass per version.** Every field sat in one submission, so metadata could never differ between binaries.
+5. **Testing outside the flow.** Testing, in-app items and promotions sat apart in the sidebar.
+6. **No release decisions.** Timing arrived last, and staged roll-out was nowhere in the path.
 
-## What partners told us | Research
+## Two findings had nothing to do with uploading | 02 · Research
 
 I sat with the research team to shape the questions, structure and methods. The study ran for two weeks with seven strategic partners, the developers who account for a large share of the platform's revenue, and combined card sorting, interviews and survey questions.
 
@@ -63,7 +40,7 @@ I sat with the research team to shape the questions, structure and methods. The 
 ::: rows
 Earlier research | Four interviews and a survey of 39 developers. 72% rated satisfaction 4 or higher out of 5, and 23% rated it 3. They liked the simple UI, and disliked slow review, vague rejections and testing that waited on review.
 Staged roll-out survey | About 130 developers, asked what they wanted from staged roll-out.
-The counterweight | Many developers release on larger platforms first and treat that as their safety check, so the goal was clarity rather than more controls.
+The counterweight | Many developers release on larger platforms first and treat that as their safety check, so ==the goal was clarity rather than more controls==.
 Card sort | Most partners already knew a competing console's structure and were comfortable in it.
 :::
 
@@ -76,57 +53,72 @@ Card sort | Most partners already knew a competing console's structure and were 
 > “The more flexibility we have to control who gets the update is better.”
 > — A developer, in the staged roll-out survey
 
-The requirements named three people to design for. Their names are fictional.
+The requirements also named three people to design for. They're in the appendix.
 
-::: rows
-Lead developer, streaming | Ships to TV, tablet and the new-OS TV from separate codebases. A tablet review delays the other two, and critical fixes wait on unrelated reviews.
-Independent game developer | A small studio with limited resources, forced to choose which platform to update first.
-Reviewer, internal | Reviews thousands of submissions a month, and struggles to track related submissions across platforms.
+## Parallel upload couldn't be bolted on | 03 · Strategy
+
+Findings 1 to 3 fit the brief. Findings 4 and 5 were about how releasing was modelled.
+
+::: key-decision Add parallel upload, or restructure
+Options | Add parallel upload to the existing flow · Separate the app from its releases
+Chose | Separate the app from its releases
+Because | Metadata, status, roll-out and testing each broke as soon as a second version existed. Availability, privacy and content rating are set once and shared; binary, devices, notes, roll-out and date belong to a release.
 :::
-
-## From a feature to a structure | Strategy
-
-Findings 1 to 3 fit the brief. Findings 4 and 5 were about how releasing was modelled. Parallel upload could not be bolted on: metadata, status, roll-out and testing each broke as soon as a second version existed.
 
 ![The structural change: one linear submission became shared app setup plus independent release tracks](/projects/appstore-console/ia-before-after.png "The structural shift · App setup is set once and shared. Each release lives in a lane of its own.")
 
-::: rows
-Separate app from release | Availability, privacy and content rating are set once and shared. Binary, devices, notes, roll-out and date belong to a release.
-Borrow familiarity | Design toward the console structure partners already trusted, not a model to learn.
-Phase by dependency | Unblock the launch first, then fix the hierarchy, then rebuild the platform.
+The card sort set a second principle: design toward ==the console structure partners already trusted==, not a model they would have to learn.
+
+::: decision How to sequence it
+Options | One larger project · Three phases, in dependency order
+Chose | Three phases
+Because | The launch blocker could ship first. Engineering pushed back on a full restructure, since it meant large back-end changes and a longer timeline. The objection was fair, so Phase 2 got a lighter change the existing back end could carry, and the deeper shift moved to Phase 3.
 :::
 
-I took the findings to the PM and leadership and made the case that this was a workflow whose architecture could not support what developers needed. Rather than one larger project, we agreed to three phases, so the launch blocker came first.
+I took the findings to the PM and leadership and made the case that this was a workflow whose architecture could not support what developers needed.
 
 ![Three phases: unblock, re-architect, rebuild](/projects/appstore-console/illus-phases.png "Illustration · Each phase stands on its own and sets up the next.")
 
-Engineering pushed back on a full restructure: it meant large back-end changes and a longer timeline. The objection was fair, so I treated it as a design input. Phase 2 got a lighter change the existing back end could carry, and the deeper shift moved to Phase 3.
-
-## Phase 1: unblock | 1 · Unblock
+## Each operating system got a lane of its own | 04 · Phase 1
 
 ::: rows
 Problem | A new OS was blocked behind an existing one, and nothing else could ship while a version was in review.
 Decision | One release track per operating system, under a new navigation that separates app setup from releases.
-Outcome | Developers could submit builds for each OS independently, in parallel.
+Outcome | Developers could ==submit builds for each OS independently, in parallel==.
 :::
 
 ![Two lanes side by side: one live at 100%, one in review](/projects/appstore-console/illus-lanes.png "Illustration · Each operating system gets a lane of its own.")
 
+::: decision What a lane is
+Options | A track per device type, as the requirements described · A track per operating system
+Chose | A track per operating system, with devices chosen inside each release
+Because | Packages for different operating systems are incompatible, so the lanes can never collide, and reviewers could absorb them at launch. Tracks per device type followed in Phase 2.
+:::
+
 ### Group by the jobs developers do
-The four steps gave way to a persistent navigation: Publish, Monetize, Test and Services. Under Publish, App setup and Release tracks sit side by side.
+**Problem.** Testing, in-app items and promotions sat apart in the sidebar, outside the four steps.
+
+**Solution.** A persistent navigation: Publish, Monetize, Test and Services. Under Publish, App setup and Release tracks sit side by side.
 
 ![App setup and Release tracks in the new navigation](/projects/appstore-console/p1-after-1-nav.png "Phase 1 · App setup and Release tracks sit side by side under Publish.")
 
 ### A lane for each operating system
-Each lane has its own Create a release action, so starting one platform's release never waits on another. An OS boundary was the cleanest line to draw: the packages are incompatible, so the lanes can never collide.
+**Problem.** Nothing else could go out while a version was in review.
+
+**Solution.** Each lane has its own Create a release action, so starting one platform's release never waits on another.
 
 ![Two empty lanes, each with its own Create a release action](/projects/appstore-console/p1-after-2-tracks.png "Phase 1 · One lane per OS, each with its own action.")
 ![Release tracks: one lane is live at 100% while another is in review](/projects/appstore-console/p1-after-3-versions.png "Phase 1 · One lane live at 100% while another is in review, impossible before.")
 
 ### Roll-out as a column, not a feature
-Partners could not find staged roll-out. A setting would still need discovering; a column is seen every time a developer looks at their releases.
+**Problem.** Partners could not find staged roll-out.
+
+**Solution.** A column in the release table, with a percentage for every release. A setting would still need discovering; a column is seen every time a developer looks at their releases.
 
 ### A release, with the system doing the checking
+**Problem.** The old flow said steps were optional and mandatory at once.
+
+**Solution.** The rule is stated once, where it matters. A release can start any time, but Submit waits until app setup is done, with the reason beside it.
 
 ![Set up the app once, create a release in the lane, submit with a roll-out, then review and live](/projects/appstore-console/illus-flow-release.png "User flow · After, Phase 1. Dark steps are new.")
 
@@ -136,7 +128,7 @@ Partners could not find staged roll-out. A setting would still need discovering;
 ![A release that cannot be submitted until app setup is complete](/projects/appstore-console/p1-release-blocked.png "Phase 1 · Submit waits, and the reason sits beside the disabled button.")
 ![The staged roll-out dialog, from 1% to a full release](/projects/appstore-console/p1-rollout-dialog.png "Phase 1 · Roll-out is chosen when submitting: 1%, 5%, 10%, 50% or a full release.")
 
-## Phase 2: let the track own its content | 2 · Tracks
+## The track became an object that owns its content | 05 · Phase 2
 
 ::: rows
 What Phase 1 left | Four known gaps, from shipping on time.
@@ -147,11 +139,16 @@ Outcome | Tracks by device type, each with its own listing, plus release history
 ![Four gaps left at launch, and the two outcomes Phase 2 set out to meet](/projects/appstore-console/illus-gaps.png "Illustration · Phase 1's gaps became Phase 2's agenda.")
 
 ### Know what data is needed
-App setup opens with a one-line explanation of its role. A section index on the right lists all nine sections and highlights the one in view, with field-level guidance and links to documentation.
+**Problem.** With a listing for each track and region, the forms grow long enough to get lost in.
+
+**Solution.** App setup opens with a one-line explanation of its role. A section index on the right lists all nine sections and highlights the one in view, with field-level guidance and links to documentation.
 
 ![App setup with a section index on the right](/projects/appstore-console/p2-2-setup-intro.png "Phase 2 · A section index turns a long form into a map.")
 
 ### A track you can combine or split
+**Problem.** Every device in an operating system shared one release pipeline.
+
+**Solution.** Choose the OS, then the device types, as ==one combined track or a track for each==.
 
 ![Create a track: choose the OS, then device types, as one track or one per device type](/projects/appstore-console/illus-flow-track.png "User flow · After, Phase 2. Dark steps are new.")
 
@@ -159,21 +156,30 @@ App setup opens with a one-line explanation of its role. A section index on the 
 ![A named release track](/projects/appstore-console/p2-4-track-page.png "Phase 2 · Store listing and first release are independent first steps inside each track.")
 
 ### A release is its own page
+**Problem.** Release notes lived with the app, not with the version they described.
+
+**Solution.** A release page with its title, notes by language, files, date and testing instructions in one place.
 
 ![Creating a release inside a track](/projects/appstore-console/p2-create-release.png "Phase 2 · Release title, notes by language, files, date and testing instructions in one place.")
 ![Each uploaded file lists the devices it supports](/projects/appstore-console/p2-devices-per-file.png "Phase 2 · Devices are chosen per file, shown as selected out of total for each family.")
 
 ### A track that knows its own state
+**Problem.** There was no release history to audit or troubleshoot.
+
+**Solution.** Each track shows a summary, separate Releases and Store Listings tabs, and its release history.
 
 ![The track with its release summary, the release in review and its history](/projects/appstore-console/p2-track-state.png "Phase 2 · A summary, Releases and Store Listings tabs, and release history.")
 
 ### Staged roll-out, where developers look
+**Problem.** Staged roll-out was still hard to find.
+
+**Solution.** A banner on the app list explains it in a sentence and says when it's available.
 
 ![A banner on the app list introducing staged roll-out](/projects/appstore-console/p2-rollout-banner.png "Phase 2 · A banner on the app list explains staged roll-out and when it's available.")
 
-## The reviewer, as a constraint | Reviewers
+## Reviewers had to absorb every new lane | 06 · Reviewers
 
-Parallel submissions multiply what a reviewer has to look at. The reviewers' tool was a separate product I did not design, but its requirements shaped my design.
+Parallel submissions multiply what a reviewer has to look at. The reviewers' tool was a separate product I did not design, but ==its requirements shaped my design==.
 
 ::: rows
 Visibility | How many tracks are active, and which device types they target.
@@ -183,30 +189,25 @@ Checklists | Specific to each device and OS, so attention goes where the risk is
 At launch | This is why the first lanes followed OS boundaries, where packages can never collide.
 :::
 
-## Phase 3: rebuild around the developer | 3 · Platform
+## A console organised around a developer's jobs | 07 · Phase 3
 
 ::: rows
 Aim | A complete overhaul of the developer platform: new structure, new guidance and a new design system matched to Amazon's devices.
 Structure | Organised by jobs: Dashboard, Release, Testing, Monetization and Monitoring.
-Status | In progress when I left, so shown as design, not as shipped. Sample data throughout.
+Status | In progress when I left, so ==shown as design, not as shipped==. Sample data throughout. More screens are in the appendix.
 :::
 
 ![The Phase 3 dashboard](/projects/appstore-console/p3-dashboard.png "Phase 3 · The dashboard answers what to do next. Design in progress.")
-![The Phase 3 app dashboard: release, app vitals, monetization and KPI trends](/projects/appstore-console/p3-ex-dashboard.png "Phase 3 · An app at a glance. The roll-out column from Phase 1 is now a headline.")
-![The Phase 3 general information form with a notifications panel](/projects/appstore-console/p3-ex-general.png "Phase 3 · Setup, with urgent work beside it.")
-![The Phase 3 all apps view](/projects/appstore-console/p3-ex-allapps.png "Phase 3 · All apps in one place, with a pinned app summarised at the top.")
 
-## Impact
+## Review waits fell from about 7 days to 2 | 08 · Impact
 
 ![Review wait in days: about 7 before, about 2 after](/projects/appstore-console/illus-impact.png "Illustration · Review wait, falling gradually after Phases 1 and 2.")
 
-::: rows
-Review wait | Fell gradually from about 7 days to about 2.
-Launch | Phases 1 and 2 shipped in Q2 2025, meeting the new-OS device launch the project was blocking.
-Strategic partners | Could submit several binaries at once, or while another was in review, and match their timing on other platforms.
-Learning curve | Partners found the flow quicker to learn, because it matched console conventions they already knew.
-Reach | The same abilities went to smaller developers, not only strategic partners.
-:::
+1. **Review waits fell gradually from about 7 days to about 2.**
+2. **Phases 1 and 2 shipped in Q2 2025,** meeting the new-OS device launch the project was blocking.
+3. **Strategic partners could submit several binaries at once,** or while another was in review, and match their timing on other platforms.
+4. **Partners found the flow quicker to learn,** because it matched console conventions they already knew.
+5. **The same abilities went to smaller developers,** ==not only strategic partners==.
 
 ::: rows
 Before · one at a time | After · independent submissions per OS, in parallel
@@ -217,17 +218,23 @@ Before · staged roll-out hard to find | After · partial or full release chosen
 
 Partner feedback is paraphrased from my account of the response, not quoted.
 
-## Reflection
+## Treat the brief as a hypothesis | 09 · Reflection
+
+1. **Treat the brief as a hypothesis.** "Allow parallel uploads" was a reasonable request and ==the wrong problem==. Ask what model a feature assumes before designing it.
+2. **Every capability has a second user.** The reviewer's needs set how many lanes were reasonable at launch.
+3. **Let constraints shape the sequence.** Engineering's objection produced a better plan: ship what the back end can carry, hold the deeper shift.
+4. **Familiar beats novel.** Designing toward conventions developers trusted cut the learning curve.
+5. **Design for the rest too.** Research focused on the largest partners, so progressive disclosure and a non-linear first-time flow kept the console usable for a solo developer.
+
+## Personas, Phase 3 screens, flows and the longer view | Appendix
+
+**The people the requirements named.** Their names are fictional.
 
 ::: rows
-Treat the brief as a hypothesis | "Allow parallel uploads" was a reasonable request and the wrong problem. Ask what model a feature assumes before designing it.
-Every capability has a second user | The reviewer's needs set how many lanes were reasonable at launch.
-Let constraints shape the sequence | Engineering's objection produced a better plan: ship what the back end can carry, hold the deeper shift.
-Familiar beats novel | Designing toward conventions developers trusted cut the learning curve.
-Design for the rest too | Research focused on the largest partners, so progressive disclosure and a non-linear first-time flow kept the console usable for a solo developer.
+Lead developer, streaming | Ships to TV, tablet and the new-OS TV from separate codebases. A tablet review delays the other two, and critical fixes wait on unrelated reviews.
+Independent game developer | A small studio with limited resources, forced to choose which platform to update first.
+Reviewer, internal | Reviews thousands of submissions a month, and struggles to track related submissions across platforms.
 :::
-
-## Appendix: research questions, flows and the longer view | Appendix
 
 **Research questions.** What the partner study set out to answer.
 
@@ -237,6 +244,12 @@ Features used | Which submission features do you use most often?
 Usefulness | How useful are future release dates, staged roll-out and a simple submission flow?
 The one to answer | Does the concept of parallel binary submission hold up?
 :::
+
+**Phase 3 explorations.** Design in progress, with sample data.
+
+![The Phase 3 app dashboard: release, app vitals, monetization and KPI trends](/projects/appstore-console/p3-ex-dashboard.png "Phase 3 · An app at a glance. The roll-out column from Phase 1 is now a headline.")
+![The Phase 3 general information form with a notifications panel](/projects/appstore-console/p3-ex-general.png "Phase 3 · Setup, with urgent work beside it.")
+![The Phase 3 all apps view](/projects/appstore-console/p3-ex-allapps.png "Phase 3 · All apps in one place, with a pinned app summarised at the top.")
 
 **First-time setup.** The flow maps organised a first-time developer's setup into four groups, with testing in parallel.
 

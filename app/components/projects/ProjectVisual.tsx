@@ -17,6 +17,8 @@ type ProjectVisualProps = {
   bleed?: boolean;
   /** Anchor the crop to the top — for tall screenshots in a shorter frame. */
   objectTop?: boolean;
+  /** Load first — for the opener at the top of a case study. */
+  priority?: boolean;
 };
 
 /**
@@ -30,6 +32,7 @@ export function ProjectVisual({
   caption,
   bleed = false,
   objectTop = false,
+  priority = false,
 }: ProjectVisualProps) {
   const frame = (
       <div
@@ -42,7 +45,8 @@ export function ProjectVisual({
             src={thumbnail}
             alt={alt}
             fill
-            sizes={bleed ? "100vw" : "(min-width: 1024px) 1152px, 100vw"}
+            sizes={bleed ? "(min-width: 1024px) 960px, 100vw" : "(min-width: 1024px) 1152px, 100vw"}
+            priority={priority}
             quality={90}
             className={`object-cover ${objectTop ? "object-top" : ""} transition-transform duration-300 ease-out-strong group-hover:scale-[1.02]`}
           />

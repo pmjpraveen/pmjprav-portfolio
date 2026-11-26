@@ -7,19 +7,20 @@ const term = "pt-0.5 text-body-sm leading-body-sm text-smoke";
 const detail = "text-body-sm leading-[1.7] text-ink";
 
 /**
- * "At a glance": what a skimming reader needs before deciding to read on.
- * The problem, my part, the calls I made and what changed, then how long the
- * full story is and where to jump in.
+ * "At a glance": the facts, my part and the calls I made, then how long the
+ * full story is and where to jump in. The problem lives in the description
+ * and the results in the stats above, so neither repeats here.
  */
 export function ProjectGlance({ glance, readMinutes, contents }: ProjectGlanceProps) {
   if (!glance) return null;
+  const hasPart = Boolean(glance.role || glance.decisions?.length);
 
   return (
-    <aside aria-label="At a glance" className="rounded-card bg-warm-taupe p-6 sm:p-8">
+    <aside aria-label="At a glance" className="glance-card rounded-card bg-warm-taupe p-6 sm:p-8">
       <p className="text-body-sm leading-body-sm text-smoke">At a glance</p>
 
       {glance.facts?.length ? (
-        <dl className="mt-4 grid gap-x-8 gap-y-3 border-b border-stone pb-5 sm:grid-cols-2">
+        <dl className={`mt-4 grid gap-x-8 gap-y-3 sm:grid-cols-2 ${hasPart ? "border-b border-stone pb-5" : ""}`}>
           {glance.facts.map((fact) => (
             <div key={fact.label}>
               <dt className="text-body-sm leading-body-sm text-smoke">{fact.label}</dt>
@@ -29,33 +30,31 @@ export function ProjectGlance({ glance, readMinutes, contents }: ProjectGlancePr
         </dl>
       ) : null}
 
-      <dl className="mt-5 flex flex-col gap-5">
-        <div className={row}>
-          <dt className={term}>Problem</dt>
-          <dd className={detail}>{glance.problem}</dd>
-        </div>
-        <div className={row}>
-          <dt className={term}>My contribution</dt>
-          <dd className={detail}>{glance.role}</dd>
-        </div>
-        <div className={row}>
-          <dt className={term}>Key decisions</dt>
-          <dd>
-            <ol className="flex flex-col gap-2">
-              {glance.decisions.map((decision, i) => (
-                <li key={decision} className={`${detail} grid grid-cols-[1.25rem_1fr]`}>
-                  <span className="text-smoke tabular-nums">{i + 1}</span>
-                  <span>{decision}</span>
-                </li>
-              ))}
-            </ol>
-          </dd>
-        </div>
-        <div className={row}>
-          <dt className={term}>Outcome</dt>
-          <dd className={`${detail} font-medium`}>{glance.outcome}</dd>
-        </div>
-      </dl>
+      {hasPart ? (
+        <dl className="mt-5 flex flex-col gap-5">
+          {glance.role ? (
+            <div className={row}>
+              <dt className={term}>My contribution</dt>
+              <dd className={detail}>{glance.role}</dd>
+            </div>
+          ) : null}
+          {glance.decisions?.length ? (
+            <div className={row}>
+              <dt className={term}>Key decisions</dt>
+              <dd>
+                <ol className="flex flex-col gap-2">
+                  {glance.decisions.map((decision, i) => (
+                    <li key={decision} className={`${detail} grid grid-cols-[1.25rem_1fr]`}>
+                      <span className="text-smoke tabular-nums">{i + 1}</span>
+                      <span>{decision}</span>
+                    </li>
+                  ))}
+                </ol>
+              </dd>
+            </div>
+          ) : null}
+        </dl>
+      ) : null}
 
       {contents?.length ? (
         <nav aria-label="On this page" className="mt-6 border-t border-stone pt-5">

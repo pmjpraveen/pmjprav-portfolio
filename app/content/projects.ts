@@ -77,11 +77,10 @@ export type Project = {
   glance?: {
     /** Short spec rows at the top of the card, e.g. Team, Timeline, Status. */
     facts?: { label: string; value: string }[];
-    problem: string;
-    role: string;
+    /** My part, where the role line alone doesn't say it. */
+    role?: string;
     /** Two or three calls, each "chose X over Y because Z". */
-    decisions: string[];
-    outcome: string;
+    decisions?: string[];
   };
   /**
    * The case study's claim, shown as its main heading in place of the bare
@@ -89,6 +88,16 @@ export type Project = {
    * claim-led header: title, a role line, then the headline stats.
    */
   headline?: string;
+  /**
+   * The client's colour, used as a quiet touch inside the case study: a faint
+   * wash on the glance card, a dot before each section label, and the key
+   * decision card. Text stays ink. Omit for the neutral look.
+   */
+  tint?: string;
+  /** The "At a glance" card's colour: one of FigJam's pastel sticky colours, matched to the hue of the project's cover. */
+  glanceColor?: string;
+  /** On wide screens, put each sub-step's text beside its screen, alternating sides. */
+  splitSteps?: boolean;
   /** Two or three headline numbers, shown under the role line, above the cover. */
   stats?: { value: string; label: string }[];
   /** Filled in from the markdown: minutes to read, and the sections to jump to. */
@@ -112,9 +121,9 @@ export const projects: Project[] = [
     client: "Amazon",
     number: "01",
     title: "Developer Support",
-    category: "Developer Tools · Support",
+    category: "Developer Tools",
     description:
-      "Developers on Amazon's Appstore could open a support case, then lose track of it in email. As the only designer, I brought support into the developer console and gave every case a page to follow. Cases fell by about 47%, then by about 87% once an AI assistant answered first.",
+      "Developers on Amazon's Appstore could open a support case, then lose track of it in email. I brought support into the developer console, gave every case a page to follow, and set out an AI assistant that answers first.",
     role: "Lead Designer, Support Cases",
     year: "2024",
     layout: "standard",
@@ -124,6 +133,9 @@ export const projects: Project[] = [
       platform: "Web · Developer console",
     },
     headline: "Turning a support form into cases developers can follow",
+    splitSteps: true,
+    tint: "#232f3e", // Amazon's squid ink
+    glanceColor: "#c6faf6", // FigJam teal, nearest free hue to the cover
     stats: [
       { value: "~47%", label: "fewer tickets after Phase 1" },
       { value: "~87%", label: "fewer tickets after Phase 2" },
@@ -136,15 +148,12 @@ export const projects: Project[] = [
         { label: "Status", value: "Both phases shipped. I joined Amazon in mid-2024." },
         { label: "Constraint", value: "Amazon's retail design system, so my work was structure and flow" },
       ],
-      problem:
-        "Developers could open a support case but not follow it: support was hard to find, and after sending, the case vanished into email. Missed replies became duplicate tickets.",
       role: "Lead designer, and the only designer. I owned help navigation, case creation, case history and the communication panels, and set out the assistant with the MarTech team.",
       decisions: [
         "Put support in a mega menu in the top navigation, over the avatar menu, so every option shows at a glance.",
         "Made each case a thread with a status in the console, not a form followed by email, so there was no reason to raise a second ticket.",
         "Brought the AI assistant forward from the plan's Phase 3 to Phase 2, once case pages gave it somewhere to hand off to.",
       ],
-      outcome: "About 47% fewer tickets after Phase 1, about 87% fewer after Phase 2, and turnaround roughly halved.",
     },
     // Story lives in app/content/work/two-way-communication.md.
     thumbnail: "/projects/two-way-communication/tile.webp",
@@ -162,7 +171,7 @@ export const projects: Project[] = [
     title: "App Submissions Workflow",
     category: "Developer Tools · Platform",
     description:
-      "On Amazon's Appstore developer console, one version in review blocked every other submission, test builds included. I led the redesign that separated the app from its releases, giving each version a track of its own. Review waits fell from about 7 days to 2, in time for a new device OS launch.",
+      "On Amazon's Appstore developer console, one version in review blocked every other submission, test builds included. I led the redesign, so a version in review no longer holds up the next one.",
     role: "Lead Designer, App Submissions",
     year: "2025",
     layout: "offset",
@@ -178,6 +187,29 @@ export const projects: Project[] = [
       platform: "Web · Developer console",
       contribution: "Research plan, flows, UI, prototypes, design system, visual QA",
     },
+    headline: "Rebuilding app submission around parallel release tracks",
+    splitSteps: true,
+    tint: "#2f3a2b", // from the cover's deep green
+    glanceColor: "#ffe0c2", // FigJam orange, like the cover
+    stats: [
+      { value: "~2 days", label: "review wait, down from about 7" },
+      { value: "Q2 2025", label: "Phases 1 and 2 shipped, on time for the new-OS launch" },
+      { value: "7", label: "strategic partners in the research that reframed the brief" },
+    ],
+    glance: {
+      facts: [
+        { label: "Team", value: "About twelve: PM, TPM, design manager, engineering lead and team, QA lead and two testers, researcher, support" },
+        { label: "Status", value: "Phase 3 was in progress when I left." },
+        { label: "Platform", value: "Web · Developer console" },
+        { label: "Outside my scope", value: "The reviewers' certification tool, a separate internal product" },
+      ],
+      role: "Lead designer for app submissions. I shaped the study with the research team, made the case for phasing to the PM and leadership, and owned flows, UI, prototypes and design-system work through handoff and visual QA.",
+      decisions: [
+        "Separated the app from its releases, rather than adding parallel upload to a flow built for one version at a time.",
+        "Gave each operating system its own lane first, because those packages can never collide; tracks per device type followed in Phase 2.",
+        "Split the work into three phases, so the launch blocker shipped first and engineering's back-end concern shaped the order.",
+      ],
+    },
     // Story lives in app/content/work/appstore-console.md.
   },
 
@@ -189,12 +221,32 @@ export const projects: Project[] = [
     title: "Spark by Recur",
     category: "Fintech · Financing",
     description:
-      "Startups that needed capital mostly had to sell equity, because banks couldn't underwrite subscription revenue. I designed onboarding, verification and approval for Spark, Recur's financing against recurring revenue. An application banks take weeks over became same-day, with capital in as little as two days.",
+      "Startups that needed capital mostly had to sell equity, because banks couldn't underwrite subscription revenue. I designed onboarding, verification and approval for Spark.",
     role: "",
     year: "",
     layout: "standard",
     featured: true,
     meta: { platform: "Web app" },
+    headline: "Getting founders capital in days, not weeks",
+    splitSteps: true,
+    tint: "#1c4a39", // Recur green, from the cover
+    glanceColor: "#cdf4d3", // FigJam green, like the cover
+    stats: [
+      { value: "Same day", label: "application, where a bank takes weeks" },
+      { value: "2 days", label: "to usable capital, at the fastest" },
+      { value: "₹5L", label: "released up front, while underwriting verifies the rest" },
+    ],
+    glance: {
+      facts: [
+        { label: "Product", value: "Spark, Recur's first product: growth capital against revenue a founder has already earned" },
+        { label: "Platform", value: "Web app" },
+      ],
+      decisions: [
+        "Released a smaller amount of capital straight away, instead of making founders wait for underwriting, so the wait stopped being the bottleneck.",
+        "Asked for the minimum up front and connected the billing, contract and bank data founders already had, automating the steps that add time without adding judgement.",
+        "Chose vertical steps over the conventional horizontal ones, because founders finished with less friction and could see what was ahead.",
+      ],
+    },
     // Story lives in app/content/work/recur-spark.md.
     thumbnail: "/projects/recur-spark/tile.webp",
     imageAlt: "Recur Spark: the upfront capital offer of up to ₹4.0 crores, with the unlock card to start an application",
@@ -211,12 +263,33 @@ export const projects: Project[] = [
     title: "Nytro Pitch App",
     category: "B2B · SaaS",
     description:
-      "Nytro.ai trains sales reps with pitch practice and analytics, but its app hid key features and made content slow to create. I owned the pitch experience and redesigned creation, recording and reports from customer feedback. Customer engagement reached 84%, and CSAT rose 26% from a 34% baseline.",
+      "Nytro.ai trains sales reps with pitch practice and analytics, but its app hid key features and made content slow to create. I owned the redesign as the company spun out on its own.",
     role: "Product Designer",
     year: "2021–22",
     layout: "offset",
     featured: true,
     meta: { platform: "Web app" },
+    headline: "Redesigning a sales-enablement app around what customers said",
+    splitSteps: true,
+    tint: "#26306f", // Nytro cobalt, from the cover
+    glanceColor: "#c2e5ff", // FigJam blue, like the cover
+    stats: [
+      { value: "84%", label: "customer engagement" },
+      { value: "+26%", label: "CSAT, from a 34% baseline" },
+      { value: "3", label: "core areas redesigned: overview, categories and reports" },
+    ],
+    glance: {
+      facts: [
+        { label: "Scope", value: "Pitch creation, recording and post-pitch analytics" },
+        { label: "Platform", value: "Web app" },
+      ],
+      role: "From information architecture through prototypes, usability testing and the style guide.",
+      decisions: [
+        "Started from the customer feedback Customer Success gathered, and redesigned the layout and content around user needs before any visual work.",
+        "Gave pitch cards a structured layout and consistent actions, and showed each date only where it was needed.",
+        "Wrote a style guide for colour, type and icons, so later updates would stay consistent.",
+      ],
+    },
     // Story lives in app/content/work/nytro-pitch.md.
     thumbnail: "/projects/nytro-pitch/tile.webp",
     imageAlt: "Nytro.ai Pitch App: the redesigned pitch overview, with published pitches shown as cards",
@@ -234,12 +307,27 @@ export const projects: Project[] = [
     title: "Comments in a Digital Dashboard",
     category: "Enterprise · ERP",
     description:
-      "Comments in Honeywell's internal ERP dashboard, used to run a $1.6 billion business, were hard to find and hard to understand. I led the redesign into a simpler, more organised layout. The work is under NDA, so this is a summary; I can walk through the detail on request.",
+      "Comments in Honeywell's internal dashboard were hard to find and hard to understand, so new users struggled to get started. I led the redesign into a simpler, more organised layout.",
     role: "Lead Designer",
     year: "2023",
     layout: "offset",
     featured: true,
     meta: { team: "9", platform: "Web · ERP" },
+    headline: "Making comments in a $1.6B business dashboard easy to find and use",
+    tint: "#2b2829", // charcoal; the cover's red glow is kept out of the page
+    glanceColor: "#ffc7c2", // FigJam red, like the cover
+    stats: [
+      { value: "$1.6B", label: "business run on this dashboard" },
+      { value: "9", label: "people on the team" },
+    ],
+    glance: {
+      facts: [
+        { label: "Company", value: "Honeywell, HCE" },
+        { label: "Product", value: "An internal ERP dashboard" },
+        { label: "Platform", value: "Web" },
+        { label: "Under NDA", value: "Summary level only. I can walk through the detail on request." },
+      ],
+    },
     // Story lives in app/content/work/honeywell-comments.md. Under NDA.
     externalCaseStudy: {
       label: "Open project file",

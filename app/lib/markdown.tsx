@@ -3,6 +3,7 @@ import type { ProjectSectionData } from "../content/projects";
 import { ProjectFigure } from "../components/projects/ProjectFigure";
 import { ProjectVisual } from "../components/projects/ProjectVisual";
 import { getImageSize } from "./image-size";
+import { BeforeAfter } from "../components/projects/BeforeAfter";
 
 function slugify(heading: string) {
   return heading
@@ -25,15 +26,21 @@ type Block =
   | { kind: "stats"; items: Pair[] }
   | { kind: "rows"; items: Pair[] }
   | { kind: "quote"; text: string; cite?: string }
-  | { kind: "decision"; title: string; items: Pair[]; images: ImageBlock[] }
+  | { kind: "decision"; title: string; items: Pair[]; images: ImageBlock[]; key?: boolean }
   | { kind: "h3"; text: string }
   | { kind: "step"; title: string; body: Block[] };
 
-/** `**bold**` only — everything else in a paragraph renders as plain text. */
+/**
+ * `**bold**` and `==highlight==` only; everything else renders as plain text.
+ * A highlight is the site's highlighter pen, drawn as it scrolls into view.
+ */
 function renderInline(text: string): ReactNode[] {
-  return text.split(/(\*\*[^*]+\*\*)/g).map((part, i) => {
-    const match = /^\*\*([^*]+)\*\*$/.exec(part);
-    return match ? <strong key={i}>{match[1]}</strong> : part;
+  return text.split(/(\*\*[^*]+\*\*|==[^=]+==)/g).map((part, i) => {
+    const bold = /^\*\*([^*]+)\*\*$/.exec(part);
+    if (bold) return <strong key={i}>{bold[1]}</strong>;
+    const mark = /^==([^=]+)==$/.exec(part);
+    if (mark) return <mark key={i} className="highlighter highlighter-inview">{mark[1]}</mark>;
+    return part;
   });
 }
 
@@ -66,7 +73,8 @@ function splitBlocks(rawLines: string[]): Block[] {
     }
 
     // `::: decision Title` fence: Options / Chose / Because rows for one call.
-    const decision = /^:::\s*decision\s+(.+)$/.exec(chunkLines[0]);
+    // `::: key-decision Title` is the dark, spotlit version of a decision card.
+    const decision = /^:::\s*(key-decision|decision)\s+(.+)$/.exec(chunkLines[0]);
     if (decision) {
       const lines = chunkLines.slice(1).filter((l) => l !== ":::");
       // Image lines inside the card show the options side by side.
@@ -82,7 +90,7 @@ function splitBlocks(rawLines: string[]): Block[] {
           const [a, ...rest] = l.split("|");
           return [a.trim(), rest.join("|").trim()];
         });
-      return { kind: "decision", title: decision[1].trim(), items, images };
+      return { kind: "decision", title: decision[2].trim(), items, images, key: decision[1] === "key-decision" };
     }
 
     // `::: stats` / `::: rows` fence, one `value | label` pair per line.
@@ -146,8 +154,37 @@ function renderFigure(image: ImageBlock, key?: number) {
   );
 }
 
-function renderBlock(block: Block, key: number, stepIndex = 0) {
+/** Per-case-study presentation switches, set on the project. */
+export type StoryOptions = {
+  /** On wide screens, put each sub-step's text beside its single visual, alternating sides. */
+  splitSteps?: boolean;
+};
+
+/** A pair captioned "Before" then "After", of the same shape, becomes a drag-to-compare frame. */
+function renderComparison(block: { items: ImageBlock[] }, key: number) {
+  if (block.items.length !== 2) return null;
+  const [a, b] = block.items;
+  if (!/^before\b/i.test(a.caption ?? "") || !/^after\b/i.test(b.caption ?? "")) return null;
+  const sa = getImageSize(a.src);
+  const sb = getImageSize(b.src);
+  // Only screens framed the same way line up under a slider.
+  if (!sa || !sb || Math.abs(sa.width / sa.height - sb.width / sb.height) > 0.02) return null;
+  const rest = (c?: string) => c?.replace(/^(before|after)\b\s*[·.:-]?\s*/i, "").trim();
+  const caption = [rest(a.caption), rest(b.caption)].filter(Boolean).join(" · ") || undefined;
+  return (
+    <BeforeAfter
+      key={key}
+      before={{ src: a.src, alt: a.alt, ...sa }}
+      after={{ src: b.src, alt: b.alt, ...sb }}
+      caption={caption}
+    />
+  );
+}
+
+function renderBlock(block: Block, key: number, stepIndex = 0, opts: StoryOptions = {}) {
   if (block.kind === "images") {
+    const comparison = renderComparison(block, key);
+    if (comparison) return comparison;
     return (
       <div key={key} className="grid gap-6 sm:grid-cols-2 lg:gap-8">
         {block.items.map((image, i) => renderFigure(image, i))}
@@ -193,8 +230,11 @@ function renderBlock(block: Block, key: number, stepIndex = 0) {
   if (block.kind === "decision") {
     // One call, made visible: what was weighed, what was chosen, and why.
     return (
-      <div key={key} className="rounded-card border border-stone p-6 sm:p-8">
-        <p className="text-body-sm leading-body-sm text-smoke">Decision</p>
+      <div
+        key={key}
+        className={`rounded-card p-6 sm:p-8 ${block.key ? "key-decision bg-ink text-eggshell [&_dt]:text-eggshell/60 [&_dd]:text-eggshell [&_p]:text-eggshell [&_figcaption]:text-eggshell/60" : "border border-stone"}`}
+      >
+        <p className={`text-body-sm leading-body-sm ${block.key ? "!text-eggshell/60" : "text-smoke"}`}>{block.key ? "Key decision" : "Decision"}</p>
         <p className="mt-1 text-body-lg leading-body-lg font-medium tracking-normal text-ink">{block.title}</p>
         {block.images.length ? (
           <div className="mt-5 grid gap-6 sm:grid-cols-2">{block.images.map((image, i) => renderFigure(image, i))}</div>
@@ -230,13 +270,19 @@ function renderBlock(block: Block, key: number, stepIndex = 0) {
     // The step's opening text sits under its title; everything from the first
     // visual on (images, tables) follows below, in the order it was written.
     const firstVisual = block.body.findIndex((b) => b.kind !== "p" && !(b.kind === "list" && !b.ordered));
-    const split = firstVisual === -1 ? block.body.length : firstVisual;
-    const text = block.body.slice(0, split);
-    const rest = block.body.slice(split);
+    const cut = firstVisual === -1 ? block.body.length : firstVisual;
+    const text = block.body.slice(0, cut);
+    const rest = block.body.slice(cut);
+    const split = opts.splitSteps && text.length > 0 && rest.length === 1 && rest[0].kind === "image";
+    const flip = stepIndex % 2 === 1;
     return (
       <div
         key={key}
-        className="flex flex-col gap-5 pt-6 first:pt-0"
+        className={`pt-6 first:pt-0 ${
+          split
+            ? `flex flex-col gap-5 lg:grid lg:items-center lg:gap-10 ${flip ? "lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:[&>*:first-child]:order-2" : "lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]"}`
+            : "flex flex-col gap-5"
+        }`}
       >
         <div>
           <p className="label">{String(stepIndex + 1).padStart(2, "0")}</p>
@@ -247,7 +293,7 @@ function renderBlock(block: Block, key: number, stepIndex = 0) {
             </div>
           ) : null}
         </div>
-        {rest.map((b, i) => renderBlock(b, i))}
+        {rest.map((b, i) => renderBlock(b, i, 0, opts))}
       </div>
     );
   }
@@ -298,7 +344,7 @@ function renderBlock(block: Block, key: number, stepIndex = 0) {
  * Renders straight to ProjectSectionData["custom"] (content: ReactNode),
  * the existing freeform escape hatch — no new section type needed.
  */
-export function parseCaseStudyMarkdown(markdown: string): ProjectSectionData[] {
+export function parseCaseStudyMarkdown(markdown: string, opts: StoryOptions = {}): ProjectSectionData[] {
   const lines = markdown.replace(/\r\n/g, "\n").split("\n");
   const sections: ProjectSectionData[] = [];
   let heading: string | undefined;
@@ -315,7 +361,7 @@ export function parseCaseStudyMarkdown(markdown: string): ProjectSectionData[] {
     const body = (
       <div className={`space-y-6 ${title ? "mt-6" : ""}`}>
         {blocks.map((block, i) =>
-          renderBlock(block, i, blocks.slice(0, i).filter((b) => b.kind === "step").length),
+          renderBlock(block, i, blocks.slice(0, i).filter((b) => b.kind === "step").length, opts),
         )}
       </div>
     );
@@ -341,7 +387,10 @@ export function parseCaseStudyMarkdown(markdown: string): ProjectSectionData[] {
       ) : (
         <div>
           {title && navLabel ? (
-            <p className="mb-3 text-body-sm leading-body-sm text-smoke">{navLabel}</p>
+            <p className="mb-3 flex items-center gap-2 text-body-sm leading-body-sm text-smoke">
+              <span aria-hidden="true" className="tint-dot" />
+              {navLabel}
+            </p>
           ) : null}
           {title ? (
             <h2 className="text-body-lg leading-body-lg font-medium tracking-normal text-ink">
