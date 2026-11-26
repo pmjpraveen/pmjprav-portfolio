@@ -26,6 +26,8 @@ type SectionBase = {
   id: string;
   /** A short label for the section, kept from the markdown heading (`## Long title | Short`). */
   navLabel?: string;
+  /** The section's heading, for the "on this page" contents. */
+  title?: string;
 };
 
 export type ProjectCustomSectionData = SectionBase & {
@@ -68,6 +70,30 @@ export type Project = {
    * case study has nothing written yet.
    */
   sections?: ProjectSectionData[];
+  /**
+   * "At a glance": the answer to a skimming reader's first questions, shown
+   * above the cover. Every line must already be stated in the case study.
+   */
+  glance?: {
+    /** Short spec rows at the top of the card, e.g. Team, Timeline, Status. */
+    facts?: { label: string; value: string }[];
+    problem: string;
+    role: string;
+    /** Two or three calls, each "chose X over Y because Z". */
+    decisions: string[];
+    outcome: string;
+  };
+  /**
+   * The case study's claim, shown as its main heading in place of the bare
+   * project name (which moves into the eyebrow). Set it to opt into the
+   * claim-led header: title, a role line, then the headline stats.
+   */
+  headline?: string;
+  /** Two or three headline numbers, shown under the role line, above the cover. */
+  stats?: { value: string; label: string }[];
+  /** Filled in from the markdown: minutes to read, and the sections to jump to. */
+  readMinutes?: number;
+  contents?: { id: string; label: string }[];
   /** A deeper case study hosted elsewhere (Notion/Google Docs/Figma/PDF/etc). Always opens in a new tab. */
   externalCaseStudy?: { label: string; url: string };
 
@@ -96,6 +122,29 @@ export const projects: Project[] = [
     meta: {
       team: "PM, technical PM, engineering, research, design manager, MarTech team",
       platform: "Web · Developer console",
+    },
+    headline: "Turning a support form into cases developers can follow",
+    stats: [
+      { value: "~47%", label: "fewer tickets after Phase 1" },
+      { value: "~87%", label: "fewer tickets after Phase 2" },
+      { value: "Halved", label: "turnaround time, roughly" },
+    ],
+    glance: {
+      facts: [
+        { label: "Team", value: "PM, technical PM, engineers, researcher, design manager, MarTech team" },
+        { label: "Timeline", value: "About three weeks of design and one of review and handoff for Phase 1, then Phase 2" },
+        { label: "Status", value: "Both phases shipped. I joined Amazon in mid-2024." },
+        { label: "Constraint", value: "Amazon's retail design system, so my work was structure and flow" },
+      ],
+      problem:
+        "Developers could open a support case but not follow it: support was hard to find, and after sending, the case vanished into email. Missed replies became duplicate tickets.",
+      role: "Lead designer, and the only designer. I owned help navigation, case creation, case history and the communication panels, and set out the assistant with the MarTech team.",
+      decisions: [
+        "Put support in a mega menu in the top navigation, over the avatar menu, so every option shows at a glance.",
+        "Made each case a thread with a status in the console, not a form followed by email, so there was no reason to raise a second ticket.",
+        "Brought the AI assistant forward from the plan's Phase 3 to Phase 2, once case pages gave it somewhere to hand off to.",
+      ],
+      outcome: "About 47% fewer tickets after Phase 1, about 87% fewer after Phase 2, and turnaround roughly halved.",
     },
     // Story lives in app/content/work/two-way-communication.md.
     thumbnail: "/projects/two-way-communication/tile.webp",

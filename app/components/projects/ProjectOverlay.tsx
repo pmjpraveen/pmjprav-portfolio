@@ -102,7 +102,7 @@ export function ProjectOverlay({ children, closeHref }: ProjectOverlayProps) {
           aria-modal="true"
           aria-labelledby="project-title"
           tabIndex={-1}
-          className="project-sheet relative mx-auto max-w-[44rem] overflow-clip rounded-large bg-eggshell outline-none"
+          className="project-sheet relative mx-auto max-w-[44rem] lg:max-w-[60rem] overflow-clip rounded-large bg-eggshell outline-none"
         >
           <button
             type="button"

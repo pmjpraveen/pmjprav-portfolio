@@ -394,6 +394,13 @@
   }
 }
 
+/* Wider sheet on large screens (60rem): the desktop gutter, so visuals get room. */
+@media (min-width: 1024px) {
+  .project-sheet {
+    --page-gutter: 64px;
+  }
+}
+
 /* =========================================================
    Signature (Signature.tsx): each pen stroke in the mask draws
    itself from start to end (pathLength is 1, so the dash maths is

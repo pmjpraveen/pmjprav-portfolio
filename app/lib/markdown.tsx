@@ -19,12 +19,13 @@ type Pair = [string, string];
 
 type Block =
   | { kind: "p"; text: string }
-  | { kind: "list"; items: string[] }
+  | { kind: "list"; items: string[]; ordered?: boolean }
   | ImageBlock
   | { kind: "images"; items: ImageBlock[] }
   | { kind: "stats"; items: Pair[] }
   | { kind: "rows"; items: Pair[] }
   | { kind: "quote"; text: string; cite?: string }
+  | { kind: "decision"; title: string; items: Pair[]; images: ImageBlock[] }
   | { kind: "h3"; text: string }
   | { kind: "step"; title: string; body: Block[] };
 
@@ -64,6 +65,26 @@ function splitBlocks(rawLines: string[]): Block[] {
       };
     }
 
+    // `::: decision Title` fence: Options / Chose / Because rows for one call.
+    const decision = /^:::\s*decision\s+(.+)$/.exec(chunkLines[0]);
+    if (decision) {
+      const lines = chunkLines.slice(1).filter((l) => l !== ":::");
+      // Image lines inside the card show the options side by side.
+      const images = lines
+        .filter((l) => IMAGE_LINE.test(l))
+        .map((l) => {
+          const [, alt, src, caption] = IMAGE_LINE.exec(l)!;
+          return { kind: "image", alt, src, caption } as ImageBlock;
+        });
+      const items = lines
+        .filter((l) => !IMAGE_LINE.test(l))
+        .map((l): Pair => {
+          const [a, ...rest] = l.split("|");
+          return [a.trim(), rest.join("|").trim()];
+        });
+      return { kind: "decision", title: decision[1].trim(), items, images };
+    }
+
     // `::: stats` / `::: rows` fence, one `value | label` pair per line.
     const fence = /^:::\s*(stats|rows)$/.exec(chunkLines[0]);
     if (fence) {
@@ -87,6 +108,10 @@ function splitBlocks(rawLines: string[]): Block[] {
 
     if (chunkLines.length === 1 && chunkLines[0].startsWith("### ")) {
       return { kind: "h3", text: chunkLines[0].slice(4).trim() };
+    }
+
+    if (chunkLines.every((l) => /^\d+\.\s/.test(l))) {
+      return { kind: "list", ordered: true, items: chunkLines.map((l) => l.replace(/^\d+\.\s+/, "").trim()) };
     }
 
     if (chunkLines.every((l) => l.startsWith("- "))) {
@@ -158,10 +183,33 @@ function renderBlock(block: Block, key: number, stepIndex = 0) {
             className="grid gap-1 sm:grid-cols-[180px_1fr] sm:gap-8"
           >
             <dt className="pt-0.5 text-body-sm leading-body-sm text-smoke">{term}</dt>
-            <dd className="text-body leading-body text-ink">{renderInline(detail)}</dd>
+            <dd className="text-body-sm leading-[1.7] text-ink">{renderInline(detail)}</dd>
           </div>
         ))}
       </dl>
+    );
+  }
+
+  if (block.kind === "decision") {
+    // One call, made visible: what was weighed, what was chosen, and why.
+    return (
+      <div key={key} className="rounded-card border border-stone p-6 sm:p-8">
+        <p className="text-body-sm leading-body-sm text-smoke">Decision</p>
+        <p className="mt-1 text-body-lg leading-body-lg font-medium tracking-normal text-ink">{block.title}</p>
+        {block.images.length ? (
+          <div className="mt-5 grid gap-6 sm:grid-cols-2">{block.images.map((image, i) => renderFigure(image, i))}</div>
+        ) : null}
+        <dl className="mt-5 flex flex-col gap-4">
+          {block.items.map(([term, detail]) => (
+            <div key={term} className="grid gap-1 sm:grid-cols-[120px_1fr] sm:gap-6">
+              <dt className="pt-0.5 text-body-sm leading-body-sm text-smoke">{term}</dt>
+              <dd className={`text-body-sm leading-[1.7] text-ink ${term === "Chose" ? "font-medium" : ""}`}>
+                {renderInline(detail)}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </div>
     );
   }
 
@@ -181,7 +229,7 @@ function renderBlock(block: Block, key: number, stepIndex = 0) {
   if (block.kind === "step") {
     // The step's opening text sits under its title; everything from the first
     // visual on (images, tables) follows below, in the order it was written.
-    const firstVisual = block.body.findIndex((b) => b.kind !== "p" && b.kind !== "list");
+    const firstVisual = block.body.findIndex((b) => b.kind !== "p" && !(b.kind === "list" && !b.ordered));
     const split = firstVisual === -1 ? block.body.length : firstVisual;
     const text = block.body.slice(0, split);
     const rest = block.body.slice(split);
@@ -192,7 +240,7 @@ function renderBlock(block: Block, key: number, stepIndex = 0) {
       >
         <div>
           <p className="label">{String(stepIndex + 1).padStart(2, "0")}</p>
-          <h3 className="mt-1 text-heading-sm leading-heading-sm font-normal tracking-heading-sm text-ink">{block.title}</h3>
+          <h3 className="mt-1 text-body-lg leading-body-lg font-medium tracking-normal text-ink">{block.title}</h3>
           {text.length ? (
             <div className="mt-3 space-y-5">
               {text.map((b, i) => renderBlock(b, i))}
@@ -204,9 +252,23 @@ function renderBlock(block: Block, key: number, stepIndex = 0) {
     );
   }
 
+  if (block.kind === "list" && block.ordered) {
+    // Numbered, bold-led items: problems, outcomes, lessons. Each reads alone.
+    return (
+      <ol key={key} className="max-w-[34rem] space-y-3">
+        {block.items.map((item, i) => (
+          <li key={i} className="grid grid-cols-[2rem_1fr] text-body-sm leading-[1.7] text-ink">
+            <span className="text-smoke tabular-nums">{String(i + 1).padStart(2, "0")}</span>
+            <span>{renderInline(item)}</span>
+          </li>
+        ))}
+      </ol>
+    );
+  }
+
   if (block.kind === "list") {
     return (
-      <ul key={key} className="max-w-[40rem] list-disc space-y-2 pl-5 text-body-lg leading-body-lg text-ink marker:text-smoke">
+      <ul key={key} className="max-w-[34rem] list-disc space-y-2 pl-5 text-body-sm leading-[1.7] text-ink marker:text-smoke">
         {block.items.map((item, i) => (
           <li key={i}>{renderInline(item)}</li>
         ))}
@@ -215,7 +277,7 @@ function renderBlock(block: Block, key: number, stepIndex = 0) {
   }
 
   return (
-    <p key={key} className="max-w-[40rem] text-body-lg leading-body-lg text-ink">
+    <p key={key} className="max-w-[34rem] text-body-sm leading-[1.7] text-ink">
       {renderInline(block.text)}
     </p>
   );
@@ -229,6 +291,9 @@ function renderBlock(block: Block, key: number, stepIndex = 0) {
  *   blank-line-separated  -> paragraphs (**bold** supported inline)
  *   - item / - item       -> bulleted list (highlights, key points)
  *   > quote / > — Name    -> pull quote with its attribution
+ *   ::: decision Title    -> a decision card: Options / Chose / Because rows,
+ *                            with any image lines shown as the options
+ *   ## Title | Appendix   -> folded section, opened with a click
  *   ![alt](src "caption") -> full-width image, reusing ProjectVisual
  * Renders straight to ProjectSectionData["custom"] (content: ReactNode),
  * the existing freeform escape hatch — no new section type needed.
@@ -247,25 +312,43 @@ export function parseCaseStudyMarkdown(markdown: string): ProjectSectionData[] {
     // `## Long title | Short label` keeps the full title on the page and a short nav label.
     const [title, navLabel] = heading ? heading.split(/\s+\|\s+/) : [undefined, undefined];
 
+    const body = (
+      <div className={`space-y-6 ${title ? "mt-6" : ""}`}>
+        {blocks.map((block, i) =>
+          renderBlock(block, i, blocks.slice(0, i).filter((b) => b.kind === "step").length),
+        )}
+      </div>
+    );
+    // The appendix is for the curious: folded away, one click to open.
+    const folded = navLabel === "Appendix";
+
     sections.push({
       id: title ? slugify(title) : "intro",
       navLabel: navLabel ?? title,
+      title,
       type: "custom",
-      content: (
+      content: folded ? (
+        <details className="group">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 rounded-card border border-stone px-6 py-5 [&::-webkit-details-marker]:hidden">
+            <span>
+              <span className="block text-body-sm leading-body-sm text-smoke">{navLabel}</span>
+              <span className="mt-1 block text-body-lg leading-body-lg font-medium tracking-normal text-ink">{title}</span>
+            </span>
+            <span aria-hidden="true" className="text-heading text-smoke transition-transform duration-200 group-open:rotate-45">+</span>
+          </summary>
+          {body}
+        </details>
+      ) : (
         <div>
           {title && navLabel ? (
             <p className="mb-3 text-body-sm leading-body-sm text-smoke">{navLabel}</p>
           ) : null}
           {title ? (
-            <h2 className="text-[length:clamp(1.625rem,3.2vw,var(--text-section))] leading-section font-normal tracking-section text-ink">
+            <h2 className="text-body-lg leading-body-lg font-medium tracking-normal text-ink">
               {title}
             </h2>
           ) : null}
-          <div className={`space-y-6 ${title ? "mt-6" : ""}`}>
-            {blocks.map((block, i) =>
-              renderBlock(block, i, blocks.slice(0, i).filter((b) => b.kind === "step").length),
-            )}
-          </div>
+          {body}
         </div>
       ),
     });
