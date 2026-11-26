@@ -1,11 +1,12 @@
-// All copy is Praveenkumar's own: the Hero, AboutPreview and his
-// career/skills details. Nothing here is invented.
+// Every fact here is Praveenkumar's own, from his case studies and roles:
+// the outcomes, companies and products are documented elsewhere on the site.
+// The wording was tightened; nothing was invented.
 export const ABOUT = {
   eyebrow: "About",
   headline: "I'm a product designer and ",
   accent: "design engineer.",
   intro:
-    "I'm Praveenkumar, a product designer and design engineer in Bengaluru, with 8+ years designing developer tools, enterprise dashboards and consumer apps. I'm open to full-time roles and consulting.",
+    "I'm Praveenkumar, a product designer and design engineer in Bengaluru. For more than eight years I've designed the software people use to get their work done: developer consoles, enterprise dashboards and the workflows inside them. I'm drawn to briefs that turn out to be symptoms, where the real fix sits in the structure underneath.",
 
   facts: [
     { label: "Based in", value: "Bengaluru, India" },
@@ -18,8 +19,8 @@ export const ABOUT = {
     label: "Background",
     lead: "I design the software people use to do their jobs.",
     paragraphs: [
-      "At Amazon I led design for the developer console, including the release-track redesign and the support case system shown in my work. Before that I designed internal dashboards at Honeywell and a sales-training app at Nytro.ai.",
-      "Lately I build too. Along and Knockout are apps I designed and coded myself, with AI.",
+      "At Amazon I led design for the Appstore developer console, growing from individual contributor to design lead with a team of two. Rebuilding submission around parallel release tracks cut review waits from about seven days to two. Turning support cases into pages developers could follow cut case volume by about 47%, and by about 87% once an AI help widget answered first. Before Amazon I designed enterprise platforms at Honeywell and the pitch experience at Nytro.ai.",
+      "Most recently I co-founded Sparklit, a hyperlocal home-services marketplace, and led its product and design. I'm open to full-time roles and consulting.",
     ],
   },
 
@@ -49,26 +50,14 @@ export const ABOUT = {
     ] as { title: string; body: string; /** Slug of a case study where this shows up. */ work?: string }[],
   },
 
+  // Two angles, as credible designers frame it: AI inside the products, and AI
+  // in the process, with the judgment kept human. Every fact is from his own
+  // case studies and notes.
   ai: {
     label: "Working with AI",
-    lead: "I design with AI, and I build with it.",
     paragraphs: [
-      "I use AI at every stage of a product, from research and concepts to prototypes and working code, mainly with Claude Code and ChatGPT.",
-      "Along and Knockout were built entirely by me, with AI.",
-    ],
-    items: [
-      {
-        title: "Built by me",
-        body: "Along and Knockout were coded completely by me with AI, from the first screen to a live product.",
-      },
-      {
-        title: "Rules that review",
-        body: "The rules I write for Claude Code tell it to review and test each feature as soon as it's built, so problems surface early.",
-      },
-      {
-        title: "A human on the flow",
-        body: "I still test every flow myself. A person catches things AI can't.",
-      },
+      "I design AI into products, and I use it to build them. At Amazon I shaped the help assistant on the developer console: what it shows, and when it hands a developer to a person. With the assistant answering first, support cases fell by about 87%. At Honeywell I owned design for an AI-powered cybersecurity product.",
+      "In my own work I use AI at every stage, from research and concepts to prototypes and working code, mostly with Claude Code and ChatGPT. I write the rules that carry my standards, so Claude Code reviews and tests each feature as soon as it's built. The judgment stays with me: I still test every flow myself, because a person catches what AI can't. Along, a group-trip planner, and Knockout, a tournament app, are the proof. I designed and coded both with AI, from the first screen to a live product.",
     ],
   },
 
@@ -108,8 +97,7 @@ export const ABOUT = {
         scope: "Designed Sharedemos, a client content-onboarding platform, and led its evolution into Nytro.ai.",
         period: "Jun 2019 – Apr 2021",
       },
-      { company: "Lobotus Technologies", role: "UI/UX Designer", period: "Aug 2018 – May 2019" },
-      { company: "Freelance consulting", role: "Independent consultant, alongside other roles", period: "Jun 2017 – Sep 2022" },
+      { company: "Pearson", role: "UI/UX Designer", period: "Aug 2018 – May 2019" },
     ] as {
       company: string;
       role: string;
