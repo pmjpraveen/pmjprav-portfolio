@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { BEHANCE_URL, SIGNATURE_SRC, SOCIAL_LINKS } from "../../content/social";
+import { BEHANCE_URL, SOCIAL_LINKS } from "../../content/social";
 import { EMAIL } from "../../lib/site";
 import { HomeNav } from "./HomeNav";
+import { Signature } from "./Signature";
 
 const linkClass = "text-body-sm leading-body-sm text-smoke transition-colors duration-150 ease-ui hover:text-ink";
 
@@ -47,9 +48,7 @@ export function HomeSidebar() {
           I turn complex, data-heavy workflows into clear experiences, from research and interaction design through
           to shipped product
         </p>
-        {SIGNATURE_SRC ? (
-          <Image src={SIGNATURE_SRC} alt="Praveenkumar's signature" width={128} height={56} className="mt-5 h-14 w-auto" />
-        ) : null}
+        <Signature className="mt-5 h-14 w-auto" />
       </div>
 
       <div className="mt-10 grid grid-cols-2 gap-8 lg:mt-0 lg:flex lg:flex-1 lg:flex-col lg:justify-between lg:pt-40">

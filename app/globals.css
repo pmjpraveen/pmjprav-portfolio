@@ -326,3 +326,51 @@
     --page-gutter: 48px;
   }
 }
+
+/* =========================================================
+   Signature (Signature.tsx): each pen stroke in the mask draws
+   itself from start to end (pathLength is 1, so the dash maths is
+   the same for every stroke), at a constant speed. It stays
+   invisible until its turn, so the round cap doesn't show early.
+   Then a full-coverage layer fades in to settle the last hairlines.
+   At rest everything is drawn, so with no animation the signature
+   is simply shown.
+   ========================================================= */
+.signature-pen {
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 0;
+  animation-name: signature-pen;
+  animation-timing-function: linear;
+  animation-fill-mode: backwards;
+}
+
+@keyframes signature-pen {
+  0% {
+    stroke-dashoffset: 1;
+    opacity: 0;
+  }
+  0.1% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+.signature-settle {
+  animation: signature-settle 300ms ease-out backwards;
+}
+
+@keyframes signature-settle {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .signature-pen,
+  .signature-settle {
+    animation: none;
+  }
+}
