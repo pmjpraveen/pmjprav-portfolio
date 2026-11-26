@@ -24,8 +24,8 @@ export const personalProjects: PersonalProject[] = [
       "A free app for planning group trips and splitting expenses. Everyone works from the same itinerary, splits are exact, and the app finds the fewest payments to settle up.",
     url: "https://getalong.xyz",
     host: "getalong.xyz",
-    thumbnail: "/projects/getalong/og.jpg",
-    imageAlt: "Along, the group trip planner and expense splitter",
+    thumbnail: "/projects/getalong/tile.webp",
+    imageAlt: "Along, the group trip planner: home, day-by-day plan and balances screens",
     platform: "iPhone, Android",
     highlights: [
       "Plan together. A day-by-day itinerary with maps, edits, moves and undo. Changes show for everyone straight away.",
@@ -47,7 +47,7 @@ export const personalProjects: PersonalProject[] = [
     description: "A web app for running tournaments.",
     url: "https://knockout-nu.vercel.app",
     host: "knockout-nu.vercel.app",
-    thumbnail: "/projects/knockout/login.jpg",
-    imageAlt: "The Knockout log-in screen",
+    thumbnail: "/projects/knockout/tile.webp",
+    imageAlt: "Knockout, the tournament app: the log-in screen",
   },
 ];
