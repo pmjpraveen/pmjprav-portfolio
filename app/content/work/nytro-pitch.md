@@ -1,41 +1,54 @@
-## Summary
+## Overview
 
-Nytro.ai is a Pitch Intelligence platform that trains sales reps and gets them ready to sell. It analyses sales pitches and demos and gives sales teams insight. I redesigned the app so it is easier to use and teams can create content faster. Customer satisfaction and engagement rose.
+Nytro.ai is a pitch intelligence platform that trains sales reps and gets them ready to sell. It analyses sales pitches and demos and gives sales teams insight. I redesigned the app so it is easier to use and teams can create content faster.
+
+**Short on time?** Read this overview, the table that opens the redesign, and Results.
 
 ::: stats
 84% | customer engagement
 +26% | CSAT, from a 34% baseline
+3 | core areas redesigned: overview, categories and reports
 :::
-
-![Global settings in the redesigned app](/projects/nytro-pitch/hero.png "The redesigned app, global settings. Click to enlarge.")
-
-## Context
 
 ::: rows
 Company | Nytro.ai, sales enablement
 My role | Product designer. I owned the pitch experience as Nytro.ai spun out into an independent company.
 Scope | Pitch creation, recording and post-pitch analytics
+Years | 2021–22
+Platform | Web app
 :::
 
-## Challenge
+![Global settings in the redesigned app](/projects/nytro-pitch/hero.png "The redesigned app, global settings. Click to enlarge.")
+
+## Hard to find, slow to make | The challenge
 
 The app's layout was confusing, so people struggled to find important features. Authors had trouble creating content, which made the product harder for new users to learn. Users also couldn't customise anything, and there were no reports.
 
-## Process
+![Four problems: hard to find, slow to create, no customisation, no reports](/projects/nytro-pitch/illus-problems.png "Illustration · Four problems, each one making the product harder to learn.")
+
+## Design by hypothesis | Process
 
 I designed by hypothesis: form a view, test it with people, refine it.
 
+![Five steps: analysis, information architecture, wireframes and prototype, usability testing, visual design and style guide](/projects/nytro-pitch/illus-process.png "Illustration · Each test fed back into the design.")
+
 ::: rows
-1. Analysis | The Customer Success team gathered customer feedback on the challenges users faced.
-2. Information architecture | Using that feedback, I redesigned the layout and content to put user needs first.
-3. Wireframes and prototype | I sketched the new design, refined it from user feedback, then built a detailed prototype to test.
-4. Usability testing | I tested with my team, the Customer Success team and a range of users, and improved the design from their feedback.
-5. Visual design and style guide | I defined a consistent look, covering colour, type and icons, and wrote a guide to keep it consistent in later updates.
+1 · Analysis | The Customer Success team gathered customer feedback on the challenges users faced.
+2 · Information architecture | Using that feedback, I redesigned the layout and content to put user needs first.
+3 · Wireframes and prototype | I sketched the new design, refined it from user feedback, then built a detailed prototype to test.
+4 · Usability testing | I tested with my team, the Customer Success team and a range of users, and improved the design from their feedback.
+5 · Style guide | I defined a consistent look, covering colour, type and icons, and wrote a guide to keep it consistent in later updates.
 :::
 
-## Before and after
+## Three areas, before and after | Redesign
 
-Three areas changed the most. Each pair below shows the original on the left and the redesign on the right, with what was wrong in the original underneath.
+::: rows
+Problem | Inconsistent actions, unstructured cards and reports that didn't explain themselves.
+Decision | Redesign the three areas that changed most: the pitch overview, categories and reports.
+Outcome | Features are easier to find, and the content creation flow is shorter.
+:::
+
+Each pair shows the original on the left and the redesign on the right, with what was wrong in the original underneath.
 
 ### Pitch overview
 
@@ -65,9 +78,23 @@ Three areas changed the most. Each pair below shows the original on the left and
 - On the overall pitch report, KPI names did not say what each KPI measured.
 - On an individual submission, the section cards were not informative. The page looked empty, then a sudden "53%" appeared in the corner, so content felt detached.
 
-## Results
+## Results | Impact
 
-Features are easier to find. The content creation flow is shorter, so pitches take less time to make. The new reports and customisation gave users more to engage with.
+![84% engagement, CSAT up 26% from a 34% baseline, and three changes behind them](/projects/nytro-pitch/illus-results.png "Illustration · Easier to find, faster to make, more to engage with.")
+
+::: rows
+Finding features | Easier, because the layout puts user needs first.
+Creating content | A shorter flow, so pitches take less time to make.
+Engagement | New reports and customisation gave users more to engage with.
+:::
 
 > “With our fresh visual branding and refined language, the pitch app distinctly encapsulates the essence of both our current and target customer base, as well as our core values.”
 > — Ravish Kamath, Founder and CEO, Nytro.ai
+
+## Reflection
+
+::: rows
+Start from what customers say | The redesign began with the feedback Customer Success gathered from customers.
+Test with more than one group | My team, Customer Success and a range of users all tested it, and each round improved the design.
+Write the system down | A style guide kept later updates consistent after the redesign shipped.
+:::
