@@ -25,7 +25,7 @@ type Block =
   | { kind: "stats"; items: Pair[] }
   | { kind: "rows"; items: Pair[] }
   | { kind: "h3"; text: string }
-  | { kind: "step"; title: string; body: Block[]; image?: ImageBlock };
+  | { kind: "step"; title: string; body: Block[] };
 
 /** `**bold**` only — everything else in a paragraph renders as plain text. */
 function renderInline(text: string): ReactNode[] {
@@ -87,15 +87,14 @@ function splitBlocks(rawLines: string[]): Block[] {
     return { kind: "p", text: chunkLines.join(" ") };
   });
 
-  // Fold each `### title` and the blocks after it into one text-beside-image step.
+  // Fold each `### title` and the blocks after it into one step, in the order written.
   const folded: Block[] = [];
   for (const block of blocks) {
     const open = folded[folded.length - 1];
     if (block.kind === "h3") {
       folded.push({ kind: "step", title: block.text, body: [] });
     } else if (open?.kind === "step") {
-      if (block.kind === "image" && !open.image) open.image = block;
-      else open.body.push(block);
+      open.body.push(block);
     } else {
       folded.push(block);
     }
@@ -158,6 +157,12 @@ function renderBlock(block: Block, key: number, stepIndex = 0) {
   }
 
   if (block.kind === "step") {
+    // The step's opening text sits under its title; everything from the first
+    // visual on (images, tables) follows below, in the order it was written.
+    const firstVisual = block.body.findIndex((b) => b.kind !== "p" && b.kind !== "list");
+    const split = firstVisual === -1 ? block.body.length : firstVisual;
+    const text = block.body.slice(0, split);
+    const rest = block.body.slice(split);
     return (
       <div
         key={key}
@@ -166,13 +171,13 @@ function renderBlock(block: Block, key: number, stepIndex = 0) {
         <div>
           <p className="label">{String(stepIndex + 1).padStart(2, "0")}</p>
           <h3 className="mt-1 text-body text-ink">{block.title}</h3>
-          <div className="mt-2 space-y-3 [&_p]:text-body [&_p]:leading-body [&_ul]:text-body">
-            {block.body.map((b, i) => renderBlock(b, i))}
-          </div>
+          {text.length ? (
+            <div className="mt-2 space-y-3 [&_p]:text-body [&_p]:leading-body [&_ul]:text-body">
+              {text.map((b, i) => renderBlock(b, i))}
+            </div>
+          ) : null}
         </div>
-        {block.image ? (
-          renderFigure(block.image)
-        ) : null}
+        {rest.map((b, i) => renderBlock(b, i))}
       </div>
     );
   }
