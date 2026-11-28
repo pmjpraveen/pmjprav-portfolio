@@ -19,7 +19,7 @@ function withHighlights(text: string, order: { next: number }): ReactNode[] {
   return text.split(/(==[^=]+==)/g).map((part, i) => {
     const match = /^==([^=]+)==$/.exec(part);
     return match ? (
-      <mark key={i} className="highlighter" style={{ "--mark": order.next++ } as CSSProperties}>
+      <mark key={i} className="highlighter font-hand" style={{ "--mark": order.next++ } as CSSProperties}>
         {match[1]}
       </mark>
     ) : (

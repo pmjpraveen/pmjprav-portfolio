@@ -60,7 +60,8 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
 
           <p className="mt-6 max-w-prose text-body-lg leading-body-lg text-ink">{description}</p>
 
-          {project.stats?.length ? (
+          {/* With a glance card the numbers sit in its results row; otherwise here. */}
+          {project.stats?.length && !project.glance ? (
             <dl className="mt-8 grid grid-cols-3 gap-x-6 border-y border-stone py-6">
               {project.stats.map((stat) => (
                 <div key={stat.label}>
@@ -73,7 +74,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
 
           {project.glance ? (
             <div className="mt-8">
-              <ProjectGlance glance={project.glance} readMinutes={project.readMinutes} contents={project.contents} />
+              <ProjectGlance glance={project.glance} stats={project.stats} readMinutes={project.readMinutes} contents={project.contents} />
             </div>
           ) : (
             <div className="mt-6">{meta_}</div>
@@ -104,7 +105,7 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
 
         {project.glance ? (
           <div className="mt-8">
-            <ProjectGlance glance={project.glance} readMinutes={project.readMinutes} contents={project.contents} />
+            <ProjectGlance glance={project.glance} stats={project.stats} readMinutes={project.readMinutes} contents={project.contents} />
           </div>
         ) : null}
 

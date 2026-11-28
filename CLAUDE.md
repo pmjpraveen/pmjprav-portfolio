@@ -109,7 +109,7 @@ Avoid unnecessary dependencies.
 
 One typeface across the entire site: **Switzer** (300, 400, 500), self-hosted from `public/fonts/switzer/` via `next/font/local` in `app/layout.tsx`. Headings, body, navigation, buttons and labels all use it; `--font-display` and `--font-mono` point at Switzer too.
 
-Do not introduce any other typeface. The exceptions: the "Book an intro call" button uses Geist Pixel, Circle style (`public/fonts/geist-pixel/`, OFL, via `--font-pixel`), and imagery the system generates (e.g. the Open Graph image, case-study illustrations) may keep its current font combination.
+Do not introduce any other typeface. The exceptions: the "Book an intro call" button uses Geist Pixel, Circle style (`public/fonts/geist-pixel/`, OFL, via `--font-pixel`); the case-study glance card ("My impact in a nutshell") uses Kalam for its title and tags, as do the About page's highlights (`next/font/google`, OFL, via `--font-hand`); and imagery the system generates (e.g. the Open Graph image, case-study illustrations) may keep its current font combination.
 
 Display typography should use approximately:
 

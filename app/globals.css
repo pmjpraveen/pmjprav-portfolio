@@ -24,6 +24,8 @@
   --font-mono: var(--font-sans);
   /* The one exception: Geist Pixel Circle on the intro-call button. */
   --font-pixel: var(--font-geist-pixel), var(--font-sans);
+  /* And Kalam, handwriting, for the glance card's title and tags. */
+  --font-hand: var(--font-kalam), cursive;
 
   /* Type scale — small and quiet: 14px UI text, 16px reading text */
   --text-caption: 11px;
@@ -464,37 +466,6 @@
   border-radius: 9999px;
   background: var(--tint);
 }
-.tinted .glance-card {
-  /* A FigJam pastel per project (--glance); a faint client wash if none is set. */
-  background-color: var(--glance, color-mix(in srgb, var(--tint) 7%, var(--color-warm-taupe)));
-}
-.tinted .glance-card .border-stone {
-  border-color: rgb(28 28 28 / 0.12);
-}
-
-/* Text on the pastel takes the pastel's own hue: a deep shade for content, a
-   muted one for labels, and a faint one for lines, so it sits in the colour
-   instead of on top of it. Ink and grey where relative colours aren't supported. */
-@supports (color: oklch(from red l c h)) {
-  .tinted .glance-card {
-    --glance-ink: oklch(from var(--glance) 0.3 0.09 h);
-    --glance-muted: oklch(from var(--glance) 0.5 0.08 h);
-    --glance-line: oklch(from var(--glance) 0.5 0.09 h / 0.25);
-    color: var(--glance-ink);
-  }
-  .tinted .glance-card .text-ink {
-    color: var(--glance-ink);
-  }
-  .tinted .glance-card .text-smoke {
-    color: var(--glance-muted);
-  }
-  .tinted .glance-card .border-stone {
-    border-color: var(--glance-line);
-  }
-  .tinted .glance-card .bg-eggshell {
-    background-color: oklch(from var(--glance) 0.98 0.02 h);
-  }
-}
 .tinted .key-decision {
   background-color: var(--tint);
 }
@@ -504,3 +475,4 @@
   outline: 2px solid var(--color-ink);
   outline-offset: 2px;
 }
+

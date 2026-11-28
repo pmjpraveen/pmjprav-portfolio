@@ -19,7 +19,7 @@ type ProjectPageProps = {
 export function ProjectPage({ project, nextProject }: ProjectPageProps) {
   // The client's colour reaches the case study through --tint (see .tinted).
   const tint = project.tint
-    ? ({ "--tint": project.tint, ...(project.glanceColor ? { "--glance": project.glanceColor } : {}) } as CSSProperties)
+    ? ({ "--tint": project.tint } as CSSProperties)
     : undefined;
   return (
     <div className={project.tint ? "tinted" : undefined} style={tint}>

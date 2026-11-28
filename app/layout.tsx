@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Kalam } from "next/font/google";
 import localFont from "next/font/local";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_TITLE } from "./lib/metadata";
 import { SITE_URL } from "./lib/site";
@@ -21,6 +22,15 @@ const geistPixel = localFont({
   variable: "--font-geist-pixel",
   display: "swap",
   src: [{ path: "../public/fonts/geist-pixel/GeistPixel-Circle.woff2", weight: "400", style: "normal" }],
+});
+
+// Kalam (OFL), a handwriting face for the case-study glance card's title and
+// tags only. next/font downloads it at build time and serves it from this site.
+const kalam = Kalam({
+  variable: "--font-kalam",
+  weight: ["400", "700"],
+  subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -68,7 +78,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${switzer.variable} ${geistPixel.variable} h-full antialiased`}
+      className={`${switzer.variable} ${geistPixel.variable} ${kalam.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
         {children}
